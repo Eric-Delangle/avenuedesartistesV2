@@ -1,0 +1,41 @@
+#footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.foot {
+  height: 180px !important;
+  width: 100%;
+  padding: 25px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+#map {
+  width: 50%;
+  height: 550px;
+  z-index: 9;
+}
+
+/* infos membre sur la carte */
+#infoMember {
+  font-family: sans-serif, arial;
+  position: absolute;
+  width: 25%;
+  height: auto;
+  border-radius: 10px 10px 10px 10px;
+  background-color: grey;
+  border: 2.5px solid #ffff;
+  color: #ffff;
+  left: 35px;
+  top: 700px;
+  display: none;
+  z-index: 10;
+}
+
+.no_point {
+  list-style: none;
+  margin: 10px auto;
+}
