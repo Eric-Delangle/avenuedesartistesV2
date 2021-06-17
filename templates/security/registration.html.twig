@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Créer votre compte.
+{% endblock %}
+{% block steelsheets %}{% endblock %}
+{% block javascripts %}{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+	<div class="container">
+		<h1 class="titre center">Création de votre compte:</h1>
+		<br>
+		{{ form_start(form, {'attr': {'class': 'placeho'}})}}
+		{{ form_row(form.firstName, {'attr': {'placeholder': "Votre prénom"}})}}
+		{{ form_row(form.lastName, {'attr': {'placeholder': "Votre nom"}})}}
+		{{ form_row(form.location, {'attr': {'placeholder': "Votre ville"}})}}
+		{{ form_row(form.email, {'attr': {'placeholder': "Votre email"}})}}
+		{{ form_row(form.password, {'attr': {'placeholder': "Votre mot de passe"}})}}
+		{{ form_row(form.password_verify)}}
+
+		<!-- form_rest permet d'afficher la liste des catégories -->
+		{{ form_rest(form)}}<!-- captcha -->
+		<!-- Notre boite de vérification --><div class="g-recaptcha" data-sitekey=""> </div>
+
+		<!-- fin captcha -->
+		<br>
+		<button type="submit" class="btn btn-success">Valider</button>
+		{{ form_end(form)}}
+	</div>
+	{# 
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				#}
+	<script>
+		document.getElementById('inscription').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('connexion').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('admin').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('espace_membre').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('deconnexion').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('pas_vu').style.display = 'block';
+	</script>
+{% endblock %}

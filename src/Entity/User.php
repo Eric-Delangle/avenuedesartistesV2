@@ -83,7 +83,7 @@ class User implements UserInterface, \Serializable
     private $avatar = "avatardefaut.jpg";
 
     /**
-     * @Vich\UploadableField(mapping="artisticWork_image", fileNameProperty="avatar")
+     * @Vich\UploadableField(mapping="avatars", fileNameProperty="avatar")
      * @Assert\File(
      * maxSize="1000k",
      * maxSizeMessage="Le fichier excède 1000Ko.",

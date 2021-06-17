@@ -45,11 +45,11 @@ class Gmap
     const markers = [];
         // cette requete va me permettre de transformer des villes en lat et long
         $(document).ready(function(){ 
-          mymap = L.map('map').setView([lat, long], 6.4);
+          mymap = L.map('map').setView([lat, long], 5.4);
           L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicG9sdnUiLCJhIjoiY2s0c3FmY2FoMTFzMDNlcXVmeXZhdGR1YiJ9.XDjMZFILlUhTvOnBqMAucg', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          maxZoom: 18,
-          minZoom: 6,
+          maxZoom: 15,
+          minZoom: 4,
           maxBounds: bounds,
           id: 'mapbox/streets-v11',
           }).addTo(mymap);

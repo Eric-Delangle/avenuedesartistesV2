@@ -24,24 +24,29 @@
 					<i class="fas fa-shopping-bag bleuMarine"></i>
 					Vos achats</a>
 			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-link" id="echanges">
+					<i class="far fa-handshake"></i>
+					Vos échanges</a>
+			</li>
 			<li lass="nav-item">
-				<a class="nav-link" id="inscription" href="#" tabindex="-1" aria-disabled="true">
+				<a class="nav-link" id="inscription" href="{{ path("security_registration")}}" tabindex="-1" aria-disabled="true">
 					<i class="fas fa-user-circle bleuCiel"></i>
 					Inscription</a>
 			</li>
 			<li lass="nav-item">
-				<a class="nav-link" id="connexion" href="#" tabindex="-1" aria-disabled="true">
+				<a class="nav-link" id="connexion" href="{{ path("security_login")}}" tabindex="-1" aria-disabled="true">
 					<i class="fas fa-sign-in-alt rose"></i>
 					Connexion</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" id="deconnexion" href="#" tabindex="-1" aria-disabled="true">
+				<a class="nav-link" id="deconnexion" href="{{ path("security_logout")}}" tabindex="-1" aria-disabled="true">
 					<i class="fas fa-sign-out-alt bleuCiel"></i>
 					Déconnexion</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" id="member" href="#" tabindex="-1" aria-disabled="true">
-					<i class="fas fa-home rose"></i>
+				<a class="nav-link" id="member" href="{{ path("member_index")}}" tabindex="-1" aria-disabled="true">
+					<i class="fas fa-home"></i>
 					Votre compte</a>
 			</li>
 			<li class="nav-item">
