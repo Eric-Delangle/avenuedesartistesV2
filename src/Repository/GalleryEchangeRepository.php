@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Gallery;
+use App\Entity\GalleryEchange;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -12,11 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Gallery[]    findAll()
  * @method Gallery[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class GalleryRepository extends ServiceEntityRepository
+class GalleryEchangeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Gallery::class);
+        parent::__construct($registry, GalleryEchange::class);
     }
 
     // /**

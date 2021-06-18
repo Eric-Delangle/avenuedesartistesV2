@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GalleryEchange index{% endblock %}
+
+{% block body %}
+    <h1>GalleryEchange index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gallery_echange in gallery_echanges %}
+            <tr>
+                <td>{{ gallery_echange.id }}</td>
+                <td>{{ gallery_echange.name }}</td>
+                <td>{{ gallery_echange.slug }}</td>
+                <td>
+                    <a href="{{ path('gallery_echange_show', {'id': gallery_echange.id}) }}">show</a>
+                    <a href="{{ path('gallery_echange_edit', {'id': gallery_echange.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('gallery_echange_new') }}">Create new</a>
+{% endblock %}

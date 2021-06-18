@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New GalleryEchange
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Créez votre galerie d'échange.</h1>
+
+		{{ include('gallery_echange/_form.html.twig') }}
+
+		<a href="{{ path('gallery_echange_index') }}">Vos galeries d'échange.</a>
+	</div>
+
+{% endblock %}

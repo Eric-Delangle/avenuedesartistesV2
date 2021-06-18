@@ -39,15 +39,22 @@ class Category
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Gallery", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\GalleryEchange", mappedBy="category")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
-    private $galleries;
+    private $galleriesEchange;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\GalleryVente", mappedBy="category")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $galleriesVente;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->galleries = new ArrayCollection();
+        $this->galleriesEchange = new ArrayCollection();
+        $this->galleriesVente = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,11 +83,19 @@ class Category
     }
 
     /**
-     * @return Collection|Gallery[]
+     * @return Collection|GalleryEchange[]
      */
-    public function getGalleries(): Collection
+    public function getGalleriesEchange(): Collection
     {
-        return $this->galleries;
+        return $this->galleriesEchange;
+    }
+
+    /**
+     * @return Collection|GalleryVente[]
+     */
+    public function getGalleriesVente(): Collection
+    {
+        return $this->galleriesVente;
     }
 
 

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GalleryVente index{% endblock %}
+
+{% block body %}
+    <h1>GalleryVente index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gallery_vente in gallery_ventes %}
+            <tr>
+                <td>{{ gallery_vente.id }}</td>
+                <td>{{ gallery_vente.name }}</td>
+                <td>{{ gallery_vente.slug }}</td>
+                <td>
+                    <a href="{{ path('gallery_vente_show', {'id': gallery_vente.id}) }}">show</a>
+                    <a href="{{ path('gallery_vente_edit', {'id': gallery_vente.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('gallery_vente_new') }}">Create new</a>
+{% endblock %}

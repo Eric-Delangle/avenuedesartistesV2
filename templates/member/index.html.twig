@@ -4,16 +4,27 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<h1 class="text-center mt-5">Votre espace
+	<div class="container white">
+		<h1 class="text-center mt-5 massenet">Votre espace
 			{{ app.user.firstName }}
 		</h1>
+		<div class="avatar"><img src="{{ asset(['images/avatars/', app.user.avatar]|join) }}" alt="avatar"></div>
 		<div class="d-flex text-center mt-5">
 			<div class="col">
-				<p>Vos œuvres à l'échange.</p>
+				<button class="btn btn-primary">
+					<a href="{{ path('gallery_echange_show', {'id': app.user.id }) }}" class="white lien">Vos œuvres à l'échange</a>
+				</button>
+				<button class="btn btn-primary">
+					<a href="{{ path('gallery_echange_new') }}" class="white lien">Créer une galerie d'échange</a>
+				</button>
 			</div>
 			<div class="col">
-				<p>Vos œuvres à la vente.</p>
+				<button class="btn btn-info">
+					<a href="{{ path('gallery_vente_show', {'id': app.user.id }) }}" class="white lien">Vos œuvres à la vente</a>
+				</button>
+				<button class="btn btn-info">
+					<a href="{{ path('gallery_vente_new') }}" class="white lien">Créer une galerie de vente</a>
+				</button>
 			</div>
 		</div>
 	</div>

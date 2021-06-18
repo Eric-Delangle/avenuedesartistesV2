@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Serializer;
  * @ORM\Entity(repositoryClass="App\Repository\ArtisticWorkRepository")
  * @Vich\Uploadable()
  */
-class ArtisticWork
+class ArtisticWorkEchange
 {
     /**
      * @ORM\Id()
@@ -33,13 +33,13 @@ class ArtisticWork
     private $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="artisticWorks", cascade = {"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\GalleryEchange", inversedBy="artisticWorks", cascade = {"persist"})
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
-    private $gallery;
+    private $galleryEchange;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="galleries", cascade = {"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="galleriesEchange", cascade = {"persist"})
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $category;
@@ -87,14 +87,14 @@ class ArtisticWork
         return $this->id;
     }
 
-    public function getGallery(): ?Gallery
+    public function getGalleryEchange(): ?GalleryEchange
     {
-        return $this->gallery;
+        return $this->galleryEchange;
     }
 
-    public function setGallery(?Gallery $gallery): self
+    public function setGalleryEchange(?GalleryEchange $galleryEchange): self
     {
-        $this->gallery = $gallery;
+        $this->galleryEchange = $galleryEchange;
 
         return $this;
     }
@@ -164,9 +164,9 @@ class ArtisticWork
 
     /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $PictureFile
-     * @return ArtisticWork
+     * @return ArtisticWorkEchange
      */
-    public function setPictureFile(?File $pictureFile): ArtisticWork
+    public function setPictureFile(?File $pictureFile): ArtisticWorkEchange
     {
         $this->pictureFile = $pictureFile;
         if ($this->pictureFile instanceof UploadedFile) {

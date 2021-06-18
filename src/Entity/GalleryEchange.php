@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\GalleryRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\GalleryEchangeRepository")
  */
-class Gallery
+class GalleryEchange
 {
     /**
      * @ORM\Id()
@@ -38,7 +38,7 @@ class Gallery
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArtisticWork", mappedBy="gallery")
+     * @ORM\OneToMany(targetEntity="App\Entity\ArtisticWorkEchange", mappedBy="gallery")
      */
     private $artisticWorks;
 

@@ -8,8 +8,163 @@
   font-style: normal;
 }
 
+.massenet {
+  font-family: massenet_boldbold, arial;
+}
+
+.slogan {
+  font-size: 2em;
+}
+
+.lien:hover {
+  text-decoration: none;
+}
+
 .titre {
   font-family: massenet_boldbold, arial;
+  font-size: 5em;
+}
+
+.liste_nav {
+  padding: 0 10px !important;
+}
+
+a:hover {
+  color: black;
+}
+
+.white a {
+  color: #ffffff !important;
+}
+
+/* liens de gauche */
+
+.rouge {
+  width: 150px;
+  height: auto;
+  background-color: rgb(163, 13, 13);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.rouge a {
+  color: #ffffff;
+}
+
+.vert {
+  width: 150px;
+  height: auto;
+  background-color: rgb(11, 97, 54);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.vert a {
+  color: #ffffff;
+}
+
+.bleu {
+  width: 150px;
+  height: auto;
+  background-color: rgb(91, 34, 224);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.bleu a {
+  color: #ffffff;
+}
+
+.orange {
+  width: 150px;
+  height: auto;
+  background-color: rgb(199, 81, 13);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.orange a {
+  color: #ffffff;
+}
+
+/* liens de droite */
+
+.violet {
+  width: 150px;
+  height: auto;
+  background-color: rgb(133, 27, 106);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.violet a {
+  color: #ffffff;
+  text-align: center;
+}
+
+.vertdo {
+  width: 150px;
+  height: auto;
+  background-color: rgb(27, 133, 124);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.vertdo a {
+  color: #ffffff;
+  text-align: center;
+}
+
+.greu {
+  width: 150px;
+  height: auto;
+  background-color: rgb(76, 95, 100);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.greu a {
+  color: #ffffff;
+  text-align: center;
+}
+
+.taupe {
+  width: 150px;
+  height: auto;
+  background-color: rgb(95, 79, 25);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.taupe a {
+  color: #ffffff;
+  text-align: center;
+}
+
+.noir {
+  width: 150px;
+  height: auto;
+  background-color: rgb(39, 38, 36);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.noir a {
+  color: #ffffff;
+  text-align: center;
+}
+
+.bleudeco {
+  width: 150px;
+  height: auto;
+  background-color: rgb(16, 12, 248);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.bleudeco a {
+  color: #ffffff;
+  text-align: center;
+}
+
+.avatar {
+  text-align: center;
+}
+
+.avatar img {
+  border-radius: 50%;
+  width: 150px;
+  height: auto;
 }
 
 #footer {
@@ -36,14 +191,22 @@
   z-index: 9;
 }
 
+.punaise_map {
+  position: absolute;
+  z-index: 9;
+  top: 280px;
+  left: 660px;
+}
+
 /* infos membre sur la carte */
 #infoMember {
   font-family: sans-serif, arial;
   position: absolute;
   width: 25%;
   height: auto;
-  border-radius: 10px 10px 10px 10px;
-  background-color: grey;
+  border-radius: 50%;
+  text-align: center;
+  background-color: rgb(143, 184, 238);
   border: 2.5px solid #ffff;
   color: #ffff;
   left: 35px;
@@ -55,9 +218,196 @@
 .no_point {
   list-style: none;
   margin: 10px auto;
+  padding: 10px;
 }
 
 .carousel-inner {
   margin-top: 90px;
-  border-radius: 50%;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 5px 5px 5px 5px;
+}
+
+.carousel img {
+  max-width: 100%;
+  max-height: 400px;
+}
+
+img {
+  object-fit: cover;
+  overflow: hidden;
+}
+
+/* --  ==== MEDIAQUERIES ====  -- */
+
+@media all and (max-width: 1024px) {
+  /* ipad */
+
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  #info {
+    display: none;
+    position: absolute;
+    width: 60%;
+    height: 70px;
+    line-height: 4;
+    font-family: milkshake, arial, time;
+    color: #ffffff;
+    font-size: 1em;
+    background-color: rgb(69, 126, 231);
+    text-align: center;
+    z-index: 1;
+    top: 400px;
+    left: 150px;
+  }
+
+  /* BURGER */
+  .lab {
+    margin-top: -15px;
+  }
+  #menu input + label {
+    position: fixed !important;
+    top: 45px;
+    right: 40px;
+    height: 60px;
+    width: 35px;
+    z-index: 5;
+  }
+
+  #menu input + label span {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    top: 50%;
+    margin-top: -1px;
+    left: 0;
+    display: block;
+    background: #020304 !important;
+    transition: 0.5s;
+  }
+
+  #menu input + label span:first-child {
+    top: 3px;
+  }
+
+  #menu input + label span:last-child {
+    top: 16px;
+  }
+
+  #menu label:hover {
+    cursor: pointer;
+  }
+
+  #menu input:checked + label span {
+    opacity: 0;
+    top: 50%;
+  }
+
+  #menu input:checked + label span:first-child {
+    opacity: 1;
+    transform: rotate(405deg);
+  }
+
+  #menu input:checked + label span:last-child {
+    opacity: 1;
+    transform: rotate(-405deg);
+  }
+
+  #menu input ~ nav {
+    background: #ffffff;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    z-index: 3;
+    transition: 0.5s;
+    transition-delay: 0.5s;
+    overflow: hidden;
+  }
+  #menu input ~ nav > ul {
+    text-align: center;
+    position: fixed;
+    flex-direction: column;
+    top: 10%;
+    height: auto;
+    margin: 0 32%;
+  }
+
+  #menu input ~ nav > ul > li {
+    opacity: 0;
+    transition: 0.5s;
+    transition-delay: 0s;
+  }
+
+  #menu input ~ nav > ul > li > a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #020304 !important;
+    font-weight: 700;
+    font-family: Roboto, sans-serif;
+    font-size: 1.5em;
+    display: block;
+    padding: 39px;
+  }
+
+  #menu input:checked ~ nav {
+    height: 50%;
+    transition-delay: 0s;
+  }
+  #menu input:checked ~ nav > ul > li {
+    opacity: 1;
+    transition-delay: 0.5s;
+  }
+  /* FIN BURGER */
+  #pas_vu {
+    margin-top: 10px;
+  }
+}
+@media all and (max-device-width: 480px) {
+  /* smartphone */
+
+  input:checked ~ nav {
+    height: auto;
+    transition-delay: 0s;
+  }
+
+  element.style {
+    display: block;
+  }
+
+  #info {
+    display: none;
+    position: absolute;
+    width: 80%;
+    height: 70px;
+    line-height: 4;
+    font-family: milkshake, arial, time;
+    color: #ffffff;
+    font-size: 1em;
+    background-color: rgb(69, 126, 231);
+    text-align: center;
+    z-index: 1;
+    top: 50px;
+    left: 10px;
+  }
+
+  #map {
+    width: 90%;
+    height: 500px;
+    margin: 0 auto;
+  }
+
+  /* infos membre sur la carte */
+  #infoMember {
+    width: 25%;
+    height: auto;
+    left: 135px;
+    top: 10px;
+    display: none;
+    z-index: 10;
+  }
 }

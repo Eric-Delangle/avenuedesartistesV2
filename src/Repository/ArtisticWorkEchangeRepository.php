@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\ArtisticWork;
+use App\Entity\ArtisticWorkEchange;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -12,11 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ArtisticWork[]    findAll()
  * @method ArtisticWork[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ArtisticWorkRepository extends ServiceEntityRepository
+class ArtisticWorkEchangeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ArtisticWork::class);
+        parent::__construct($registry, ArtisticWorkEchange::class);
     }
 
     // /**

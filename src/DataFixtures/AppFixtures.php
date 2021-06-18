@@ -4,10 +4,12 @@ namespace App\DataFixtures;
 
 use Faker;
 use App\Entity\User;
-use App\Entity\Gallery;
 use App\Entity\Category;
 use Cocur\Slugify\Slugify;
-use App\Entity\ArtisticWork;
+use App\Entity\GalleryVente;
+use App\Entity\GalleryEchange;
+use App\Entity\ArtisticWorkVente;
+use App\Entity\ArtisticWorkEchange;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -64,27 +66,52 @@ class AppFixtures extends Fixture
         foreach ($categories as $category) {
             foreach ($users as $user) {
                 for ($g = 0; $g <= 1; $g++) {
-                    $gallery = new Gallery();
-                    $gallery->setName($faker->name);
-                    $slug = $slugify->slugify($gallery->getName());
-                    $gallery->setSlug($slug);
-                    $gallery->setCategory($category);
-                    $gallery->setUser($user);
-                    $manager->persist($gallery);
+                    $galleryEchange = new GalleryEchange();
+                    $galleryEchange->setName($faker->name);
+                    $slug = $slugify->slugify($galleryEchange->getName());
+                    $galleryEchange->setSlug($slug);
+                    $galleryEchange->setCategory($category);
+                    $galleryEchange->setUser($user);
+                    $manager->persist($galleryEchange);
 
                     for ($a = 1; $a <= 2; $a++) {
 
-                        $artWork = new ArtisticWork();
-                        $artWork->setName($faker->name);
-                        $artWork->setGallery($gallery);
-                        $artWork->setSlug($faker->name);
-                        $artWork->setCategory($category);
-                        $artWork->setPicture('avatarDefaut.jpg');
-                        $artWork->setPictureFile(new File('public/images/avatars/avatardefaut.jpg'));
-                        $artWork->setDescription($faker->text);
-                        $artWork->setCreatedAt($faker->dateTimeBetween($startDate = '-6 months', $endDate = 'now'));
-                        $artWork->setUpdatedAt($faker->dateTimeBetween($startDate = '-6 months', $endDate = 'now'));
-                        $manager->persist($artWork);
+                        $artWorkEchange = new ArtisticWorkEchange();
+                        $artWorkEchange->setName($faker->name);
+                        $artWorkEchange->setGalleryEchange($galleryEchange);
+                        $artWorkEchange->setSlug($faker->name);
+                        $artWorkEchange->setCategory($category);
+                        $artWorkEchange->setPicture('avatarDefaut.jpg');
+                        $artWorkEchange->setPictureFile(new File('public/images/avatars/avatardefaut.jpg'));
+                        $artWorkEchange->setDescription($faker->text);
+                        $artWorkEchange->setCreatedAt($faker->dateTimeBetween($startDate = '-6 months', $endDate = 'now'));
+                        $artWorkEchange->setUpdatedAt($faker->dateTimeBetween($startDate = '-6 months', $endDate = 'now'));
+                        $manager->persist($artWorkEchange);
+                    }
+                    for ($g = 0; $g <= 1; $g++) {
+                        $galleryVente = new GalleryVente();
+                        $galleryVente->setName($faker->name);
+                        $slug = $slugify->slugify($galleryVente->getName());
+                        $galleryVente->setSlug($slug);
+                        $galleryVente->setCategory($category);
+                        $galleryVente->setUser($user);
+                        $manager->persist($galleryVente);
+
+                        for ($b = 1; $b <= 2; $b++) {
+
+                            $artWorkVente = new ArtisticWorkVente();
+
+                            $artWorkVente->setName($faker->name);
+                            $artWorkVente->setGalleryVente($galleryVente);
+                            $artWorkVente->setSlug($faker->name);
+                            $artWorkVente->setCategory($category);
+                            $artWorkVente->setPicture('avatarDefaut.jpg');
+                            $artWorkVente->setPictureFile(new File('public/images/avatars/avatardefaut.jpg'));
+                            $artWorkVente->setDescription($faker->text);
+                            $artWorkVente->setCreatedAt($faker->dateTimeBetween($startDate = '-6 months', $endDate = 'now'));
+                            $artWorkVente->setUpdatedAt($faker->dateTimeBetween($startDate = '-6 months', $endDate = 'now'));
+                            $manager->persist($artWorkVente);
+                        }
                     }
                 }
             }
