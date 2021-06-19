@@ -39,7 +39,7 @@ class GalleryVenteController extends AbstractController
             $entityManager->persist($galleryVente);
             $entityManager->flush();
 
-            return $this->redirectToRoute('gallery_vente_index');
+            return $this->redirectToRoute('member_index');
         }
 
         return $this->render('gallery_vente/new.html.twig', [
@@ -83,7 +83,7 @@ class GalleryVenteController extends AbstractController
      */
     public function delete(Request $request, GalleryVente $galleryVente): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$galleryVente->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $galleryVente->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($galleryVente);
             $entityManager->flush();

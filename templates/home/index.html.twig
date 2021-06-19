@@ -56,15 +56,15 @@
 				</div>
 			</div>
 			{# 
-																																																<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-																																																	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-																																																	<span class="sr-only">Previous</span>
-																																																</a>
-																																																<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-																																																	<span class="carousel-control-next-icon" aria-hidden="true"></span>
-																																																	<span class="sr-only">Next</span>
-																																																</a>
-																																													#}
+																																																																														<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+																																																																															<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+																																																																															<span class="sr-only">Previous</span>
+																																																																														</a>
+																																																																														<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+																																																																															<span class="carousel-control-next-icon" aria-hidden="true"></span>
+																																																																															<span class="sr-only">Next</span>
+																																																																														</a>
+																																																																											#}
 		</div>
 		{# FIN CAROUSEL #}
 
@@ -85,46 +85,28 @@
 
 	<script>
 		document.getElementById('inscription').style.display = 'block';
-	</script>
-	<script>
-		document.getElementById('connexion').style.display = 'block';
-	</script>
-	<script>
-		document.getElementById('admin').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('member').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('deconnexion').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('achats').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('echanges').style.display = 'none';
+document.getElementById('connexion').style.display = 'block';
+document.getElementById('admin').style.display = 'none';
+document.getElementById('member').style.display = 'none';
+document.getElementById('deconnexion').style.display = 'none';
+document.getElementById('achats').style.display = 'none';
+document.getElementById('echanges').style.display = 'none';
+document.getElementById('echange').style.display = 'none';
+document.getElementById('achat').style.display = 'none';
+document.getElementById('deco').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'none';
 	</script>
 	{% if app.user %}
 		<script>
 			document.getElementById('member').style.display = 'block';
-		</script>
-		<script>
-			document.getElementById('deconnexion').style.display = 'block';
-		</script>
-		<script>
-			document.getElementById('achats').style.display = 'block';
-		</script>
-		<script>
-			document.getElementById('echanges').style.display = 'block';
-		</script>
-		<script>
-			document.getElementById('inscription').style.display = 'none';
-		</script>
-		<script>
-			document.getElementById('connexion').style.display = 'none';
-		</script>
-		<script>
-			document.getElementById('admin').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'block';
+document.getElementById('deco').style.display = 'block';
+document.getElementById('deconnexion').style.display = 'block';
+document.getElementById('achats').style.display = 'block';
+document.getElementById('echanges').style.display = 'block';
+document.getElementById('inscription').style.display = 'none';
+document.getElementById('connexion').style.display = 'none';
+document.getElementById('admin').style.display = 'none';
 		</script>
 	{% endif %}
 	{% if is_granted('ROLE_ADMIN') %}

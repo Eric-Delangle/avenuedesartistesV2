@@ -1,11 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New GalleryVente{% endblock %}
+{% block title %}New GalleryVente
+{% endblock %}
 
 {% block body %}
-    <h1>Create new GalleryVente</h1>
+	<div class="container">
+		<h1>Créer une galerie de vente.</h1>
 
-    {{ include('gallery_vente/_form.html.twig') }}
+		{{ include('gallery_vente/_form.html.twig') }}
 
-    <a href="{{ path('gallery_vente_index') }}">back to list</a>
+		<button class="btb bouton">
+			<a href="{{ path('gallery_vente_index') }}">Liste de vos galeries.</a>
+		</button>
+	</div>
+	<script>
+		document.getElementById('member').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('deconnexion').style.display = 'block';
+	</script>
+	<script>
+		document.getElementById('achats').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echanges').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('achat').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echange').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('inscription').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('connexion').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('admin').style.display = 'none';
+	</script>
 {% endblock %}

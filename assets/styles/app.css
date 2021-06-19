@@ -8,6 +8,32 @@
   font-style: normal;
 }
 
+.bouton {
+  background-color: darkcyan !important;
+  color: #ffffff !important;
+}
+
+.bouton:hover {
+  background-color: rgb(11, 12, 12) !important;
+  color: #ffffff !important;
+}
+
+ul a {
+  color: white !important;
+}
+
+a:hover {
+  color: #000000;
+}
+
+li:hover {
+  background-color: rgb(122, 126, 88);
+}
+
+#deconnexion a:hover {
+  color: #000000;
+}
+
 .massenet {
   font-family: massenet_boldbold, arial;
 }
@@ -36,8 +62,21 @@ a:hover {
 .white a {
   color: #ffffff !important;
 }
+/* liens */
+
+li {
+  border-radius: 10px 10px 10px 10px;
+  text-align: center;
+  color: #ffffff !important;
+  padding: 2px;
+}
 
 /* liens de gauche */
+
+.liens_gauche li {
+  padding: 2px !important;
+  margin: 2px;
+}
 
 .rouge {
   width: 150px;
@@ -81,6 +120,18 @@ a:hover {
 
 .orange a {
   color: #ffffff;
+}
+
+#registration {
+  text-align: center;
+}
+
+#registration a {
+  color: #ffffff;
+}
+
+#connexion a {
+  color: #ffffff !important;
 }
 
 /* liens de droite */
@@ -157,6 +208,10 @@ a:hover {
   text-align: center;
 }
 
+#deco {
+  padding: 2px;
+}
+
 .avatar {
   text-align: center;
 }
@@ -187,7 +242,7 @@ a:hover {
   border-radius: 10px 10px 10px 10px;
   box-shadow: 5px 5px 5px 5px;
   width: 100%;
-  height: 550px;
+  height: 500px;
   z-index: 9;
 }
 

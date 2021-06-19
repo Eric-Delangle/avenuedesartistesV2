@@ -45,6 +45,7 @@ class Gmap
     const markers = [];
         // cette requete va me permettre de transformer des villes en lat et long
         $(document).ready(function(){ 
+          // la valeur 5.4 met la carte de france un peu trop loin mais 5.5 la met un peu trop pret.
           mymap = L.map('map').setView([lat, long], 5.4);
           L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicG9sdnUiLCJhIjoiY2s0c3FmY2FoMTFzMDNlcXVmeXZhdGR1YiJ9.XDjMZFILlUhTvOnBqMAucg', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
