@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ArtisticWorkRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ArtisticWorkEchangeRepository")
  * @Vich\Uploadable()
  */
 class ArtisticWorkEchange
@@ -61,7 +61,7 @@ class ArtisticWorkEchange
     private $picture;
 
     /**
-     * @Vich\UploadableField(mapping="artisticWork_image", fileNameProperty="picture")
+     * @Vich\UploadableField(mapping="artisticWorks", fileNameProperty="picture")
      * @Assert\File(
      * maxSize="1000k",
      * maxSizeMessage="Le fichier excède 1000Ko.",

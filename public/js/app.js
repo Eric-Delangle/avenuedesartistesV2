@@ -85,6 +85,7 @@ class Gmap
                 let nom = req[i]["lastName"];
                 let Nom = nom.ucFirst();
                 let slug = req[i]["slug"];
+                console.log(slug); 
                 let rep = req[i]['categories'];
               
                     let cat = '';
@@ -109,14 +110,17 @@ class Gmap
                         marker.addEventListener('mouseover', ()=> {
                         
                           document.getElementById('infoMember').style.display = "block";
-                          document.getElementById('nomMembre').innerHTML = "Membre: "  + preNom + ' ' + Nom;  
-                          document.getElementById('ville').innerHTML = "Ville: " + Ville;
+                          document.getElementById('nomMembre').innerHTML = "<span class='titre_profil'>Membre:</span>&nbsp"  + preNom + ' ' + Nom;
+                         
+                          document.getElementById('ville').innerHTML = "<span class='titre_profil'>Ville:</span>&nbsp" + Ville;
                       
-                          document.getElementById('categorie').innerHTML = "Catégorie(s): " + cat;
+                          document.getElementById('categorie').innerHTML = "<span class='titre_profil'>Catégorie(s):</span>&nbsp" + cat;
                                 
-                          // fonction qui afficher le lien
-                          document.getElementById('profil').innerHTML = "<span class='btn btn-success' style='cursor:pointer;'>Profil</span>" ;   
-                          document.getElementById("profil").onclick = function(){window.location="http://127.0.0.1:8000/public_show/" + slug;};
+                          // fonction qui affiche le lien
+                          document.getElementById('profil').innerHTML = "<span class='btn bouton' style='cursor:pointer;'>Profil</span>" ;  
+                          document.getElementById("profil").onclick = function() {
+                            window.location="https://127.0.0.1:8000/user/" + slug;
+                          };
                             map.addEventListener('click', ()=> {
                               document.getElementById('infoMember').style.display = "none";
                           })      

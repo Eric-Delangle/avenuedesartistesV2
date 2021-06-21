@@ -43,7 +43,7 @@ class AppFixtures extends Fixture
                 $user->setFirstName($faker->firstNameMale());
                 $user->setLastName($faker->lastName());
                 $user->setEmail("email+" . $h . "@email.com");
-                $slug = $slugify->slugify($user->getFirstName());
+                $slug = $slugify->slugify($user->getFirstName() . ' ' . $user->getLastName());
                 $user->setSlug($slug);
                 $user->setLocation($city);
                 $user->setPassword("password");

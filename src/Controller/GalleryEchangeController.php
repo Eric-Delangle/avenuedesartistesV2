@@ -20,8 +20,11 @@ class GalleryEchangeController extends AbstractController
      */
     public function index(GalleryEchangeRepository $galleryEchangeRepository): Response
     {
+        $id = $this->getUser()->getId();
+        $galerieEchangePerso = $galleryEchangeRepository->findBy(['user' => $id]);
+
         return $this->render('gallery_echange/index.html.twig', [
-            'gallery_echanges' => $galleryEchangeRepository->findAll(),
+            'gallery_echanges' => $galerieEchangePerso,
         ]);
     }
 

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choisir une œuvre.
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center mt-5 massenet">Vous avez l'embarras du choix</h1>
+		<p class="mt-5">
+
+			{% for item in users %}
+
+				<p>
+					<span class='titre_profil massenet' style="color:#ffffff;">Artiste :</span>
+					{{ item.firstName }}
+					{{ item.lastName }}<br>
+				</p>
+				<p>
+					<span class='titre_profil massenet' style="color:#ffffff;">Ses catégories :</span>
+					{% for item in item.categories %}
+
+						{{ item }}
+					{% endfor %}
+					.
+				</p>
+				<p>
+					<span class='titre_profil massenet' style="color:#ffffff;">Ses galeries de vente :</span>
+
+					{% for item in item.galleryVente %}
+						<a href="{{path('gallery_vente_show', {'id': item.id})}}">{{ item.name }}</a>
+					{% endfor %}
+
+
+					.
+				</p>
+			</p>
+		</p>
+		<p>
+			<span class='titre_profil massenet' style="color:#ffffff;">Il vit à :</span>
+			{{ item.location }}</p>
+
+		<button class="btn bouton">
+			<a href="{{path('user_show', {'slug' : item.slug})}}">Profil</a>
+		</button>
+		<hr>
+	{% endfor %}
+</p></p></div><script>document.getElementById('inscription').style.display = 'block';
+document.getElementById('connexion').style.display = 'block';
+document.getElementById('admin').style.display = 'none';
+document.getElementById('member').style.display = 'none';
+document.getElementById('deconnexion').style.display = 'none';
+document.getElementById('achats').style.display = 'none';
+document.getElementById('echanges').style.display = 'none';
+document.getElementById('echange').style.display = 'none';
+document.getElementById('achat').style.display = 'none';
+document.getElementById('deco').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'none';</script>{% if app.user %}<script>
+document.getElementById('member').style.display = 'block';
+document.getElementById('bleudeco').style.display = 'block';
+document.getElementById('deco').style.display = 'block';
+document.getElementById('deconnexion').style.display = 'block';
+document.getElementById('achats').style.display = 'block';
+document.getElementById('echanges').style.display = 'block';
+document.getElementById('inscription').style.display = 'none';
+document.getElementById('connexion').style.display = 'none';
+document.getElementById('admin').style.display = 'none';</script>{% endif %}{% if is_granted('ROLE_ADMIN') %}<script>
+document.getElementById('admin').style.display = 'block';</script>{% endif %}{% endblock %}

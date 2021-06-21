@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'image a votre galerie d'échange.
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center mt-5">Ajouter une image à votre galerie d'échange.</h1>
+
+		{{ include('artistic_work_echange/_form.html.twig') }}
+
+		<button class="btn bouton">
+			<a href="{{ path('gallery_echange_index') }}">Retour à vos galeries d'échange</a>
+		</button>
+	</div>
+
+{% endblock %}

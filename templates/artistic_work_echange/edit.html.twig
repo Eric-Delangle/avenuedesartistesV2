@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ArtisticWorkEchange{% endblock %}
+
+{% block body %}
+    <h1>Edit ArtisticWorkEchange</h1>
+
+    {{ include('artistic_work_echange/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('artistic_work_echange_index') }}">back to list</a>
+
+    {{ include('artistic_work_echange/_delete_form.html.twig') }}
+{% endblock %}

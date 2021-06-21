@@ -12,19 +12,15 @@
 		<div class="d-flex text-center mt-5">
 			<div class="col">
 				<button class="btn btn-primary">
-					<a href="{{ path('gallery_echange_show', {'id': app.user.id }) }}" class="white lien">Vos œuvres à l'échange</a>
+					<a href="{{ path('gallery_echange_index', {'id': app.user.id }) }}" class="white lien">Gérer vos œuvres à l'échange</a>
 				</button>
-				<button class="btn btn-primary">
-					<a href="{{ path('gallery_echange_new') }}" class="white lien">Créer une galerie d'échange</a>
-				</button>
+
 			</div>
 			<div class="col">
 				<button class="btn btn-info">
-					<a href="{{ path('gallery_vente_show', {'id': app.user.id }) }}" class="white lien">Vos œuvres à la vente</a>
+					<a href="{{ path('buy_one', {'slug': app.user.slug }) }}" class="white lien">Gérer vos œuvres à la vente</a>
 				</button>
-				<button class="btn btn-info">
-					<a href="{{ path('gallery_vente_new') }}" class="white lien">Créer une galerie de vente</a>
-				</button>
+
 			</div>
 		</div>
 	</div>

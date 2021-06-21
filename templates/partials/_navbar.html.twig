@@ -2,12 +2,12 @@
 
 
 	<div class="navbar-toggle navbar-collapse" id="">
-		<ul class="navbar-nav text-center liste_nav liens_gauche">
+		<ul class="navbar-nav text-center liste_nav liens_gauche homeNav">
 			<li class="nav-item rouge">
 				<a class="nav-link" id="pas_vu" href="{{ path('home' ) }}">Accueil</a>
 			</li>
 			<li class="nav-item vert">
-				<a class="nav-link" id="acheter" href="#">Acheter</a>
+				<a class="nav-link" id="acheter" href="{{ path('buy_index') }}">Acheter</a>
 			</li>
 			<li class="nav-item bleu">
 				<a class="nav-link" id="echanger" href="#">Echanger</a>
@@ -18,7 +18,7 @@
 
 		</ul>
 
-		<ul class="navbar-nav ml-auto">
+		<ul class="navbar-nav ml-auto homeNav">
 			<li class="nav-item violet" id="achat">
 				<a href="#" class="nav-link" id="achats">
 					<i class="fas fa-shopping-bag bleuMarine"></i>

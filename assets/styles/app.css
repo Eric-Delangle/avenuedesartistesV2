@@ -26,7 +26,7 @@ a:hover {
   color: #000000;
 }
 
-li:hover {
+.homeNav li:hover {
   background-color: rgb(122, 126, 88);
 }
 
@@ -36,6 +36,15 @@ li:hover {
 
 .massenet {
   font-family: massenet_boldbold, arial;
+}
+
+.titre_profil {
+  width: 20px;
+  height: auto;
+  padding: 5px;
+  border-radius: 10px 10px 10px 10px;
+  background-color: rgb(199, 81, 13);
+  font-size: 1.2em;
 }
 
 .slogan {
@@ -167,6 +176,10 @@ li {
   border-radius: 10px 10px 10px 10px;
 }
 
+.greu:hover {
+  background-color: rgb(47, 128, 128);
+}
+
 .greu a {
   color: #ffffff;
   text-align: center;
@@ -177,6 +190,10 @@ li {
   height: auto;
   background-color: rgb(95, 79, 25);
   border-radius: 10px 10px 10px 10px;
+}
+
+.taupe:hover {
+  background-color: rgb(47, 128, 128);
 }
 
 .taupe a {
@@ -223,7 +240,6 @@ li {
 }
 
 #footer {
-  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;

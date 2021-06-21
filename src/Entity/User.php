@@ -2,24 +2,25 @@
 
 namespace App\Entity;
 
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Notifier\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -105,6 +106,11 @@ class User implements UserInterface, \Serializable
      * @Groups({"group1"})
      */
     private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\GalleryVente", mappedBy="user")
+     */
+    private $galleryVente;
 
     /**
      * @ORM\Column(type="integer")
@@ -410,6 +416,26 @@ class User implements UserInterface, \Serializable
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of galleryVente
+     */
+    public function getGalleryVente()
+    {
+        return $this->galleryVente;
+    }
+
+    /**
+     * Set the value of galleryVente
+     *
+     * @return  self
+     */
+    public function setGalleryVente($galleryVente)
+    {
+        $this->galleryVente = $galleryVente;
 
         return $this;
     }
