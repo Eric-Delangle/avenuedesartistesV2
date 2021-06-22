@@ -38,7 +38,7 @@ class GalleryVente
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArtisticWorkVente", mappedBy="gallery")
+     * @ORM\OneToMany(targetEntity="App\Entity\ArtisticWorkVente", mappedBy="galleryVente")
      */
     private $artisticWorks;
 

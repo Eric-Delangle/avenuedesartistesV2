@@ -1,50 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Galeries d'échange.
+{% block title %}Abonnements
 {% endblock %}
 
 {% block body %}
-	<div class="container liens_blancs">
-		<h1 class="text-center mt-5 massenet">Vos galeries d'échange.</h1>
+	<div class="container">
+		<h1 class="text-center massenet mt-5">Cette page proposera les abonnements.</h1>
 
-		<table class="table mt-5">
-			<thead>
-				<tr>
-
-					<th>Name</th>
-
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for gallery_echange in gallery_echanges %}
-					<tr>
-
-						<td>{{ gallery_echange.name }}</td>
-
-						<td>
-							<button class="btn bouton">
-								<a href="{{ path('gallery_echange_show', {'id': gallery_echange.id}) }}">Voir la galerie</a>
-							</button>
-							<button class="btn bouton">
-								<a href="{{ path('gallery_echange_edit', {'id': gallery_echange.id}) }}">Editer la galerie</a>
-							</button>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="4">Vous n'avez pas encore créé de galerie d'échange.</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-
-		<button class="btn bouton">
-			<a href="{{ path('gallery_echange_new') }}">Créer une galerie d'échange</a>
-		</button>
-		<button class="btn bouton">
-			<a href="{{ path('member_index') }}">retourner sur votre espace</a>
-		</button>
 	</div>
 	<script>
 		document.getElementById('inscription').style.display = 'block';
@@ -77,4 +39,5 @@ document.getElementById('admin').style.display = 'none';
 			document.getElementById('admin').style.display = 'block';
 		</script>
 	{% endif %}
+
 {% endblock %}

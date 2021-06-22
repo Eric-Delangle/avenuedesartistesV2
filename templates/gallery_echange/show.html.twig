@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GalleryEchange
+{% block title %}Galerie d'échange
 {% endblock %}
 
 {% block body %}
 	<div class="container mt-5 text-center">
-		<h1>Vos œuvres à l'échange</h1>
-		{{dump(gallery_echange)}}
-		<table class="table">
+		<h1 class="text-center massenet">Vos œuvres à l'échange</h1>
+		<table class="table mt-3">
 			<tbody>
 				<tr>
 					<th>Id</th>
@@ -21,6 +20,20 @@
 					<th>Slug</th>
 					<td>{{ gallery_echange.slug }}</td>
 				</tr>
+				<tr>
+					<th>Les œuvres</th>
+					<td>
+
+						{% for artisticWork in gallery_echange.artisticWorks %}
+
+							<p><img src=" {{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="images"></p>
+							<p>{{ artisticWork.name|title }}:</p>
+							<p>{{ artisticWork.description }}</p>
+
+						{% endfor %}
+
+					</td>
+				</tr>
 			</tbody>
 		</table>
 
@@ -30,5 +43,35 @@
 
 		{{ include('gallery_echange/_delete_form.html.twig') }}
 	</div>
-
+	<script>
+		document.getElementById('inscription').style.display = 'block';
+document.getElementById('connexion').style.display = 'block';
+document.getElementById('admin').style.display = 'none';
+document.getElementById('member').style.display = 'none';
+document.getElementById('deconnexion').style.display = 'none';
+document.getElementById('achats').style.display = 'none';
+document.getElementById('echanges').style.display = 'none';
+document.getElementById('echange').style.display = 'none';
+document.getElementById('achat').style.display = 'none';
+document.getElementById('deco').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+			document.getElementById('member').style.display = 'block';
+document.getElementById('bleudeco').style.display = 'block';
+document.getElementById('deco').style.display = 'block';
+document.getElementById('deconnexion').style.display = 'block';
+document.getElementById('achats').style.display = 'block';
+document.getElementById('echanges').style.display = 'block';
+document.getElementById('inscription').style.display = 'none';
+document.getElementById('connexion').style.display = 'none';
+document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<script>
+			document.getElementById('admin').style.display = 'block';
+		</script>
+	{% endif %}
 {% endblock %}

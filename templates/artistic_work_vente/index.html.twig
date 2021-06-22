@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Image vente
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center mt-5 massenet">Liste des images de vente</h1>
+
+		<table class="table mt-3">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Slug</th>
+					<th>Name</th>
+					<th>CreatedAt</th>
+					<th>Picture</th>
+					<th>Updated_at</th>
+					<th>Description</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for artistic_work_vente in artistic_work_ventes %}
+					<tr>
+						<td>{{ artistic_work_vente.id }}</td>
+						<td>{{ artistic_work_vente.slug }}</td>
+						<td>{{ artistic_work_vente.name }}</td>
+						<td>{{ artistic_work_vente.createdAt ? artistic_work_vente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ artistic_work_vente.picture }}</td>
+						<td>{{ artistic_work_vente.updatedAt ? artistic_work_vente.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ artistic_work_vente.description }}</td>
+						<td>
+							<a href="{{ path('artistic_work_vente_show', {'id': artistic_work_vente.id}) }}">show</a>
+							<a href="{{ path('artistic_work_vente_edit', {'id': artistic_work_vente.id}) }}">edit</a>
+						</td>
+					</tr>
+
+				{% else %}
+					<tr>
+						<td colspan="8">no records found</td>
+					</tr>
+					<a href="{{ path('artistic_work_vente_new', {'id':artistic_work_vente.id}) }}">Create new</a>
+				{% endfor %}
+			</tbody>
+		</table>
+
+
+	</div>
+
+{% endblock %}

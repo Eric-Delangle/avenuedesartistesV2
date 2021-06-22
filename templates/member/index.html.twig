@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container white">
+	<div class="container white liens_blancs">
 		<h1 class="text-center mt-5 massenet">Votre espace
 			{{ app.user.firstName }}
 		</h1>
@@ -18,7 +18,7 @@
 			</div>
 			<div class="col">
 				<button class="btn btn-info">
-					<a href="{{ path('buy_one', {'slug': app.user.slug }) }}" class="white lien">Gérer vos œuvres à la vente</a>
+					<a href="{{ path('gallery_vente_index', {'slug': app.user.slug }) }}" class="white lien">Gérer vos œuvres à la vente</a>
 				</button>
 
 			</div>

@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use Cocur\Slugify\Slugify;
 use App\Entity\GalleryEchange;
 use App\Form\GalleryEchangeType;
 use App\Repository\GalleryEchangeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/gallery/echange")
+ * @Route("/galerie/echange")
  */
 class GalleryEchangeController extends AbstractController
 {
@@ -38,13 +40,16 @@ class GalleryEchangeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $galleryEchange->setSlug($galleryEchange->getName());
+            $this->addFlash('success', "Votre galerie d'échange a bien été crée !");
+            $slugify = new Slugify();
+            $slug = $slugify->slugify($galleryEchange->getName());
+            $galleryEchange->setSlug($slug);
             $galleryEchange->setUser($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($galleryEchange);
             $entityManager->flush();
 
-            return $this->redirectToRoute('gallery_echange_index');
+            return $this->redirectToRoute('member_index');
         }
 
         return $this->render('gallery_echange/new.html.twig', [
@@ -53,13 +58,18 @@ class GalleryEchangeController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/{id}", name="gallery_echange_show", methods={"GET"})
      */
     public function show(GalleryEchange $galleryEchange): Response
     {
+
+        //$galerieUser = $user->getFirstName();
+
         return $this->render('gallery_echange/show.html.twig', [
             'gallery_echange' => $galleryEchange,
+            //'user' => $galerieUser
         ]);
     }
 

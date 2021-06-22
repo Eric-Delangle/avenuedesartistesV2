@@ -4,8 +4,8 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<h1 class="text-center mt-5">Profil de
+	<div class="container liens_blancs">
+		<h1 class="text-center mt-5 massenet">Profil de
 			{{ user.firstName }}
 			{{ user.lastName }}</h1>
 
@@ -29,7 +29,7 @@
 				</tr>
 				<tr>
 					<th>Avatar</th>
-					<td><img src="{{ asset(['images/avatars/', user.avatar]|join) }}" alt="avatar"></td>
+					<td><img src="{{ asset(['images/avatars/', user.avatar]|join) }}" alt="avatar" class="images"></td>
 				</tr>
 				<tr>
 					<th>Description</th>
@@ -39,22 +39,57 @@
 					<th>Catégories</th>
 					<td>
 						{% for item in user.categories %}
-
-							{{ item }}
+							<button class="btn bouton mt-2">
+								{{ item }}
+							</button>
 						{% endfor %}
+					</td>
+				</tr>
+				<tr class="liens_blancs">
+					<th>Galeries de vente</th>
+					<td>
+						{% if galleryvente %}
+							{% for item in galleryvente %}
+								<button class="btn bouton mt-2 ">
+									<a href="{{path('gallery_vente_show', {'id': item.id})}}">{{ item }}</a>
+								</button>
+
+							{% endfor %}
+						{% else %}
+							<p>Ce membre ne possède pas encore de galerie de vente.</p>
+						{% endif %}
+
+					</td>
+				</tr>
+				<tr>
+					<th>Galeries d'échange</th>
+					<td>
+						{% if galleryechange %}
+							{% for item in galleryechange %}
+								<button class="btn bouton mt-2 ">
+									<a href="{{path('gallery_echange_show', {'id': item.id})}}">{{ item }}</a>
+								</button>
+
+							{% endfor %}
+						{% else %}
+							<p>Ce membre ne possède pas encore de galerie d'échange.</p>
+						{% endif %}
+
+
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		<div class="container text-center">
+			<button class="btn bouton mt-5">
+				<a href="{{ path('buy_index') }}">Retour à la liste</a>
+			</button>
 
-		<button class="btn bouton">
-			<a href="{{ path('buy_index') }}">Retour à la liste</a>
-		</button>
-
+		</div>
 
 	</div>
 	<script>
-		document.getElementById('member').style.display = 'none';
+		document.getElementById('member').style.display = 'block';
 	</script>
 	<script>
 		document.getElementById('bleudeco').style.display = 'none';

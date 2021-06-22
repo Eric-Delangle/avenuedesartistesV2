@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit ArtisticWorkEchange{% endblock %}
+{% block title %}Modification d'image d'échange.
+{% endblock %}
 
 {% block body %}
-    <h1>Edit ArtisticWorkEchange</h1>
+	<div class="container">
+		<h1 class="text-center mt-5 massenet">Modification d'image d'échange.</h1>
 
-    {{ include('artistic_work_echange/_form.html.twig', {'button_label': 'Update'}) }}
+		{{ include('artistic_work_echange/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('artistic_work_echange_index') }}">back to list</a>
+		<a href="{{ path('artistic_work_echange_index') }}">Retour à la liste</a>
 
-    {{ include('artistic_work_echange/_delete_form.html.twig') }}
+		{{ include('artistic_work_echange/_delete_form.html.twig') }}
+	</div>
+
 {% endblock %}

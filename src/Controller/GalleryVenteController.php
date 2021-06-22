@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
+use Cocur\Slugify\Slugify;
 use App\Entity\GalleryVente;
 use App\Form\GalleryVenteType;
 use App\Repository\GalleryVenteRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/gallery/vente")
+ * @Route("/galerie/vente")
  */
 class GalleryVenteController extends AbstractController
 {
@@ -20,8 +21,11 @@ class GalleryVenteController extends AbstractController
      */
     public function index(GalleryVenteRepository $galleryVenteRepository): Response
     {
+        $id = $this->getUser()->getId();
+        $galerieVentePerso = $galleryVenteRepository->findBy(['user' => $id]);
+
         return $this->render('gallery_vente/index.html.twig', [
-            'gallery_ventes' => $galleryVenteRepository->findAll(),
+            'gallery_ventes' => $galerieVentePerso,
         ]);
     }
 
@@ -35,6 +39,11 @@ class GalleryVenteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Votre galerie de vente a bien été crée !');
+            $slugify = new Slugify();
+            $slug = $slugify->slugify($galleryVente->getName());
+            $galleryVente->setSlug($slug);
+            $galleryVente->setUser($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($galleryVente);
             $entityManager->flush();
@@ -53,6 +62,7 @@ class GalleryVenteController extends AbstractController
      */
     public function show(GalleryVente $galleryVente): Response
     {
+
         return $this->render('gallery_vente/show.html.twig', [
             'gallery_vente' => $galleryVente,
         ]);
@@ -67,6 +77,8 @@ class GalleryVenteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->addFlash('success', 'Votre galerie de vente a bien été modifiée!');
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('gallery_vente_index');
@@ -87,6 +99,7 @@ class GalleryVenteController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($galleryVente);
             $entityManager->flush();
+            $this->addFlash('success', 'Votre galerie de vente a bien été supprimée!');
         }
 
         return $this->redirectToRoute('gallery_vente_index');

@@ -61,7 +61,7 @@ class ArtisticWorkVente
     private $picture;
 
     /**
-     * @Vich\UploadableField(mapping="artisticWork_image", fileNameProperty="picture")
+     * @Vich\UploadableField(mapping="artisticWorks", fileNameProperty="picture")
      * @Assert\File(
      * maxSize="1000k",
      * maxSizeMessage="Le fichier excède 1000Ko.",

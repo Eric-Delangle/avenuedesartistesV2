@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'image a votre galerie de vente.
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center mt-5">Ajouter une image à votre galerie de vente.</h1>
+
+		{{ include('artistic_work_vente/_form.html.twig') }}
+
+		<button class="btn bouton">
+			<a href="{{ path('gallery_vente_index') }}">Retour à vos galeries de vente.</a>
+		</button>
+	</div>
+
+{% endblock %}

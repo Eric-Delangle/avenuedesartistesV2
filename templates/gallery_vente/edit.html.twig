@@ -1,48 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion d'une galerie de vente.
+{% block title %}Modification de votre galerie.
 {% endblock %}
 
 {% block body %}
 	<div class="container">
-		<h1 class="text-center mt-5 massenet">Gestion de votre galerie de vente
-			{{ gallery_vente.name }}.</h1>
+		<h1 class="text-center mt-5">Editer votre galerie de vente</h1>
 
-		{{ include('gallery_vente/_form.html.twig', {'button_label': 'Update'}) }}
-
-		<a href="{{ path('gallery_vente_index') }}">back to list</a>
+		{{ include('gallery_vente/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
 		{{ include('gallery_vente/_delete_form.html.twig') }}
+		<a class="btn btn-info mt-2" href="{{ path('artistic_work_vente_new', {'id': gallery_vente.id}) }}">Ajouter une image</a>
+		<button class="btn bouton mt-2">
+			<a href="{{ path('gallery_vente_index') }}">Retour à la liste de vos galeries</a>
+		</button>
 	</div>
 	<script>
-		document.getElementById('inscription').style.display = 'block';
-document.getElementById('connexion').style.display = 'block';
-document.getElementById('admin').style.display = 'none';
-document.getElementById('member').style.display = 'none';
-document.getElementById('deconnexion').style.display = 'none';
-document.getElementById('achats').style.display = 'none';
-document.getElementById('echanges').style.display = 'none';
-document.getElementById('echange').style.display = 'none';
-document.getElementById('achat').style.display = 'none';
-document.getElementById('deco').style.display = 'none';
-document.getElementById('bleudeco').style.display = 'none';
+		document.getElementById('member').style.display = 'block';
 	</script>
-	{% if app.user %}
-		<script>
-			document.getElementById('member').style.display = 'block';
-document.getElementById('bleudeco').style.display = 'block';
-document.getElementById('deco').style.display = 'block';
-document.getElementById('deconnexion').style.display = 'block';
-document.getElementById('achats').style.display = 'block';
-document.getElementById('echanges').style.display = 'block';
-document.getElementById('inscription').style.display = 'none';
-document.getElementById('connexion').style.display = 'none';
-document.getElementById('admin').style.display = 'none';
-		</script>
-	{% endif %}
-	{% if is_granted('ROLE_ADMIN') %}
-		<script>
-			document.getElementById('admin').style.display = 'block';
-		</script>
-	{% endif %}
+	<script>
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('deconnexion').style.display = 'block';
+	</script>
+	<script>
+		document.getElementById('achats').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echanges').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('achat').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echange').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('inscription').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('connexion').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('admin').style.display = 'none';
+	</script>
 {% endblock %}

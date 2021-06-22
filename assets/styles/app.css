@@ -8,6 +8,24 @@
   font-style: normal;
 }
 
+.A_titre {
+  width: 10px;
+  height: auto;
+  color: #ffffff;
+  background-color: #2fa4e7;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.liens_blancs a {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.liens_noirs a {
+  color: #000000 !important;
+  text-decoration: none !important;
+}
+
 .bouton {
   background-color: darkcyan !important;
   color: #ffffff !important;
@@ -27,7 +45,7 @@ a:hover {
 }
 
 .homeNav li:hover {
-  background-color: rgb(122, 126, 88);
+  background-color: rgb(7, 7, 7);
 }
 
 #deconnexion a:hover {
@@ -112,7 +130,7 @@ li {
 .bleu {
   width: 150px;
   height: auto;
-  background-color: rgb(91, 34, 224);
+  background-color: rgb(45, 94, 255);
   border-radius: 10px 10px 10px 10px;
 }
 
@@ -302,10 +320,15 @@ li {
   max-width: 100%;
   max-height: 400px;
 }
-
+/*
 img {
   object-fit: cover;
   overflow: hidden;
+}
+*/
+.images {
+  width: 50% !important;
+  height: auto;
 }
 
 /* --  ==== MEDIAQUERIES ====  -- */

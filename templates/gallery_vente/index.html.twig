@@ -1,37 +1,80 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GalleryVente index{% endblock %}
+{% block title %}Galeries de vente.
+{% endblock %}
 
 {% block body %}
-    <h1>GalleryVente index</h1>
+	<div class="container liens_blancs">
+		<h1 class="text-center mt-5">Vos galeries de vente.</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for gallery_vente in gallery_ventes %}
-            <tr>
-                <td>{{ gallery_vente.id }}</td>
-                <td>{{ gallery_vente.name }}</td>
-                <td>{{ gallery_vente.slug }}</td>
-                <td>
-                    <a href="{{ path('gallery_vente_show', {'id': gallery_vente.id}) }}">show</a>
-                    <a href="{{ path('gallery_vente_edit', {'id': gallery_vente.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		<table class="table mt-5">
+			<thead>
+				<tr>
 
-    <a href="{{ path('gallery_vente_new') }}">Create new</a>
+					<th>Name</th>
+
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for gallery_vente in gallery_ventes %}
+					<tr>
+
+						<td>{{ gallery_vente.name }}</td>
+
+						<td>
+							<button class="btn bouton">
+								<a href="{{ path('gallery_vente_show', {'id': gallery_vente.id}) }}">Voir la galerie</a>
+							</button>
+							<button class="btn bouton">
+								<a href="{{ path('gallery_vente_edit', {'id': gallery_vente.id}) }}">Editer la galerie</a>
+							</button>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">Vous n'avez pas encore créé de galerie de vente.</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<button class="btn bouton">
+			<a href="{{ path('gallery_vente_new') }}">Créer une galerie de vente.</a>
+		</button>
+		<button class="btn bouton">
+			<a href="{{ path('member_index') }}">retourner sur votre espace</a>
+		</button>
+	</div>
+	<script>
+		document.getElementById('inscription').style.display = 'block';
+document.getElementById('connexion').style.display = 'block';
+document.getElementById('admin').style.display = 'none';
+document.getElementById('member').style.display = 'none';
+document.getElementById('deconnexion').style.display = 'none';
+document.getElementById('achats').style.display = 'none';
+document.getElementById('echanges').style.display = 'none';
+document.getElementById('echange').style.display = 'none';
+document.getElementById('achat').style.display = 'none';
+document.getElementById('deco').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+			document.getElementById('member').style.display = 'block';
+document.getElementById('bleudeco').style.display = 'block';
+document.getElementById('deco').style.display = 'block';
+document.getElementById('deconnexion').style.display = 'block';
+document.getElementById('achats').style.display = 'block';
+document.getElementById('echanges').style.display = 'block';
+document.getElementById('inscription').style.display = 'none';
+document.getElementById('connexion').style.display = 'none';
+document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<script>
+			document.getElementById('admin').style.display = 'block';
+		</script>
+	{% endif %}
 {% endblock %}

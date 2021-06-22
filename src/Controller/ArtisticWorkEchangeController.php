@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Cocur\Slugify\Slugify;
 use App\Entity\GalleryEchange;
 use App\Entity\ArtisticWorkEchange;
 use App\Form\ArtisticWorkEchangeType;
@@ -17,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ArtisticWorkEchangeController extends AbstractController
 {
     /**
-     * @Route("/", name="artistic_work_echange_index", methods={"GET"})
+     * @Route("/", name="artistic_work_echange_index")
      */
     public function index(ArtisticWorkEchangeRepository $artisticWorkRepository): Response
     {
@@ -27,10 +28,11 @@ class ArtisticWorkEchangeController extends AbstractController
     }
 
     /**
-     * @Route("/new/{id}", name="artistic_work_echange_new", methods={"POST"}, requirements={"id": "\d+" })
+     * @Route("/new/{id}", name="artistic_work_echange_new", requirements={"id": "\d+" })
      */
     public function new(Request $request, GalleryEchange $galleryEchange): Response
     {
+
         $artisticWorkEchange = new ArtisticWorkEchange();
         $artisticWorkEchange->setGalleryEchange($galleryEchange);
 
@@ -39,7 +41,11 @@ class ArtisticWorkEchangeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre image a bien été ajoutée!');
+            $slugify = new Slugify();
+            $slug = $slugify->slugify($artisticWorkEchange->getName());
+            $artisticWorkEchange->setSlug($slug);
             $artisticWorkEchange->setCreatedAt(new \DateTime());
+            $artisticWorkEchange->setUpdatedAt(new \DateTime());
             $artisticWorkEchange->setGalleryEchange($galleryEchange);
 
 
@@ -57,7 +63,7 @@ class ArtisticWorkEchangeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="artistic_work_echange_show", methods={"GET"}, requirements={"id": "\d+" })
+     * @Route("/{id}", name="artistic_work_echange_show", requirements={"id": "\d+" })
      */
     public function show(ArtisticWorkEchange $artisticWorkEchange): Response
     {
@@ -67,7 +73,7 @@ class ArtisticWorkEchangeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="artistic_work_echange_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="artistic_work_echange_edit")
      */
     public function edit(Request $request, ArtisticWorkEchange $artisticWorkEchange): Response
     {
@@ -87,7 +93,7 @@ class ArtisticWorkEchangeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="artistic_work_echange_delete", methods={"POST"})
+     * @Route("/{id}", name="artistic_work_echange_delete")
      */
     public function delete(Request $request, ArtisticWorkEchange $artisticWorkEchange): Response
     {

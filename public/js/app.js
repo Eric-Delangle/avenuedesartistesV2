@@ -117,7 +117,7 @@ class Gmap
                           document.getElementById('categorie').innerHTML = "<span class='titre_profil'>Catégorie(s):</span>&nbsp" + cat;
                                 
                           // fonction qui affiche le lien
-                          document.getElementById('profil').innerHTML = "<span class='btn bouton' style='cursor:pointer;'>Profil</span>" ;  
+                          document.getElementById('profil').innerHTML = "<span class='btn bouton mt-3' style='cursor:pointer;'>Profil</span>" ;  
                           document.getElementById("profil").onclick = function() {
                             window.location="https://127.0.0.1:8000/user/" + slug;
                           };

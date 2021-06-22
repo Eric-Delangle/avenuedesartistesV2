@@ -1,30 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GalleryVente
+{% block title %}Galerie de vente.
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<h1 class="text-center mt-5 massenet">Galerie
-			{{ gallery_vente.name }}
-			de
-			{{ gallery_vente.user.firstName }}
-			{{ gallery_vente.user.lastName }}</h1>
-
+	<div class="container mt-5 text-center">
+		<h1 class="text-center massenet">Vos œuvres à la vente.</h1>
 		<table class="table mt-3">
 			<tbody>
+
 				<tr>
 					<th>Nom de la galerie</th>
-					<td class="massenet">{{ gallery_vente.name }}</td>
+					<td>{{ gallery_vente.name }}</td>
 				</tr>
+				<tr>
+					<th>Les œuvres</th>
+					<td>
 
+						{% for artisticWork in gallery_vente.artisticWorks %}
+
+							<p><img src=" {{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="images"></p>
+							<p>{{ artisticWork.name|title }}:</p>
+							<p>{{ artisticWork.description }}</p>
+
+						{% endfor %}
+
+					</td>
+				</tr>
 			</tbody>
 		</table>
 
-		<button class="btn bouton">
-			<a href="{{ path('buy_index') }}">Retour à la liste</a>
-		</button>
+		<a href="{{ path('member_index') }}">Retour à votre espace.</a>
 
+		<a href="{{ path('gallery_vente_edit', {'id': gallery_vente.id}) }}">Modifier</a>
+
+		{{ include('gallery_vente/_delete_form.html.twig') }}
 	</div>
 	<script>
 		document.getElementById('inscription').style.display = 'block';

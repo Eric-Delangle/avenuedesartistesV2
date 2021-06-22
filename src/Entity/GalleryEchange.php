@@ -38,7 +38,7 @@ class GalleryEchange
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArtisticWorkEchange", mappedBy="gallery")
+     * @ORM\OneToMany(targetEntity="App\Entity\ArtisticWorkEchange", mappedBy="galleryEchange")
      */
     private $artisticWorks;
 
