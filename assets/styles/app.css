@@ -8,11 +8,29 @@
   font-style: normal;
 }
 
+.font_grand {
+  font-size: 4em!important;
+}
+
+img {
+  cursor: pointer;
+}
+
+.image_grande {
+  width: 700px !important;
+  height: 700px !important;
+}
+
+.image_petite {
+  width: 300px !important;
+  height: 300px !important;
+}
+
 .A_titre {
   width: 10px;
   height: auto;
   color: #ffffff;
-  background-color: #2fa4e7;
+  background-color: #f0840a;
   border-radius: 10px 10px 10px 10px;
 }
 
@@ -48,12 +66,12 @@ a:hover {
   background-color: rgb(7, 7, 7);
 }
 
-#deconnexion a:hover {
-  color: #000000;
+#deconnexion:hover {
+  background-color: #cc1b1b!important;
 }
 
 .massenet {
-  font-family: massenet_boldbold, arial;
+  font-family: massenet_boldbold, arial !important;
 }
 
 .titre_profil {
@@ -63,6 +81,7 @@ a:hover {
   border-radius: 10px 10px 10px 10px;
   background-color: rgb(199, 81, 13);
   font-size: 1.2em;
+  color: #ffffff;
 }
 
 .slogan {
@@ -130,12 +149,13 @@ li {
 .bleu {
   width: 150px;
   height: auto;
-  background-color: rgb(45, 94, 255);
+  background-color: #0f96e4;
   border-radius: 10px 10px 10px 10px;
 }
 
 .bleu a {
   color: #ffffff;
+  font-family: massenet, arial;
 }
 
 .orange {
@@ -161,7 +181,9 @@ li {
   color: #ffffff !important;
 }
 
+
 /* liens de droite */
+
 
 .violet {
   width: 150px;

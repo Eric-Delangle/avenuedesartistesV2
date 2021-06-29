@@ -1,51 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Galerie d'échange
+{% block title %}Page d'administration des galeries de vente.
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-5 text-center">
-		<h1 class="text-center massenet">Vos œuvres à l'échange</h1>
-		<table class="table mt-3">
+	<div class="container liens_blancs">
+		<h1 class="text-center mt-5">Vos galeries de vente.</h1>
+
+		<table class="table mt-5">
+			<thead>
+				<tr>
+
+					<th>Name</th>
+
+					<th></th>
+				</tr>
+			</thead>
 			<tbody>
-				<tr>
-					<th>Nom de la galerie</th>
-					<td>{{ gallery_echange.name }}</td>
-				</tr>
-				<tr>
-					<th>Les œuvres</th>
-					<td>
+				{% for gallery_vente in gallery_ventes %}
+					<tr>
 
-						{% if gallery_echange.artisticWorks is not empty %}
+						<td>{{ gallery_vente.name }}</td>
 
-							{% for artisticWork in gallery_echange.artisticWorks %}
-
-								<p><img src=" {{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="images"></p>
-								<p>{{ artisticWork.name|title }}:</p>
-								<p>{{ artisticWork.description }}</p>
-								<button class="btn btn-danger">
-									<a href="{{ path('artistic_work_echange_delete', {'id': artisticWork.id}) }}" style="color:#ffffff; text-decoration:none;">Supprimer cette œuvre</a>
-								</button>
-
-							{% endfor %}
-						{% else %}
-							<p class="text-center">Cette galerie ne contient pas encore d'œuvres.</p>
-						{% endif %}
-
-					</td>
-				</tr>
+						<td>
+							<button class="btn bouton">
+								<a href="{{ path('admin_gallery_vente_show', {'id': gallery_vente.id}) }}">Voir la galerie</a>
+							</button>
+							<button class="btn bouton">
+								<a href="{{ path('admin_gallery_vente_edit', {'id': gallery_vente.id}) }}">Editer la galerie</a>
+							</button>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">Vous n'avez pas encore créé de galerie de vente.</td>
+					</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 
 		<button class="btn bouton">
-			<a href="{{ path('member_index') }}" style="color:#ffffff; text-decoration:none;">Retour à votre espace</a>
+			<a href="{{ path('admin_gallery_vente_new', {"slug" : app.user.slug}) }}">Créer une galerie de vente</a>
 		</button>
-
 		<button class="btn bouton">
-			<a href="{{ path('gallery_echange_edit', {'id': gallery_echange.id}) }}" style="color:#ffffff; text-decoration:none;">Modifier</a>
+			<a href="{{ path('member_index') }}">Retourner sur votre espace</a>
 		</button>
-
-		{{ include('gallery_echange/_delete_form.html.twig') }}
 	</div>
 	<script>
 		document.getElementById('inscription').style.display = 'block';

@@ -27,7 +27,7 @@
 					<span class='titre_profil massenet' style="color:#ffffff;">Ses galeries de vente :</span>
 
 					{% for item in item.galleryVente %}
-						<a href="{{path('gallery_vente_show', {'id': item.id})}}">{{ item.name }}</a>
+						<a href="{{path('gallery_vente_show', {'id': item.id})}}" class="bouton">{{ item.name }}</a>
 					{% endfor %}
 
 

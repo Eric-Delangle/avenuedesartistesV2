@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\admin;
 
 use Cocur\Slugify\Slugify;
 use App\Entity\GalleryEchange;
@@ -53,7 +53,7 @@ class ArtisticWorkEchangeController extends AbstractController
             $entityManager->persist($artisticWorkEchange);
             $entityManager->flush();
 
-            return $this->redirectToRoute('artistic_work_echange_index');
+            return $this->redirectToRoute('gallery_echange_index');
         }
 
         return $this->render('artistic_work_echange/new.html.twig', [
@@ -97,12 +97,18 @@ class ArtisticWorkEchangeController extends AbstractController
      */
     public function delete(Request $request, ArtisticWorkEchange $artisticWorkEchange): Response
     {
+
+
+
         if ($this->isCsrfTokenValid('delete' . $artisticWorkEchange->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($artisticWorkEchange);
+
             $entityManager->flush();
+
+            $this->addFlash('success', 'Votre image a bien été supprimée.');
         }
 
-        return $this->redirectToRoute('artistic_work_echange_index');
+        return $this->redirectToRoute('gallery_echange_index');
     }
 }

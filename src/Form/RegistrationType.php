@@ -9,6 +9,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrationType extends AbstractType
@@ -27,12 +28,32 @@ class RegistrationType extends AbstractType
                 'attr' => [
                     'required' => false,
                     'style' => 'placeho',
+                    'placeholder' => 'Tapez de nouveau votre mot de passe.'
                 ]
             ])
             ->add('firstName')
             ->add('lastName')
             ->add('location')
-            ->add('description2')
+            ->add('description2', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Décrivez vous en quelques mots (facultatif).'
+                ]
+            ])
+            ->add('tel', TextType::class, [
+                'label' => 'Votre numéro de téléphone.',
+                'attr' => [
+                    'placeholder' => 'Numéro de téléphone.'
+                ]
+            ])
+            ->add('adress', TextType::class, [
+                'label' => 'Votre adresse',
+                'attr' => [
+                    'placeholder' => 'Votre numéro et le nom de votre rue.'
+                ]
+            ])
+            ->add('postalCode', TextType::class, ['label' => 'Votre code postal.', 'attr' => [
+                'placeholder' => 'Code postal.'
+            ]])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',

@@ -1,12 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Galerie de vente.
+{% block title %}Galerie de vente de
+	{{gallery_vente.user.firstName}}
+	{{gallery_vente.user.lastName}}.
 {% endblock %}
 
 {% block body %}
 	<div class="container mt-5 text-center">
-		<h1 class="text-center massenet">Vos œuvres à la vente.</h1>
-		<table class="table mt-3">
+		<h1 class="text-center massenet">Les œuvres de
+			{{gallery_vente.user.firstName}}
+			{{gallery_vente.user.lastName}}
+			en vente.</h1>
+		<table class="table mt-3" style="width:85%;" id="container_images">
 			<tbody>
 
 				<tr>
@@ -19,22 +24,54 @@
 
 						{% for artisticWork in gallery_vente.artisticWorks %}
 
-							<p><img src=" {{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="images"></p>
-							<p>{{ artisticWork.name|title }}:</p>
-							<p>{{ artisticWork.description }}</p>
+							{% if artisticWork %}
+								<p><img onclick="agrandir()" src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="image_petite" id="image_grande"></p>
 
+								<p class="mt-5">
+									<span class="titre_profil" style="color:#ffffff;">Son titre:</span>
+									{{ artisticWork.name|title }}:</p>
+								<p>
+									<span class="titre_profil" style="color:#ffffff;">Sa déscription:</span>
+									{{ artisticWork.description }}</p>
+								<p>
+									<span class="titre_profil" style="color:#ffffff;">Son prix:</span>
+									{{ artisticWork.price }}
+									€</p>
+								<div class="text-center">
+									<button class="btn bouton mt-3 text-center">Laissez vous tenter</button>
+								</div>
+
+								<hr>
+							{% else %}
+								<p class="text-center">Il n'y a pas encore d'œuvre dans cette galerie.</p>
+							{% endif %}
 						{% endfor %}
 
 					</td>
+
+
 				</tr>
 			</tbody>
 		</table>
+		<div class="container text-center liens_blancs">
+			<button class="btn bouton">
+				<a href="{{path('user_show', {'slug' : gallery_vente.user.slug})}}">Retour sur le profil d'{{gallery_vente.user.firstName}}
+					{{gallery_vente.user.lastName}}.</a>
+			</button>
 
-		<a href="{{ path('member_index') }}">Retour à votre espace.</a>
+			<button class="btn bouton">
+				<a href="{{ path('buy_index') }}">Retour à la liste des galeries de vente</a>
+			</button>
 
-		<a href="{{ path('gallery_vente_edit', {'id': gallery_vente.id}) }}">Modifier</a>
+		</div>
 
-		{{ include('gallery_vente/_delete_form.html.twig') }}
+		{# 
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	<a href="{{ path('member_index') }}">Retour à votre espace.</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	<a href="{{ path('gallery_vente_edit', {'id': gallery_vente.id}) }}">Modifier</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	{{ include('gallery_vente/_delete_form.html.twig') }}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	#}
 	</div>
 	<script>
 		document.getElementById('inscription').style.display = 'block';
@@ -66,5 +103,52 @@ document.getElementById('admin').style.display = 'none';
 		<script>
 			document.getElementById('admin').style.display = 'block';
 		</script>
+
 	{% endif %}
+	{% block javascripts %}
+		{{ encore_entry_script_tags('app') }}
+
+	{% endblock %}
+	<script>
+		function agrandir() { // il faut que j'arrive a recuperer la liste des images
+
+const ig = document.getElementsByTagName("img");
+
+// je créé un tableau vide pour y mettre toutes les images de la page
+const images = [];
+
+images.push(ig);
+
+
+for (let i = 0; i < images.length; i++) {
+
+console.log(images[i][0])
+
+
+if (images[i][0].classList == "image_petite") { // images[i][j].classList.toggle('image_grande');
+
+images[i][0].classList.remove('image_petite');
+images[i][0].classList.add('image_grande');
+
+
+} else if (images[i][0].classList == "image_grande") {
+images[i][0].classList.remove('image_grande');
+images[i][0].classList.add('image_petite');
+
+}
+}
+
+}
+
+
+function retrecir() {
+
+const ig = document.getElementsByClassName("image_grande");
+
+ig.classList.remove("image_grande");
+ig.classList.add("image_petite");
+
+
+}
+	</script>
 {% endblock %}

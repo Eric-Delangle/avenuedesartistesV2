@@ -29,33 +29,6 @@ class GalleryVenteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="gallery_vente_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $galleryVente = new GalleryVente();
-        $form = $this->createForm(GalleryVenteType::class, $galleryVente);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Votre galerie de vente a bien été crée !');
-            $slugify = new Slugify();
-            $slug = $slugify->slugify($galleryVente->getName());
-            $galleryVente->setSlug($slug);
-            $galleryVente->setUser($this->getUser());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($galleryVente);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('member_index');
-        }
-
-        return $this->render('gallery_vente/new.html.twig', [
-            'gallery_vente' => $galleryVente,
-            'form' => $form->createView(),
-        ]);
-    }
 
     /**
      * @Route("/{id}", name="gallery_vente_show", methods={"GET"})
@@ -66,42 +39,5 @@ class GalleryVenteController extends AbstractController
         return $this->render('gallery_vente/show.html.twig', [
             'gallery_vente' => $galleryVente,
         ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="gallery_vente_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, GalleryVente $galleryVente): Response
-    {
-        $form = $this->createForm(GalleryVenteType::class, $galleryVente);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $this->addFlash('success', 'Votre galerie de vente a bien été modifiée!');
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('gallery_vente_index');
-        }
-
-        return $this->render('gallery_vente/edit.html.twig', [
-            'gallery_vente' => $galleryVente,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="gallery_vente_delete", methods={"POST"})
-     */
-    public function delete(Request $request, GalleryVente $galleryVente): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $galleryVente->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($galleryVente);
-            $entityManager->flush();
-            $this->addFlash('success', 'Votre galerie de vente a bien été supprimée!');
-        }
-
-        return $this->redirectToRoute('gallery_vente_index');
     }
 }

@@ -19,12 +19,10 @@ class GalleryEchange
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="galleries")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="galleriesEchange")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $category;
-
-    private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"remove"})
@@ -39,6 +37,7 @@ class GalleryEchange
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ArtisticWorkEchange", mappedBy="galleryEchange")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $artisticWorks;
 

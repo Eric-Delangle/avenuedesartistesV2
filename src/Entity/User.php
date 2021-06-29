@@ -22,6 +22,7 @@ use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Notifier\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email")
@@ -36,6 +37,12 @@ class User implements UserInterface, \Serializable
      * @Groups({"group1"})
      */
     private $id;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $userIdentifier;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -109,8 +116,15 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\GalleryVente", mappedBy="user")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $galleryVente;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\GalleryEchange", mappedBy="user")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $galleryEchange;
 
     /**
      * @ORM\Column(type="integer")
@@ -132,7 +146,20 @@ class User implements UserInterface, \Serializable
      */
     private $description2;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adress;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $postalCode;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tel;
 
 
     public function __construct()
@@ -161,6 +188,8 @@ class User implements UserInterface, \Serializable
             return ['ROLE_ADMIN'];
         elseif ($this->niveau == 1)
             return ['ROLE_USER'];
+        elseif ($this->niveau == 3)
+            return ['ROLE_VENDEUR'];
         else
             return [];
     }
@@ -436,6 +465,82 @@ class User implements UserInterface, \Serializable
     public function setGalleryVente($galleryVente)
     {
         $this->galleryVente = $galleryVente;
+
+        return $this;
+    }
+
+    public function getAdress(): ?string
+    {
+        return $this->adress;
+    }
+
+    public function setAdress(?string $adress): self
+    {
+        $this->adress = $adress;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(?string $postalCode): self
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    public function getTel(): ?string
+    {
+        return $this->tel;
+    }
+
+    public function setTel(?string $tel): self
+    {
+        $this->tel = $tel;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of userIdentifier
+     */
+    public function getUserIdentifier()
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * Set the value of userIdentifier
+     *
+     * @return  self
+     */
+    public function setUserIdentifier($userIdentifier)
+    {
+        $this->userIdentifier = $userIdentifier;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of galleryEchange
+     */
+    public function getGalleryEchange()
+    {
+        return $this->galleryEchange;
+    }
+
+    /**
+     * Set the value of galleryEchange
+     *
+     * @return  self
+     */
+    public function setGalleryEchange($galleryEchange)
+    {
+        $this->galleryEchange = $galleryEchange;
 
         return $this;
     }

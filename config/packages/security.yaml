@@ -1,5 +1,5 @@
 security:
-  #enable_authenticator_manager: true
+  enable_authenticator_manager: true
   encoders:
     App\Entity\User:
       algorithm: auto
@@ -22,7 +22,7 @@ security:
       security: false
 
     main:
-      anonymous: true
+      #anonymous: true
       provider: in_database
 
       form_login:
@@ -34,5 +34,6 @@ security:
         target: home
 
   access_control:
-    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/administration, roles: ROLE_ADMIN }
+    - { path: ^/admin/vente, roles: ROLE_VENDEUR }
       # https://symfony.com/doc/current/security/form_login_setup.html

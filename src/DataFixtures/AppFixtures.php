@@ -14,10 +14,20 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
-class AppFixtures extends Fixture
+class AppFixtures implements FixtureInterface
 {
+
+    protected $encoder;
+
+    public function __construct(UserPasswordHasherInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
     public function load(ObjectManager $manager)
     {
         $faker =  Faker\Factory::create('fr_FR');
@@ -40,16 +50,26 @@ class AppFixtures extends Fixture
             for ($h = 1; $h <= 5; $h++) {
 
                 $user = new User();
+                $hash = $this->encoder->hashPassword($user, 'password');
+
+
                 $user->setFirstName($faker->firstNameMale());
                 $user->setLastName($faker->lastName());
                 $user->setEmail("email+" . $h . "@email.com");
                 $slug = $slugify->slugify($user->getFirstName() . ' ' . $user->getLastName());
                 $user->setSlug($slug);
                 $user->setLocation($city);
-                $user->setPassword("password");
+
+
                 $user->setNiveau(1);
                 $user->setAvatar('avatarDefaut.jpg'); // la je donne le nom de l'avatar
                 $user->setAvatarFile(new File('public/images/avatars/avatardefaut.jpg')); // la son fichier
+
+
+                $user->setPassword($hash);
+
+
+
 
                 foreach ($categories as $category) {
                     $user->getCategories($categories)->add($category);

@@ -82,6 +82,11 @@ class ArtisticWorkVente
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=0, nullable=true)
+     */
+    private $price;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -208,6 +213,18 @@ class ArtisticWorkVente
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

@@ -19,31 +19,33 @@ class GalleryVente
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="galleries")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="galleriesVente")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $category;
 
-    private $categories;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="galleryVente", cascade={"remove"})
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $user;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ArtisticWorkVente", mappedBy="galleryVente")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $artisticWorks;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $slug;
 

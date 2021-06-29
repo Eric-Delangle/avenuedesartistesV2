@@ -25,6 +25,7 @@ class ArtisticWorkEchangeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ArtisticWorkEchange::class,
+            'translation_domain' => 'forms',
         ]);
     }
 }

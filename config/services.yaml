@@ -22,3 +22,7 @@ services:
   App\Controller\:
     resource: "../src/Controller"
     tags: ["controller.service_arguments"]
+
+  App\DataFixtures\:
+    resource: "../src/DataFixtures"
+    tags: ["doctrine.fixture.orm"]

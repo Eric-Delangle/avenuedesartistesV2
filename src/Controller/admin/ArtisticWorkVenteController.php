@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\admin;
 
 use Cocur\Slugify\Slugify;
 use App\Entity\GalleryVente;
