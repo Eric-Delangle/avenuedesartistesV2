@@ -1,20 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout d'image a votre galerie de vente.
+{% block title %}Modification de votre galerie.
 {% endblock %}
 
 {% block body %}
 	<div class="container">
-		<h1 class="text-center mt-5">Ajouter une image à votre galerie de vente.</h1>
+		<h1 class="text-center mt-5">Editer votre galerie de vente</h1>
 
-		{{ include('artistic_work_vente/_form.html.twig') }}
+		{{ include('admin/admin_vente/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-		<button class="btn bouton">
-			<a href="{{ path('gallery_vente_index') }}">Retour à vos galeries de vente.</a>
+		{{ include('admin/admin_vente/_delete_form.html.twig') }}
+		<a class="btn btn-info mt-2" href="{{ path('artistic_work_vente_new', {'id': gallery_vente.id}) }}">Ajouter une image</a>
+		<button class="btn bouton mt-2">
+			<a href="{{ path('admin_gallery_vente_index', {'slug': app.user.slug}) }}" style="color:#ffffff; text-decoration:none;">Retour à la liste de vos galeries</a>
 		</button>
 	</div>
 	<script>
-		document.getElementById('member').style.display = 'none';
+		document.getElementById('member').style.display = 'block';
 	</script>
 	<script>
 		document.getElementById('bleudeco').style.display = 'none';

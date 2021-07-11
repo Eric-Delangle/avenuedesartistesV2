@@ -5,6 +5,7 @@ namespace App\Controller\admin;
 use Cocur\Slugify\Slugify;
 use App\Entity\GalleryVente;
 use App\Form\GalleryVenteType;
+use App\Repository\ArtisticWorkVenteRepository;
 use App\Repository\GalleryVenteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,11 +35,16 @@ class AdminVenteController extends AbstractController
     /**
      * @Route("/admin/{id}", name="admin_gallery_vente_show", methods={"GET"})
      */
-    public function show(GalleryVente $galleryvente): Response
+    public function show(GalleryVente $galleryvente, ArtisticWorkVenteRepository $imageRepo): Response
     {
+
+        //$user = $this->getUser();
+        $listeImages = $imageRepo->findBy(['galleryVente' => $galleryvente]);
+
 
         return $this->render('admin/admin_vente/show.html.twig', [
             'gallery_vente' => $galleryvente,
+            'images' => $listeImages
         ]);
     }
 

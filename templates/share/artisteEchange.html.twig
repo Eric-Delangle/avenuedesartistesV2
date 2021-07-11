@@ -1,51 +1,37 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
-{% block title %}Page d'administration des galeries de vente.
+{% block title %}
+	Galerie(s) d'échange'
 {% endblock %}
 
 {% block body %}
-	<div class="container liens_blancs">
-		<h1 class="text-center mt-5">Vos galeries de vente.</h1>
+	<div class="container">
+		<h1 class="text-center mt-5">Galerie(s) d'échange'</h1>
+		<div class="jumbotron mt-5">
+			{% for item in galeries %}
+				<p class="text-center">{{item.name}}
 
-		<table class="table mt-5">
-			<thead>
-				<tr>
-
-					<th>Name</th>
-
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for gallery_vente in gallery_ventes %}
-					<tr>
-
-						<td>{{ gallery_vente.name }}</td>
-
-						<td>
+					<ul class="text-center">
+						<li>
 							<button class="btn bouton">
-								<a href="{{ path('admin_gallery_vente_show', {'id': gallery_vente.id}) }}">Voir la galerie</a>
+								<a href="{{ path('gallery_vente_edit', {'id': item.id }) }}">Gérer cette galerie</a>
 							</button>
+						</li>
+						<li>
 							<button class="btn bouton">
-								<a href="{{ path('admin_gallery_vente_edit', {'id': gallery_vente.id}) }}">Editer la galerie/gérer les images</a>
+								<a href="{{ path('gallery_vente_delete', {'id': item.id }) }}">Supprimer cette galerie</a>
 							</button>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="4">Vous n'avez pas encore créé de galerie de vente.</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+						</li>
+					</ul>
+				</p>
+				<hr>
+			{% endfor %}
 
-		<button class="btn bouton">
-			<a href="{{ path('admin_gallery_vente_new', {"slug" : app.user.slug}) }}">Créer une galerie de vente</a>
-		</button>
-		<button class="btn bouton">
-			<a href="{{ path('member_index') }}">Retourner sur votre espace</a>
-		</button>
+		</div>
+
 	</div>
+
+
 	<script>
 		document.getElementById('inscription').style.display = 'block';
 document.getElementById('connexion').style.display = 'block';
@@ -77,4 +63,5 @@ document.getElementById('admin').style.display = 'none';
 			document.getElementById('admin').style.display = 'block';
 		</script>
 	{% endif %}
+
 {% endblock %}

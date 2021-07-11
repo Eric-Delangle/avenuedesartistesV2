@@ -13,10 +13,11 @@ use App\Repository\ArtisticWorkVenteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/artistic/work/vente")
+ * @Route("/admin/artistic/work/vente")
  */
 class ArtisticWorkVenteController extends AbstractController
 {
+
     /**
      * @Route("/", name="artistic_work_vente_index")
      */
@@ -36,6 +37,10 @@ class ArtisticWorkVenteController extends AbstractController
         $artisticWorkVente = new ArtisticWorkVente();
         $artisticWorkVente->setGalleryVente($galleryVente);
 
+        $quelgalerie = $galleryVente->getSlug();
+        $galerieid = $galleryVente->getId();
+
+
         $form = $this->createForm(ArtisticWorkVenteType::class, $artisticWorkVente);
         $form->handleRequest($request);
 
@@ -53,10 +58,13 @@ class ArtisticWorkVenteController extends AbstractController
             $entityManager->persist($artisticWorkVente);
             $entityManager->flush();
 
-            return $this->redirectToRoute('member_index');
+            return $this->redirectToRoute('admin_gallery_vente_show', [
+                'id' => $galerieid,
+                'slug' => $quelgalerie,
+            ]);
         }
 
-        return $this->render('artistic_work_vente/new.html.twig', [
+        return $this->render('admin/artistic_work_vente/new.html.twig', [
             'artistic_work_vente' => $artisticWorkVente,
             'form' => $form->createView(),
         ]);
@@ -67,8 +75,10 @@ class ArtisticWorkVenteController extends AbstractController
      */
     public function show(ArtisticWorkVente $artisticWorkVente): Response
     {
-        return $this->render('artistic_work_vente/show.html.twig', [
+
+        return $this->render('admin/artistic_work_vente/show.html.twig', [
             'artistic_work_vente' => $artisticWorkVente,
+            "artisticWork" => $artisticWorkVente
         ]);
     }
 
@@ -81,28 +91,37 @@ class ArtisticWorkVenteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', "Votre image a bien été modifiée !");
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('artistic_work_vente_index');
         }
 
-        return $this->render('artistic_work_vente/edit.html.twig', [
+        return $this->render('admin/artistic_work_vente/edit.html.twig', [
             'artistic_work_vente' => $artisticWorkVente,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="artistic_work_vente_delete")
+     * @Route("/delete/{id}", name="artistic_work_vente_delete")
      */
     public function delete(Request $request, ArtisticWorkVente $artisticWorkVente): Response
     {
+        //dd($artisticWorkVente);
+        //$quelgalerie = $galleryVente->getSlug();
+        $galerieid = $artisticWorkVente->getGalleryVente()->getId();
+        //dd($galerieid);
+
         if ($this->isCsrfTokenValid('delete' . $artisticWorkVente->getId(), $request->request->get('_token'))) {
+            $this->addFlash('success', "Votre image a bien été supprimée !");
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($artisticWorkVente);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('artistic_work_vente_index');
+        return $this->redirectToRoute('admin_gallery_vente_show', [
+            'id' => $galerieid,
+        ]);
     }
 }

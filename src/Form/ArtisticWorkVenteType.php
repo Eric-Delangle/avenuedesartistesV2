@@ -15,6 +15,7 @@ class ArtisticWorkVenteType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
+            ->add('price')
             ->add('pictureFile', VichFileType::class, [
                 'required' => false,
                 'label' => 'Votre image',
@@ -25,6 +26,8 @@ class ArtisticWorkVenteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ArtisticWorkVente::class,
+            'translation_domain' => 'forms'
+
         ]);
     }
 }

@@ -55,10 +55,25 @@ class AppFixtures implements FixtureInterface
 
                 $user->setFirstName($faker->firstNameMale());
                 $user->setLastName($faker->lastName());
-                $user->setEmail("email+" . $h . "@email.com");
+
+                /* test email */
+
+
+                $user->setEmail("email->" . $h . "@email.com");
+
+
+
+                /* fin */
+
+
                 $slug = $slugify->slugify($user->getFirstName() . ' ' . $user->getLastName());
                 $user->setSlug($slug);
+                $user->setDescription2($faker->sentence());
                 $user->setLocation($city);
+                $user->setAdress($faker->streetAddress());
+                $user->setPostalCode($faker->postcode());
+                $user->setTel($faker->phoneNumber());
+                $user->setUserIdentifier($user->getEmail());
 
 
                 $user->setNiveau(1);

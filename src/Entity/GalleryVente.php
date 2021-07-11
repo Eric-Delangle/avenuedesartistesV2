@@ -26,7 +26,7 @@ class GalleryVente
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="galleryVente", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="galleryVente")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $user;

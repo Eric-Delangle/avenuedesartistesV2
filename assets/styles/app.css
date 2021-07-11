@@ -47,6 +47,9 @@ img {
 .bouton {
   background-color: darkcyan !important;
   color: #ffffff !important;
+  padding: 2px 5px;
+  border-radius: 10px;
+  
 }
 
 .bouton:hover {
@@ -351,6 +354,19 @@ img {
 .images {
   width: 50% !important;
   height: auto;
+}
+
+/* pour ne plus avoir les liens a la con dans l'upload d'image */
+.form-group a {
+  display: none!important;
+}
+
+.listeGaleries {
+    line-height: 3;
+}
+
+.listeGaleries a {
+    text-decoration: none!important;
 }
 
 /* --  ==== MEDIAQUERIES ====  -- */

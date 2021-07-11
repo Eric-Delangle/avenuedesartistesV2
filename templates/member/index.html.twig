@@ -38,8 +38,13 @@
 		<p class="mt-5">
 			<span class="titre_profil massenet">Vous apparaissez dans les catégories suivantes :</span>
 			{% for item in app.user.categories %}
+				{% if loop.first != true %}
+					,
+				{% endif %}
+
 				{{ item }}
 			{% endfor %}
+			.
 		</p>
 
 	</div>

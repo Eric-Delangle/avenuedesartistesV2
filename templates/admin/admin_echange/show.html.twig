@@ -7,20 +7,20 @@
 
 {% block body %}
 	<div class="container mt-5 text-center">
-		<h1 class="text-center massenet">Vos œuvres en vente.</h1>
+		<h1 class="text-center massenet">Vos œuvres à l'échange.</h1>
 		<table class="table mt-3" style="width:85%;" id="container_images">
 			<tbody>
 
 				<tr>
 					<th>Nom de la galerie</th>
-					<td>{{ gallery_vente.name }}</td>
+					<td>{{ gallery_echange.name }}</td>
 				</tr>
 				<tr>
 					<th>Les œuvres</th>
 
 					<td>
 
-						{% for artisticWork in gallery_vente.artisticWorks %}
+						{% for artisticWork in gallery_echange.artisticWorks %}
 
 
 							<p><img onclick="agrandir()" src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="image_petite" id="image_grande"></p>
@@ -53,7 +53,7 @@
 		<div class="container text-center liens_blancs">
 
 			<button class="btn bouton">
-				<a href="{{ path('admin_gallery_vente_index', {'slug' : app.user.slug}) }}">Retour à la liste de vos galeries de vente</a>
+				<a href="{{ path('admin_gallery_echange_index', {'slug' : app.user.slug}) }}">Retour à la liste de vos galeries d'échanges'</a>
 			</button>
 
 		</div>

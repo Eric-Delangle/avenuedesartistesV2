@@ -39,10 +39,14 @@
 					<th>Catégories</th>
 					<td>
 						{% for item in user.categories %}
+							{% if loop.first != true %}
+								,
+							{% endif %}
 							<button class="btn bouton mt-2">
 								{{ item }}
 							</button>
 						{% endfor %}
+						.
 					</td>
 				</tr>
 				<tr class="liens_blancs">

@@ -25,7 +25,7 @@ class GalleryEchange
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User",inversedBy="galleryEchange", cascade={"remove"})
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $user;

@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="container">
 		<div class="listeGaleries">
-			<h1 class="text-center mt-5 massenet">Vous avez l'embarras du choix</h1>
+			<h1 class="text-center mt-5 massenet">Sélectionnez un artiste ou/et une œuvre a échanger.</h1>
 			<p class="mt-5">
 
 				{% for item in users %}
@@ -27,21 +27,15 @@
 						.
 					</p>
 					<p>
-						<span class='titre_profil massenet' style="color:#ffffff;">Ses galeries de vente :</span>
+						<span class='titre_profil massenet' style="color:#ffffff;">Ses galeries d'échange :</span>
 
-						{% for item in item.galleryVente %}
-
-							<a href="{{path('gallery_vente_show', {'id': item.id})}}" class="bouton">{{ item.name }}</a>
-
-
+						{% for item in item.galleryEchange %}
+							<a href="{{path('gallery_echange_show', {'id': item.id})}}" class="bouton">{{ item.name }}</a>
 						{% else %}
 
-							Ce membre n'a pas de galerie de vente
-
+							Ce membre n'a pas de galerie d'échange
 						{% endfor %}
 						.
-
-
 					</p>
 				</p>
 			</p>
