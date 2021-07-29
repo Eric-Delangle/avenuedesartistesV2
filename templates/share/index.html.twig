@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="container">
 		<div class="listeGaleries">
-			<h1 class="text-center mt-5 massenet">Sélectionnez un artiste ou/et une œuvre a échanger.</h1>
+			<h1 class="text-center mt-5 massenet">Sélectionnez un artiste avec qui échanger.</h1>
 			<p class="mt-5">
 
 				{% for item in users %}
@@ -15,6 +15,9 @@
 						<span class='titre_profil massenet' style="color:#ffffff;">Artiste :</span>
 						{{ item.firstName }}
 						{{ item.lastName }}<br>
+					</p>
+					<p>
+						<img src="{{ asset(['images/avatars/', item.avatar]|join) }}" alt="avatar" class="avatar">
 					</p>
 					<p>
 						<span class='titre_profil massenet' style="color:#ffffff;">Ses catégories :</span>
@@ -52,6 +55,7 @@
 </p></div></div><script>document.getElementById('inscription').style.display = 'block';
 document.getElementById('connexion').style.display = 'block';
 document.getElementById('admin').style.display = 'none';
+document.getElementById('echanger').style.display = 'none';
 document.getElementById('member').style.display = 'none';
 document.getElementById('deconnexion').style.display = 'none';
 document.getElementById('achats').style.display = 'none';

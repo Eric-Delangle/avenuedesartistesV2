@@ -54,22 +54,26 @@
 				<a href="{{ path('gallery_echange_index', {'id': app.user.id }) }}" class="white lien">Gérer vos œuvres à l'échange</a>
 			</button>
 
-		</div>
+			{% if is_granted('ROLE_VENDEUR') %}
 
-
-		{% if is_granted('ROLE_VENDEUR') %}
-			<div class="col">
 				<button class="btn bouton">
 					<a href="{{ path('admin_gallery_vente_index', {'slug': app.user.slug }) }}" class="white lien">Gérer vos œuvres à la vente</a>
 				</button>
-
+			{% else %}
+				<button class="btn bouton">
+					<a href="{{ path('subscriber_index') }}" class="white lien">Un abonnement est necessaire pour vendre</a>
+				</button>
 			</div>
-		{% else %}
-			<button class="btn bouton">
-				<a href="{{ path('subscriber_index') }}" class="white lien">Un abonnement est necessaire pour vendre</a>
-			</button>
 		{% endif %}
 
+	</div>
+	<div id="message" class="mt-5 text-center">
+		<button class="btn bouton">
+			<a href="{{ path('message_index') }}" class="white lien">Consulter vos messages</a>
+		</button>
+		<button class="btn bouton">
+			<a href="#" class="white lien">Modifier vos informations</a>
+		</button>
 	</div>
 </div>
 

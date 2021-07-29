@@ -8,6 +8,129 @@
   font-style: normal;
 }
 
+
+/* MEDIAQUERIES */
+
+/* petit écran sm (téléphone mode paysage , 576px et plus) */
+@media (min-width: 576px) {
+
+
+    /* slogan */
+
+    .slogan {
+        font-size: 3em!important;
+    }
+    /* forme et taille de la ul de droite */
+
+.liens_droits {
+    margin-top: 20px;
+    font-size: 2em!important;
+}
+
+.liens_droits a {
+  padding: 10px 10px!important;
+}
+
+
+#map_et_diapo {
+    flex-direction: column!important;
+}
+
+#map {
+    margin: 0 auto!important;
+}
+
+#carouselExampleControls {
+    margin: 0 auto!important;
+}
+
+.orange {
+    width: auto!important;
+    padding: 10px 10px;
+}
+
+.greu {
+    width: auto!important;
+    padding: 10px 10px;
+}
+
+.noir {
+    width: auto!important;
+    padding: 10px 10px;
+}
+
+/* forme et taille de la ul de gauche */
+
+.liens_gauche {
+   margin: 0 auto;
+   font-size: 2em!important;
+}
+
+.liens_gauche li {
+    width: auto!important;
+}
+
+.punaise_map {
+    display: none;
+}
+}
+
+/* petit écran md (tablette , 768px et plus) */
+@media (min-width: 768px) {
+    
+}
+
+/* écran large ld (ordinateur , 992px et plus) */
+@media (min-width: 992px) {
+
+    
+    /* slogan */
+
+    .slogan {
+        font-size: 2em!important;
+    }
+    
+    #map_et_diapo {
+        flex-direction: row!important;
+    }
+
+    #map {
+        margin: 10px auto!important;
+    }
+    
+    #carouselExampleControls {
+        margin: 10px auto!important;
+    }
+
+    .punaise_map {
+        display: block;
+    }
+
+    .liens_droits {
+        margin-top: 15px!important;
+        font-size: 1em!important;
+    }
+
+    .liens_gauche {
+        margin-top: 15px!important;
+        margin-left: 15px!important;
+        font-size: 1em!important;
+    }
+}
+
+/* écran extra large xl (ordinateur grand écran , 1200px et plus) */
+@media (min-width: 1200px) {
+    #burger {
+        display:none;
+    }
+
+    .punaise_map {
+        display: block;
+    }
+}
+
+
+
 .font_grand {
   font-size: 4em!important;
 }
@@ -345,15 +468,17 @@ li {
   max-width: 100%;
   max-height: 400px;
 }
-/*
-img {
-  object-fit: cover;
-  overflow: hidden;
-}
-*/
+
 .images {
   width: 50% !important;
   height: auto;
+}
+
+
+.avatar {
+    width: 20%;
+    height: auto;
+    margin:0 auto;
 }
 
 /* pour ne plus avoir les liens a la con dans l'upload d'image */
@@ -368,6 +493,44 @@ img {
 .listeGaleries a {
     text-decoration: none!important;
 }
+
+/* faire disparaitre la checkbox du formulaire d'inscription */
+#registration_avatarFile_delete {
+    display: none;
+}
+
+.vich-file {
+    color: #ffffff;
+}
+
+/* mettre un fond vert au titre "categories" */
+
+.col-form-label {
+    width: 150px;
+    height: auto;
+    background-color: rgb(11, 97, 54);
+    color: #ffffff;
+    border-radius: 10px 10px 10px 10px;
+    text-align: center;
+}
+
+.custom-file {
+    margin-top: 20px;
+}
+
+/* bouton browse */
+
+.custom-file input {
+    cursor: pointer;
+}
+ 
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+    content: "Browse";
+  }
+  
+  .custom-file-input:lang(fr) ~ .custom-file-label::after {
+    content: "Parcourir";
+  }
 
 /* --  ==== MEDIAQUERIES ====  -- */
 
@@ -396,105 +559,7 @@ img {
     left: 150px;
   }
 
-  /* BURGER */
-  .lab {
-    margin-top: -15px;
-  }
-  #menu input + label {
-    position: fixed !important;
-    top: 45px;
-    right: 40px;
-    height: 60px;
-    width: 35px;
-    z-index: 5;
-  }
-
-  #menu input + label span {
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    top: 50%;
-    margin-top: -1px;
-    left: 0;
-    display: block;
-    background: #020304 !important;
-    transition: 0.5s;
-  }
-
-  #menu input + label span:first-child {
-    top: 3px;
-  }
-
-  #menu input + label span:last-child {
-    top: 16px;
-  }
-
-  #menu label:hover {
-    cursor: pointer;
-  }
-
-  #menu input:checked + label span {
-    opacity: 0;
-    top: 50%;
-  }
-
-  #menu input:checked + label span:first-child {
-    opacity: 1;
-    transform: rotate(405deg);
-  }
-
-  #menu input:checked + label span:last-child {
-    opacity: 1;
-    transform: rotate(-405deg);
-  }
-
-  #menu input ~ nav {
-    background: #ffffff;
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 0;
-    z-index: 3;
-    transition: 0.5s;
-    transition-delay: 0.5s;
-    overflow: hidden;
-  }
-  #menu input ~ nav > ul {
-    text-align: center;
-    position: fixed;
-    flex-direction: column;
-    top: 10%;
-    height: auto;
-    margin: 0 32%;
-  }
-
-  #menu input ~ nav > ul > li {
-    opacity: 0;
-    transition: 0.5s;
-    transition-delay: 0s;
-  }
-
-  #menu input ~ nav > ul > li > a {
-    text-decoration: none;
-    text-transform: uppercase;
-    color: #020304 !important;
-    font-weight: 700;
-    font-family: Roboto, sans-serif;
-    font-size: 1.5em;
-    display: block;
-    padding: 39px;
-  }
-
-  #menu input:checked ~ nav {
-    height: 50%;
-    transition-delay: 0s;
-  }
-  #menu input:checked ~ nav > ul > li {
-    opacity: 1;
-    transition-delay: 0.5s;
-  }
-  /* FIN BURGER */
+ 
   #pas_vu {
     margin-top: 10px;
   }

@@ -17,6 +17,9 @@
 						{{ item.lastName }}<br>
 					</p>
 					<p>
+						<img src="{{ asset(['images/avatars/', item.avatar]|join) }}" alt="avatar" class="avatar">
+					</p>
+					<p>
 						<span class='titre_profil massenet' style="color:#ffffff;">Ses catégories :</span>
 						{% for item in item.categories %}
 							{% if loop.first != true %}
@@ -57,6 +60,7 @@
 	</p>
 </p></div></div><script>document.getElementById('inscription').style.display = 'block';
 document.getElementById('connexion').style.display = 'block';
+document.getElementById('acheter').style.display = 'none';
 document.getElementById('admin').style.display = 'none';
 document.getElementById('member').style.display = 'none';
 document.getElementById('deconnexion').style.display = 'none';
