@@ -1,13 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Editer votre profil
+{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+	<div class="container">
+		<h1 class="mt-5">Modifier vos informations.</h1>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('user_index') }}">back to list</a>
+		{{ form_start(form, {'attr': {'class': 'placeho'}})}}
+		{{ form_row(form.firstName, {'attr': {'placeholder': "Votre prénom"}})}}
+		{{ form_row(form.lastName, {'attr': {'placeholder': "Votre nom"}})}}
+		{{ form_row(form.location, {'attr': {'placeholder': "Votre ville"}})}}
+		{{ form_row(form.email, {'attr': {'placeholder': "Votre email"}})}}
 
-    {{ include('user/_delete_form.html.twig') }}
+		<!-- form_rest permet d'afficher la liste des catégories -->
+		{{ form_rest(form)}}
+		<!-- captcha -->
+		<button type="submit" class="btn bouton">Valider</button>
+		{{ form_end(form)}}
+		<a href="{{ path('member_index') }}">Retourner sur votre espace.</a>
+
+		{{ include('user/_delete_form.html.twig') }}
+		<button class="btn btn-warning mt-3">
+			<a href="{{ path('reset_password') }}" style="color:white; text-decoration:none;">Changer de mot de passe.</a>
+		</button>
+		<button class="btn btn-warning mt-3">
+			<a href="#" style="color:white; text-decoration:none;">Changer votre photo de profil.</a>
+		</button>
+	</div>
+
+	<script>
+		document.getElementById('member').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('deconnexion').style.display = 'block';
+	</script>
+	<script>
+		document.getElementById('achats').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echanges').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('achat').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echange').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('inscription').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('connexion').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('admin').style.display = 'none';
+	</script>
 {% endblock %}

@@ -7,31 +7,29 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class PasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('password')
-            ->add('firstName')
-            ->add('lastName')
-            ->add('slug')
-            ->add('location')
-            ->add('avatar', VichFileType::class, [
-                'required' => false,
-                'label' => 'Votre image',
+            ->add('password', PasswordType::class, [
+                'attr' => [
+                    'required' => false,
+                ]
             ])
-            ->add('registeredAt')
-            ->add('niveau')
-            ->add('description2')
-            ->add('categories');
+            ->add('password_verify', PasswordType::class, [
+                'attr' => [
+                    'required' => false,
+                    'placeholder' => 'Tapez de nouveau votre mot de passe.'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'translation_domain' => 'forms',
         ]);
     }
 }

@@ -8,6 +8,9 @@ use ReCaptcha\ReCaptcha;
 use Cocur\Slugify\Slugify;
 use App\Form\RegistrationType;
 use App\Entity\AdminController;
+use Symfony\Component\Mime\Email;
+use App\Repository\UserRepository;
+use Symfony\Component\Mailer\MailerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,10 +24,12 @@ class SecurityController extends AbstractController
 {
 
     private $authenticationUtils;
+    private $mailer;
 
-    public function __construct(AuthenticationUtils $authenticationUtils)
+    public function __construct(AuthenticationUtils $authenticationUtils, MailerInterface $mailer)
     {
         $this->authenticationUtils = $authenticationUtils;
+        $this->mailer = $mailer;
     }
 
     /**
@@ -49,6 +54,12 @@ class SecurityController extends AbstractController
 
             $hash = $encoder->hashPassword($user, $user->getPassword());
             $user->setPassword($hash);
+
+            // on génère le token d'activation
+
+            $user->setActivationToken(md5(uniqid()));
+
+
             $slugify = new Slugify();
             $slug = $slugify->slugify($user->getFirstName() . '' . $user->getLastName());
             $user->setSlug($slug);
@@ -58,7 +69,22 @@ class SecurityController extends AbstractController
             $user->setUserIdentifier($user->getEmail());
             $manager->persist($user);
             $manager->flush();
-            $this->addFlash('success', 'Votre compte a bien été créé');
+            $this->addFlash('success', 'Votre compte a bien été créé, vérifiez vos emails pour pouvoir l\'activer.');
+
+
+            // email d'activation
+
+            $email = (new Email())
+                ->from('hello@example.com')
+                ->to($user->getEmail())
+
+                ->subject('Activation de votre compte')
+                ->text($this->renderView('emails/activation.html.twig', ['token' => $user->getActivationToken()]));
+
+
+            $this->mailer->send($email);
+
+
             return $this->redirectToRoute('security_login');
         }
         // }
@@ -68,11 +94,37 @@ class SecurityController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/activation/{token}", name="security_activation")
+     */
+    public function activation($token, UserRepository $userRepo)
+    {
+        // on verifie si un utilsateur a ce token
+        $user = $userRepo->findoneBy(['activation_token' => $token]);
+        // si aucun utilisateur n'existe avec ce token
+        if (!$user) {
+            throw $this->createNotFoundException('Cet utilsateur n\'existe pas');
+        }
+        // on supprime le token
+        $user->setActivationToken(null);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        // on envoie un message flash
+        $this->addFlash('message', 'Vous avez bien activé votre compte.');
+
+        // on va sur l'espace membre
+        return $this->redirectToRoute('member_index');
+    }
+
     /**
      * @Route("/connexion", name="security_login")
      */
     public function login()
     {
+
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('member_index');
@@ -86,6 +138,7 @@ class SecurityController extends AbstractController
             'last_username' => $this->authenticationUtils->getLastUsername(),
             'error'         => $this->authenticationUtils->getLastAuthenticationError(),
         ));
+
         $this->addFlash('success', 'Vous êtes bien connecté !');
     }
 

@@ -72,7 +72,7 @@
 			<a href="{{ path('message_index') }}" class="white lien">Consulter vos messages</a>
 		</button>
 		<button class="btn bouton">
-			<a href="#" class="white lien">Modifier vos informations</a>
+			<a href="{{ path('user_edit', {'id': app.user.id }) }}" class="white lien">Modifier vos informations</a>
 		</button>
 	</div>
 </div>

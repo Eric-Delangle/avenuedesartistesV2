@@ -51,13 +51,13 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min="8", minMessage="Votre mot de passe doit contenir au minimum huit caractères")
-     * @Assert\EqualTo(propertyPath="password_verify", message="Vos mots de passe ne sont pas identiques")
+     * @Assert\Length(min="8", minMessage="Votre mot de passe doit contenir au minimum huit caractères", groups={"registration"})
+     * @Assert\EqualTo(propertyPath="password_verify", message="Vos mots de passe ne sont pas identiques", groups={"registration"})
      */
     private $password;
 
     /**
-     *  @Assert\EqualTo(propertyPath="password", message="Vos mots de passe ne sont pas identiques")
+     *  @Assert\EqualTo(propertyPath="password", message="Vos mots de passe ne sont pas identiques", groups={"registration"})
      * @var string|null
      */
     public $password_verify;
@@ -161,6 +161,11 @@ class User implements UserInterface, \Serializable
      */
     private $tel;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $activation_token;
+
 
     public function __construct()
     {
@@ -236,7 +241,6 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
-
 
     public function getFirstName(): ?string
     {
@@ -541,6 +545,28 @@ class User implements UserInterface, \Serializable
     public function setGalleryEchange($galleryEchange)
     {
         $this->galleryEchange = $galleryEchange;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of password_verify
+     *
+     * @return  string|null
+     */
+    public function getPassword_verify()
+    {
+        return $this->password_verify;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
 
         return $this;
     }

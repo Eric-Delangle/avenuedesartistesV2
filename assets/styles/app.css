@@ -532,6 +532,16 @@ li {
     content: "Parcourir";
   }
 
+/* inscription activation */
+.activation_link {
+    text-decoration: none;
+    color: red;
+}
+
+.activation_text {
+    margin: 0 auto;
+}
+
 /* --  ==== MEDIAQUERIES ====  -- */
 
 @media all and (max-width: 1024px) {

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserModifType;
 use App\Repository\UserRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\GalleryVenteRepository;
@@ -12,12 +13,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/user")
  */
 class UserController extends AbstractController
 {
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
@@ -78,17 +88,20 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, ValidatorInterface $validator): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+
+        $form = $this->createForm(UserModifType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->addFlash('success', 'Votre profil a bien été mis à jour !');
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index');
-        }
 
+            return $this->redirectToRoute('member_index');
+        }
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
