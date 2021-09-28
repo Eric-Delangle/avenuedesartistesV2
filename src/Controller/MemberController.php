@@ -14,7 +14,8 @@ class MemberController extends AbstractController
      */
     public function index(UserRepository $userRepo): Response
     {
-        $id = $this->getUser()->getId();
+
+        // verification du compte si il est activé
         $activToken = $this->getUser()->getActivationToken();
 
         if ($activToken != null) {
@@ -23,17 +24,11 @@ class MemberController extends AbstractController
 
                 'token' => $activToken
             ]);
-            /*
-            echo '<p class="activation_text">Vous n\'avez pas encore activé votre compte.</p>';
-            $url = "http://localhost:8000";
-            $texte_du_lien = "Retourner à l'accueil";
-            echo '<a class="activation_link" href="' . $url . '">' . $texte_du_lien . '</a>';
-*/
-
-
-
-            //exit();
         }
+
+        // si le compte est bien activé
+
+        $id = $this->getUser()->getId();
         $perso = $userRepo->findBy(['id' => $id]);
 
         return $this->render('member/index.html.twig', [

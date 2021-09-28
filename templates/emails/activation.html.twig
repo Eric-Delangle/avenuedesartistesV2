@@ -5,6 +5,6 @@
 	Lien d'activation
 	Vous avez créé un compte sur avenuedesartistes.com, veuillez cliquer sur le lien ci-dessous pour l'activer.
 
-		<a href="{{ absolute_url(path('security_activation', {'token':token}))}}"></a>
+		{{ absolute_url(path('security_activation', {'token':token}))}}
 
 
