@@ -21,6 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Notifier\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+//use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
 
 
 /**

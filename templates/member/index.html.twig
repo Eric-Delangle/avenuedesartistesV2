@@ -1,109 +1,153 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Votre espace
+{% block title %}
+    Votre espace
+    
 {% endblock %}
 
 {% block body %}
-	<div class="container white liens_blancs">
-		<h1 class="text-center mt-5 massenet font_grand">Votre espace
-			{{ app.user.firstName }}
-		</h1>
-		<div class="avatar"><img src="{{ asset(['images/avatars/', app.user.avatar]|join) }}" alt="avatar"></div>
 
-		<div class="container text-center mt-3">
-			<p class="h1 massenet">{{ app.user.firstName }}
-				{{ app.user.lastName }}</p>
-			<p class="mt-5">
-				<span class="titre_profil massenet">Vous habitez :</span>
-				{{ app.user.adress }}
-				{{ app.user.postalCode }}
-				à
-				{{ app.user.location }}</p>
-			<p class="mt-5">
-				<span class="titre_profil massenet">Votre description :</span>
-				{{ app.user.description2}}
-			</p>
-			<p class="mt-5">
-				<span class="titre_profil massenet">Contact :</span>
-			</p>
-			<p>
-				<i class="fas fa-envelope">
-					{{ app.user.email}}</i>
-			</p>
-			<p>
-				<i class="fas fa-phone-volume">
-					{{ app.user.tel }}</i>
-			</p>
-		</p>
-		<p class="mt-5">
-			<span class="titre_profil massenet">Vous apparaissez dans les catégories suivantes :</span>
-			{% for item in app.user.categories %}
-				{% if loop.first != true %}
-					,
-				{% endif %}
+    <div class="container white liens_blancs">
+        <h1 class="text-center mt-5 massenet font_grand">
+            Votre espace
+            			
+            {{ app.user.firstName |capitalize }}
+        </h1>
+        <div class="avatar">
+            <img src="{{ asset(['images/avatars/', app.user.avatar]|join) }}" alt="avatar"></div>
 
-				{{ item }}
-			{% endfor %}
-			.
-		</p>
+            <div class="container text-center mt-3">
+                <p class="h1 massenet">
+                    {{ app.user.firstName |capitalize }}
+                    {{ app.user.lastName |capitalize }}
+                </p>
+                <table class="test">
+                    <thead class="text-center">
+                        <tr>
+                            <th class="titre_profil_test massenet">
+                                Vous habitez
+                            </th>
+                            <th class="titre_profil_test massenet">
+                                Votre description
+                            </th>
+                            <th class="titre_profil_test massenet">
+                                Contact
+                            </th>
+                            <th class="titre_profil_test massenet">
+                                Vous apparaissez dans les catégories suivantes
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr>
+                            <td>
+                                <p class="mt-5">
+                                    {{ app.user.adress }}
+                                    {{ app.user.postalCode }}
+                                    à
+                                    				
+                                    {{ app.user.location |capitalize }}
+                                </p>
+                            </td>
+                            <td>
+                                {{ app.user.description2 }}
+                            </td>
+                            <td>
+                                <p>
+                                    <i class="fas fa-envelope">
+                                        {{ app.user.email }}
+                                    </i>
+                                </p>
+                                <p>
+                                    <i class="fas fa-phone-volume">
+                                        {{ app.user.tel }}
+                                    </i>
+                                </p>
+                            </td>
+                            <td>
+                                {% for item in app.user.categories %}
+                                    {% if loop.first != true %}
+                                        ,
+                                        				
+                                    {% endif %}
 
-	</div>
-	<div class="d-flex text-center mt-5">
-		<div class="col">
-			<button class="btn bouton">
-				<a href="{{ path('gallery_echange_index', {'id': app.user.id }) }}" class="white lien">Gérer vos œuvres à l'échange</a>
-			</button>
+                                    {{ item }}
+                                {% endfor %}
+                                .
+                                			
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="d-flex text-center white mt-5">
+            <div class="col">
+                <button class="btn bouton">
+                    <a href="{{ path('gallery_echange_index', {'id': app.user.id }) }}" class="white lien">
+                        Gérer vos œuvres à l'échange
+                    </a>
+                </button>
 
-			{% if is_granted('ROLE_VENDEUR') %}
+                {% if is_granted('ROLE_VENDEUR') %}
 
-				<button class="btn bouton">
-					<a href="{{ path('admin_gallery_vente_index', {'slug': app.user.slug }) }}" class="white lien">Gérer vos œuvres à la vente</a>
-				</button>
-			{% else %}
-				<button class="btn bouton">
-					<a href="{{ path('subscriber_index') }}" class="white lien">Un abonnement est necessaire pour vendre</a>
-				</button>
-			</div>
-		{% endif %}
+                    <button class="btn bouton">
+                        <a href="{{ path('admin_gallery_vente_index', {'slug': app.user.slug }) }}" class="white lien">
+                            Gérer vos œuvres à la vente
+                        </a>
+                    </button>
+                {% else %}
+                    <button class="btn bouton">
+                        <a href="{{ path('subscriber_index') }}" class="white lien">
+                            Un abonnement est necessaire pour vendre
+                        </a>
+                    </button>
+                </div>
+            {% endif %}
 
-	</div>
-	<div id="message" class="mt-5 text-center">
-		<button class="btn bouton">
-			<a href="{{ path('message_index') }}" class="white lien">Consulter vos messages</a>
-		</button>
-		<button class="btn bouton">
-			<a href="{{ path('user_edit', {'id': app.user.id }) }}" class="white lien">Modifier vos informations</a>
-		</button>
-	</div>
-</div>
+        </div>
+        <div id="message" class="mt-5 text-center white">
+            <button class="btn bouton">
+                <a href="{{ path('message_index') }}" class="white lien">
+                    Consulter vos messages
+                </a>
+            </button>
+            <button class="btn bouton">
+                <a href="{{ path('user_edit', {'id': app.user.id }) }}" class="white lien">
+                    Modifier vos informations
+                </a>
+            </button>
+        </div>
+    </div>
 
-<script>
+    <script>
 	document.getElementById('member').style.display = 'none';
 </script>
-<script>
+    <script>
 	document.getElementById('bleudeco').style.display = 'none';
 </script>
-<script>
+    <script>
 	document.getElementById('deconnexion').style.display = 'block';
 </script>
-<script>
+    <script>
 	document.getElementById('achats').style.display = 'none';
 </script>
-<script>
+    <script>
 	document.getElementById('echanges').style.display = 'none';
 </script>
-<script>
+    <script>
 	document.getElementById('achat').style.display = 'none';
 </script>
-<script>
+    <script>
 	document.getElementById('echange').style.display = 'none';
 </script>
-<script>
+    <script>
 	document.getElementById('inscription').style.display = 'none';
 </script>
-<script>
+    <script>
 	document.getElementById('connexion').style.display = 'none';
 </script>
-<script>
+    <script>
 	document.getElementById('admin').style.display = 'none';
-</script>{% endblock %}
+</script>
+{% endblock %}

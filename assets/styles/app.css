@@ -176,7 +176,7 @@ img {
 }
 
 .bouton:hover {
-  background-color: rgb(11, 12, 12) !important;
+  background-color: rgb(214, 144, 79) !important;
   color: #ffffff !important;
 }
 
@@ -194,6 +194,7 @@ a:hover {
 
 #deconnexion:hover {
   background-color: #cc1b1b!important;
+  border-color: #cc1b1b!important;
 }
 
 .massenet {
@@ -202,6 +203,20 @@ a:hover {
 
 .titre_profil {
   width: 20px;
+  height: auto;
+  padding: 5px;
+  border-radius: 10px 10px 10px 10px;
+  background-color: rgb(199, 81, 13);
+  font-size: 1.2em;
+  color: #ffffff;
+}
+
+.test {
+  border-collapse: separate;
+  border-spacing: 50px;
+}
+
+.titre_profil_test {
   height: auto;
   padding: 5px;
   border-radius: 10px 10px 10px 10px;
@@ -406,10 +421,11 @@ li {
 }
 
 #footer {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 850px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+    position: relative;
 }
 
 .foot {
@@ -488,6 +504,7 @@ li {
 
 .listeGaleries {
     line-height: 3;
+    text-align: center;
 }
 
 .listeGaleries a {
