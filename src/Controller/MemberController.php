@@ -30,7 +30,7 @@ class MemberController extends AbstractController
 
         $id = $this->getUser()->getId();
         $perso = $userRepo->findBy(['id' => $id]);
-
+    
         return $this->render('member/index.html.twig', [
             'perso' => $perso,
             'token' => $activToken

@@ -75,7 +75,6 @@ class UserController extends AbstractController
         GalleryEchangeRepository $galleryEchangeRepo
     ) {
 
-
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'users' => $userRepo->findOneBySlug(['slug' => $slug]),
