@@ -8,8 +8,8 @@
 {% block body %}
 	<div class="container mt-5 text-center">
 		<h1 class="text-center massenet">Les œuvres de
-			{{gallery_vente.user.firstName}}
-			{{gallery_vente.user.lastName}}
+			{{gallery_vente.user.firstName | capitalize }}
+			{{gallery_vente.user.lastName | capitalize }}
 			en vente.</h1>
 		<table class="table mt-3" style="width:85%;" id="container_images">
 			<tbody>
@@ -98,16 +98,6 @@ document.getElementById('admin').style.display = 'none';
 
 	{% endif %}
 	{% block javascripts %}
-		{{ encore_entry_script_tags('app') }}
-
+		{{ encore_entry_script_tags('images') }}
 	{% endblock %}
-	<script>
-		const images = document.querySelectorAll('.image_petite');
- 			for (let i = 0; i < images.length; i++) {
-				images[i].addEventListener('click', function() {
-					console.log(images[i])
-					this.classList.toggle('image_petite');
-				});
-			}
-	</script>
 {% endblock %}
