@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie de vente de
+	{{gallery_vente.user.firstName}}
+	{{gallery_vente.user.lastName}}.
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5 text-center">
+		<h1 class="text-center massenet">Vos œuvres à l'échange.</h1>
+		<table class="table mt-3" style="width:85%;" id="container_images">
+			<tbody>
+
+				<tr>
+					<th>Nom de la galerie</th>
+					<td>{{ gallery_echange.name }}</td>
+				</tr>
+				<tr>
+					<th>Les œuvres</th>
+
+					<td>
+
+						{% for artisticWork in gallery_echange.artisticWorks %}
+
+
+							<p><img onclick="agrandir()" src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="image_petite" id="image_grande"></p>
+
+							<p class="mt-5">
+								<span class="titre_profil" style="color:#ffffff;">Son titre:</span>
+								{{ artisticWork.name|title }}:</p>
+							<p>
+								<span class="titre_profil" style="color:#ffffff;">Sa déscription:</span>
+								{{ artisticWork.description }}</p>
+							<p>
+								<span class="titre_profil" style="color:#ffffff;">Son prix:</span>
+								{{ artisticWork.price }}
+								€</p>
+							<br>
+							{{ include('admin/artistic_work_vente/_delete.html.twig') }}
+							<hr>
+
+
+						{% else %}
+							<p class="text-center">Il n'y a pas encore d'œuvre dans cette galerie.</p>
+						{% endfor %}
+
+					</td>
+
+
+				</tr>
+			</tbody>
+		</table>
+		<div class="container text-center liens_blancs">
+
+			<button class="btn bouton">
+				<a href="{{ path('admin_gallery_echange_index', {'slug' : app.user.slug}) }}">Retour à la liste de vos galeries d'échanges'</a>
+			</button>
+
+		</div>
+
+
+		<button class="btn bouton mt-2">
+			<a href="{{ path('member_index') }}" style="color:#ffffff; text-decoration:none;">Retour à votre espace</a>
+		</button>
+
+
+	</div>
+	<script>
+		document.getElementById('inscription').style.display = 'block';
+document.getElementById('connexion').style.display = 'block';
+document.getElementById('admin').style.display = 'none';
+document.getElementById('member').style.display = 'none';
+document.getElementById('deconnexion').style.display = 'none';
+document.getElementById('achats').style.display = 'none';
+document.getElementById('echanges').style.display = 'none';
+document.getElementById('echange').style.display = 'none';
+document.getElementById('achat').style.display = 'none';
+document.getElementById('deco').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+			document.getElementById('member').style.display = 'block';
+document.getElementById('bleudeco').style.display = 'block';
+document.getElementById('deco').style.display = 'block';
+document.getElementById('deconnexion').style.display = 'block';
+document.getElementById('achats').style.display = 'block';
+document.getElementById('echanges').style.display = 'block';
+document.getElementById('inscription').style.display = 'none';
+document.getElementById('connexion').style.display = 'none';
+document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<script>
+			document.getElementById('admin').style.display = 'block';
+		</script>
+
+	{% endif %}
+	{% block javascripts %}
+		{{ encore_entry_script_tags('app') }}
+
+	{% endblock %}
+	<script>
+		function agrandir() { // il faut que j'arrive a recuperer la liste des images
+
+const ig = document.getElementsByTagName("img");
+
+// je créé un tableau vide pour y mettre toutes les images de la page
+const images = [];
+
+images.push(ig);
+
+
+for (let i = 0; i < images.length; i++) {
+
+console.log(images[i][0])
+
+
+if (images[i][0].classList == "image_petite") { // images[i][j].classList.toggle('image_grande');
+
+images[i][0].classList.remove('image_petite');
+images[i][0].classList.add('image_grande');
+
+
+} else if (images[i][0].classList == "image_grande") {
+images[i][0].classList.remove('image_grande');
+images[i][0].classList.add('image_petite');
+
+}
+}
+
+}
+
+
+function retrecir() {
+
+const ig = document.getElementsByClassName("image_grande");
+
+ig.classList.remove("image_grande");
+ig.classList.add("image_petite");
+
+
+}
+	</script>
+{% endblock %}

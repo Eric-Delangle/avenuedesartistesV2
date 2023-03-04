@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification d'image.
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center mt-5 massenet">Modification de votre avatar.</h1>
+	
+<form method="post" enctype="multipart/form-data">
+	{{ form_start(form) }}
+	<button type="submit" class="btn bouton">Valider</button>
+	{{ form_end(form)}}
+</form>
+
+		<a href="{{ path('member_index') }}">Retour à votre espace</a> 
+
+	</div>
+
+{% endblock %}

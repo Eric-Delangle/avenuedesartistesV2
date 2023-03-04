@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ user.firstName }}
+	{{ user.lastName }}
+{% endblock %}
+
+{% block body %}
+	<div class="container liens_blancs">
+		<h1 class="text-center mt-5 massenet">Profil de
+			{{ user.firstName }}
+			{{ user.lastName }}</h1>
+
+		<table class="table mt-5">
+			<tbody>
+				<tr>
+					<th>Email</th>
+					<td>{{ user.email }}</td>
+				</tr>
+				<tr>
+					<th>Prénom</th>
+					<td>{{ user.firstName }}</td>
+				</tr>
+				<tr>
+					<th>Nom</th>
+					<td>{{ user.lastName }}</td>
+				</tr>
+				<tr>
+					<th>Ville</th>
+					<td>{{ user.location }}</td>
+				</tr>
+				<tr>
+					<th>Avatar</th>
+					<td><img src="{{ asset(['images/avatars/', user.avatar]|join) }}" alt="avatar" class="avatar"></td>
+				</tr>
+				<tr>
+					<th>Description</th>
+					<td>{{ user.description2 }}</td>
+				</tr>
+				<tr>
+					<th>Catégories</th>
+					<td>
+						{% for item in user.categories %}
+							{% if loop.first != true %}
+								,
+							{% endif %}
+							<button class="btn bouton mt-2">
+								{{ item }}
+							</button>
+						{% endfor %}
+						.
+					</td>
+				</tr>
+				<tr>
+					<th>Galeries d'échange</th>
+					<td>
+						{% if galleryechange %}
+							{% for item in galleryechange %}
+								<button class="btn bouton mt-2 ">
+									<a href="{{path('gallery_showUser', {'id': item.id})}}">{{ item }}</a>
+								</button>
+
+							{% endfor %}
+						{% else %}
+							<p>Ce membre ne possède pas encore de galerie d'échange.</p>
+						{% endif %}
+
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="container text-center">
+			<button class="btn bouton mt-5">
+				<a href="{{ path('home') }}">Retour à l'accueil</a>
+			</button>
+
+		</div>
+
+	</div>
+	<script>
+		document.getElementById('member').style.display = 'block';
+	</script>
+	<script>
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('deconnexion').style.display = 'block';
+	</script>
+	<script>
+		document.getElementById('achats').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echanges').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('achat').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echange').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('inscription').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('connexion').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('admin').style.display = 'none';
+	</script>
+{% endblock %}

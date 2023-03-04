@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de votre galerie.
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center mt-5">Editer votre galerie de vente</h1>
+
+		{{ include('admin/admin_vente/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+		{{ include('admin/admin_vente/_delete_form.html.twig') }}
+		<a class="btn btn-info mt-2" href="{{ path('artistic_work_vente_new', {'id': gallery_vente.id}) }}">Ajouter une image</a>
+		<button class="btn bouton mt-2">
+			<a href="{{ path('admin_gallery_vente_index', {'slug': app.user.slug}) }}" style="color:#ffffff; text-decoration:none;">Retour à la liste de vos galeries</a>
+		</button>
+	</div>
+	<script>
+		document.getElementById('member').style.display = 'block';
+	</script>
+	<script>
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('deconnexion').style.display = 'block';
+	</script>
+	<script>
+		document.getElementById('achats').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echanges').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('achat').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echange').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('inscription').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('connexion').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('admin').style.display = 'none';
+	</script>
+{% endblock %}

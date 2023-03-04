@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galeries{% endblock %}
+
+{% block body %}
+<div class="container font galerie text-center mt-5"> 
+        
+        <h1 class="center titre">Vous visitez les galeries de la <span class="A_titre">c</span>atégorie {{ category.name }}.</h1>
+           
+               
+           
+
+    {% for gallerie in galleries %}
+ 
+    <br>
+    
+       <div class="center fontDiv font_titres flex">
+           
+           <div> 
+                <p style="color:orange;font-weight: bold;font-size:1.2em;">Nom de la galerie</p>
+             
+                <p>{{ gallerie.name }}</p>
+            </div>
+            <div>
+                <p style="color:orange;font-weight: bold;font-size:1.2em;">Membre</p>
+                    {{ gallerie.user.firstName|title}}
+                
+                    {{ gallerie.user.lastName|title }}
+            </div>
+            <div>
+                <p style="color:orange;font-weight: bold;font-size:1.2em;">Ville</p>
+                
+                    {{ gallerie.user.location|title }}
+            </div>
+        </div>
+        
+               <p class="center" style="color:orange;font-weight: bold;font-size:1.2em;">Oeuvres</p>
+               <br>
+               <div class="fontDiv font_titres galerie center"> 
+                <!-- l'array sur lequel je dois boucler c'est gallery.artisticWorks -->
+                {% for artisticWork in gallerie.artisticWorks %}
+                
+                    <p><img src=" {{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="images" ></p>
+                    <br>
+                    <p>{{ artisticWork.name|title }}:</p>
+                    <p>{{ artisticWork.description }}</p>
+                   
+                {% endfor %}
+            </div>
+            <div class="center"> 
+                <a class="btn btn-success" href="{{ path('message_newUserMess', {'id': gallerie.user.id}) }}">Envoyer un message à {{ gallerie.user.firstName|title}}</a>
+                <a class="btn btn-info" href="{{ path('user_show', {'slug': gallerie.user.slug}) }}">Voir son profil</a>
+            </div>
+            <hr style="height: 5px;">
+            
+    {% endfor %}
+    <div class="pagination center">
+        {{ knp_pagination_render (galleries)}}
+    </div>
+   
+</div>
+
+ <script>document.getElementById('pas_vu').style.display ='block';</script>
+ 
+ 
+ 	<script>
+ 	    document.getElementById('pas_vu').style.display = 'block';
+		document.getElementById('inscription').style.display = 'block';
+		document.getElementById('connexion').style.display = 'block';
+		document.getElementById('admin').style.display = 'none';
+		document.getElementById('member').style.display = 'none';
+		document.getElementById('deconnexion').style.display = 'none';
+		document.getElementById('echanges').style.display = 'none';
+		document.getElementById('echange').style.display = 'none';
+		document.getElementById('achat').style.display = 'none';
+		document.getElementById('deco').style.display = 'none';
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+		    document.getElementById('pas_vu').style.display = 'block';
+			document.getElementById('member').style.display = 'block';
+			document.getElementById('bleudeco').style.display = 'block';
+			document.getElementById('deco').style.display = 'block';
+			document.getElementById('deconnexion').style.display = 'block';
+			document.getElementById('echanges').style.display = 'block';
+			document.getElementById('inscription').style.display = 'none';
+			document.getElementById('connexion').style.display = 'none';
+			document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+ 
+{% endblock %}

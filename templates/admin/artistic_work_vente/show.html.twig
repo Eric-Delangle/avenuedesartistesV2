@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Image vente
+{% endblock %}
+
+{% block body %}
+	<div class="conatainer">
+		<h1 class="text-center mt-5 massenet">Les images de vente</h1>
+
+		<table class="table mt-3">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ artistic_work_vente.id }}</td>
+				</tr>
+				<tr>
+					<th>Slug</th>
+					<td>{{ artistic_work_vente.slug }}</td>
+				</tr>
+				<tr>
+					<th>Name</th>
+					<td>{{ artistic_work_vente.name }}</td>
+				</tr>
+				<tr>
+					<th>CreatedAt</th>
+					<td>{{ artistic_work_vente.createdAt ? artistic_work_vente.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+				</tr>
+				<tr>
+					<th>Picture</th>
+					<td>{{ artistic_work_vente.picture }}</td>
+				</tr>
+				<tr>
+					<th>Updated_at</th>
+					<td>{{ artistic_work_vente.updatedAt ? artistic_work_vente.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+				</tr>
+				<tr>
+					<th>Description</th>
+					<td>{{ artistic_work_vente.description }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<button class="btn bouton">
+			<a href="{{ path('artistic_work_vente_index') }}">Retour à la liste</a>
+		</button>
+
+		<button class="btn bouton">
+			<a href="{{ path('artistic_work_vente_edit', {'id': artistic_work_vente.id}) }}">Modifier</a>
+		</button>
+
+		{{ include('admin/artistic_work_vente/_delete.html.twig') }}
+	</div>
+
+{% endblock %}

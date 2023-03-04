@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos galeries{% endblock %}
+
+{% block body %}
+   
+<div class="container font">
+        <h1 class="center titre">Vos galerie(s)</h1>
+        <br>
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Categorie</th>
+            
+                <th>Nom de votre galerie</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    {% if galeries %}
+                    {% for galerie in galeries %}
+                    
+                    <td>{{ galerie.category }}</td>
+                   
+                    <td>{{ galerie.name }}</td>
+                    <td>
+                        <a class=" btn btn-info" href="{{ path('galery_edit', {'id': galerie.id}) }}">Gérer cette galerie</a>
+                       
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3">Pas de galerie enregistrée.</td>
+                </tr>
+            
+            
+            {% endif %}
+         
+        </tbody>
+    </table>
+    <a class="btn btn-success" href="{{ path('galery_new', {'id': app.user.id}) }}">Créer une nouvelle galerie</a>
+</div>
+    
+
+
+<script>document.getElementById('inscription').style.display ='none';</script>
+<script>document.getElementById('connexion').style.display ='none';</script>
+
+ {% if  app.user.niveau == 2 %}
+<script>document.getElementById('admin').style.display ='block';</script>
+ {% else %}
+ <script>document.getElementById('admin').style.display ='none';</script>
+{% endif %}
+<script>document.getElementById('deconnexion').style.display ='block';</script>
+<script>document.getElementById('espace_membre').style.display ='block';</script>
+<script>document.getElementById('pas_vu').style.display ='block';</script>
+{% endblock %}

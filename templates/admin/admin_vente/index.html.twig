@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'administration des galeries de vente.
+{% endblock %}
+
+{% block body %}
+	<div class="container liens_blancs">
+		<h1 class="text-center mt-5">Vos galeries de vente.</h1>
+
+		<table class="table mt-5">
+			<thead>
+				<tr>
+
+					<th>Name</th>
+
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for gallery_vente in gallery_ventes %}
+					<tr>
+
+						<td>{{ gallery_vente.name }}</td>
+
+						<td>
+							<button class="btn bouton">
+								<a href="{{ path('admin_gallery_vente_show', {'id': gallery_vente.id}) }}">Voir la galerie</a>
+							</button>
+							<button class="btn bouton">
+								<a href="{{ path('admin_gallery_vente_edit', {'id': gallery_vente.id}) }}">Editer la galerie/gérer les images</a>
+							</button>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">Vous n'avez pas encore créé de galerie de vente.</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<button class="btn bouton">
+			<a href="{{ path('admin_gallery_vente_new', {"slug" : app.user.slug}) }}">Créer une galerie de vente</a>
+		</button>
+		<button class="btn bouton">
+			<a href="{{ path('member_index') }}">Retourner sur votre espace</a>
+		</button>
+	</div>
+	<script>
+		document.getElementById('inscription').style.display = 'block';
+document.getElementById('connexion').style.display = 'block';
+document.getElementById('admin').style.display = 'none';
+document.getElementById('member').style.display = 'none';
+document.getElementById('deconnexion').style.display = 'none';
+document.getElementById('achats').style.display = 'none';
+document.getElementById('echanges').style.display = 'none';
+document.getElementById('echange').style.display = 'none';
+document.getElementById('achat').style.display = 'none';
+document.getElementById('deco').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+			document.getElementById('member').style.display = 'block';
+document.getElementById('bleudeco').style.display = 'block';
+document.getElementById('deco').style.display = 'block';
+document.getElementById('deconnexion').style.display = 'block';
+document.getElementById('achats').style.display = 'block';
+document.getElementById('echanges').style.display = 'block';
+document.getElementById('inscription').style.display = 'none';
+document.getElementById('connexion').style.display = 'none';
+document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<script>
+			document.getElementById('admin').style.display = 'block';
+		</script>
+	{% endif %}
+{% endblock %}

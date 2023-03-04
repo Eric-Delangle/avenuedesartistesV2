@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+
+  
+        {{ form_widget(form.message, {'attr': {'placeholder': "Votre réponse"}}) }}
+   
+    
+    <button class="btn btn-success">{{ button_label|default('Envoyer') }}</button>
+{{ form_end(form) }}

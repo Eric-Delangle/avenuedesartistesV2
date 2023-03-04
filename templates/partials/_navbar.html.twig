@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg nav mx-auto" id="navigation">
+
+
+	<div class="navbar-toggle navbar-collapse" id="">
+		<ul class="navbar-nav text-center liste_nav liens_gauche homeNav">
+			<li class="nav-item bleu" id="pas_vu">
+				<a class="nav-link massenet" href="{{ path('home' ) }}" style="font-size:1.5em;">Accueil</a>
+			</li>
+			<li class="nav-item bleu" id="explain">
+				<a class="nav-link massenet" href="{{ path('explain' ) }}" style="font-size:1.5em;">Comment ça marche ?</a>
+			</li>
+			<li class="nav-item bleu" id="echanger">
+				<a class="nav-link massenet" href="{{ path('share_index') }}" style="font-size:1.5em;">Echanger</a>
+			</li>
+			<li class="nav-item bleu" id="contact">
+				<a class="nav-link massenet" href="{{ path('contact_us') }}" style="font-size:1.5em;">Contact</a>
+			</li>
+	 <ul class="navbar-nav mr-auto center font">
+                  
+                    <li class="nav-item dropdown bleu">
+                        <a class="nav-link dropdown-toggle nav_a" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-store-alt"></i> Galeries</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="border:none;">
+                  
+                        <a class="dropdown-item liens lien_gal" href="{{ path('galery_category', {'id': 2}) }}">Peinture</a>
+                        <a class="dropdown-item liens lien_gal" href="{{ path('galery_category', {'id': 1}) }}">Dessin</a>
+                        <a class="dropdown-item liens lien_gal" href="{{ path('galery_category', {'id': 3}) }}">Sculpture</a>
+                        <a class="dropdown-item liens lien_gal" href="{{ path('galery_category', {'id': 4}) }}">Modelage</a>
+                        <a class="dropdown-item liens lien_gal" href="{{ path('galery_category', {'id': 5}) }}">Art numérique</a>
+                        <a class="dropdown-item liens lien_gal" href="{{ path('galery_category', {'id': 6}) }}">Photographie</a>
+                        <a class="dropdown-item liens lien_gal" href="{{ path('galery_category', {'id': 11}) }}">Mosaique</a>
+                        <a class="dropdown-item liens lien_gal" href="{{ path('galery_category', {'id': 12}) }}">Collectionneur</a>
+                        <a class="dropdown-item liens lien_gal" href="{{ path('galery_category', {'id': 13}) }}">Céramique</a>
+                    </li>
+                    </ul>
+		</ul>
+		
+
+
+		<ul class="navbar-nav ml-auto liens_droits">
+			<li class="nav-item bleu" id="echange">
+				<a href="#" class="nav-link massenet" id="echanges">
+					<i class="far fa-handshake"></i>
+					Vos échanges</a>
+			</li>
+			<li lass="nav-item bleu" id="registration">
+				<a class="nav-link greu massenet" id="inscription" href="{{ path("security_registration")}}" tabindex="-1" aria-disabled="true">
+					<i class="fas fa-user-circle bleuCiel"></i>
+					Inscription</a>
+			</li>
+			<li lass="nav-item bleu">
+				<a class="nav-link noir massenet" id="connexion" href="{{ path("security_login")}}" tabindex="-1" aria-disabled="true">
+					<i class="fas fa-sign-in-alt rose"></i>
+					Connexion</a>
+			</li>
+			<li class="nav-item noir" id="deco">
+				<a class="nav-link massenet" id="deconnexion" href="{{ path("security_logout")}}" tabindex="-1" aria-disabled="true">
+					<i class="fas fa-sign-out-alt bleuCiel"></i>
+					Déconnexion</a>
+			</li>
+			<li class="nav-item bleu ml-2" id="bleudeco">
+				<a class="nav-link massenet" id="member" href="{{ path("member_index")}}" tabindex="-1" aria-disabled="true">
+					<i class="fas fa-home"></i>
+					Votre compte</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link massenet" id="admin" href="#" tabindex="-1" aria-disabled="true">
+					<i class="fas fa-tools"></i>
+					Administration</a>
+			</li>
+		</ul>
+
+        </div>
+	</div>
+</nav>

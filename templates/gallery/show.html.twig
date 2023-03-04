@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie de {{ gallery.user.firstName }}{% endblock %}
+
+{% block body %}
+<div class="container font">
+    <h1 class="center">Galerie de {{ gallery.user.firstName|title }}</h1>
+    
+    <br>
+        <div class="center fontDiv font_titres"> 
+            <p><span class="bleu">Nom de la galerie: </span> {{ gallery.name|title }}</p>
+
+            <p><span class="bleu">Catégorie: </span> {{ gallery.category }}</p>
+        </div>
+        <div class="center fontDiv font_titres">
+                <p><span class="bleu">Oeuvres</span></p>
+                <!-- l'array sur lequel je dois boucler c'est gallery.artisticWorks -->
+                {% for artisticWork in gallery.artisticWorks %}
+                    <p><img src=" {{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="images" ></p>
+                    <p>{{ artisticWork.name|title }}:</p>
+                    <p>{{ artisticWork.description }}</p>
+                  
+                {% endfor %}
+        </div>
+        <div class="center">
+            
+            <a class="btn btn-info" href="{{ path('user_show', {'slug': gallery.user.slug}) }}">Voir son profil</a>
+            <a class="btn btn-success" href="{{ path('message_newUserMess', {'id': gallery.user.id}) }}">Envoyer un message</a>
+      
+        </div>
+</div>
+   <script>
+		document.getElementById('inscription').style.display = 'block';
+		document.getElementById('connexion').style.display = 'block';
+		document.getElementById('admin').style.display = 'none';
+		document.getElementById('pas_vu').style.display = 'none';
+		document.getElementById('member').style.display = 'none';
+		document.getElementById('deconnexion').style.display = 'none';
+		document.getElementById('echanges').style.display = 'none';
+		document.getElementById('echange').style.display = 'none';
+		document.getElementById('achat').style.display = 'none';
+		document.getElementById('deco').style.display = 'none';
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+			document.getElementById('member').style.display = 'block';
+			document.getElementById('bleudeco').style.display = 'block';
+			document.getElementById('deco').style.display = 'block';
+			document.getElementById('deconnexion').style.display = 'block';
+			document.getElementById('echanges').style.display = 'block';
+			document.getElementById('inscription').style.display = 'none';
+			document.getElementById('connexion').style.display = 'none';
+			document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+{% endblock %}

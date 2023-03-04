@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'image a votre galerie de vente.
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center mt-5">Ajouter une image à votre galerie de vente.</h1>
+
+		{{ include('admin/artistic_work_vente/_form.html.twig') }}
+
+		<button class="btn bouton mt-2">
+			<a href="{{ path('gallery_vente_index') }}" style="color:#ffffff; text-decoration:none;">Retour à vos galeries de vente</a>
+		</button>
+	</div>
+	<script>
+		document.getElementById('member').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('deconnexion').style.display = 'block';
+	</script>
+	<script>
+		document.getElementById('achats').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echanges').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('achat').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('echange').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('inscription').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('connexion').style.display = 'none';
+	</script>
+	<script>
+		document.getElementById('admin').style.display = 'none';
+	</script>
+{% endblock %}
