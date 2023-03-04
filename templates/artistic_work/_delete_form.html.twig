@@ -1,0 +1,8 @@
+<form method="post" action="{{ path('artistic_work_delete', {'id': artistic_work.id}) }}" onsubmit="return confirm('Etes vous sur(e) de vouloir définitivement supprimer cette image?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artistic_work.id) }}">
+    <button class="btn btn-danger">Supprimer cette image</button>
+</form>
+
+
+<!-- <a href="javascript:{}" onclick="document.getElementById('my_form').submit();">Supprimer</a>-->

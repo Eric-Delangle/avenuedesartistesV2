@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre nouvelle galerie{% endblock %}
+
+{% block body %}
+<div class ="container mt-5">
+    <h1 class="center">Créer une galerie</h1>
+
+    {{ include('gallery/_form.html.twig') }}
+
+    <a class="btn btn-info" href="{{ path('galery_index', {'id': app.user.id}) }}">Retour à la liste de vos galeries</a>
+    </div>
+    
+    <script>
+		document.getElementById('inscription').style.display = 'block';
+		document.getElementById('connexion').style.display = 'block';
+		document.getElementById('admin').style.display = 'none';
+		document.getElementById('pas_vu').style.display = 'none';
+		document.getElementById('member').style.display = 'none';
+		document.getElementById('deconnexion').style.display = 'none';
+		document.getElementById('echanges').style.display = 'none';
+		document.getElementById('echange').style.display = 'none';
+		document.getElementById('achat').style.display = 'none';
+		document.getElementById('deco').style.display = 'none';
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+			document.getElementById('member').style.display = 'block';
+			document.getElementById('bleudeco').style.display = 'block';
+			document.getElementById('deco').style.display = 'block';
+			document.getElementById('deconnexion').style.display = 'block';
+			document.getElementById('echanges').style.display = 'block';
+			document.getElementById('inscription').style.display = 'none';
+			document.getElementById('connexion').style.display = 'none';
+			document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+{% endblock %}

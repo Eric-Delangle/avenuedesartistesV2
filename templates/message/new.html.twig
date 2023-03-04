@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau message{% endblock %}
+
+{% block body %}
+
+{% if app.user %}
+    <h1 class="center titre text-center mt-5">Rédigez votre message</h1>
+    <div class="container font"> 
+        {{ include('message/_form.html.twig') }}
+
+        <a class="btn btn-info" href="{{ path('message_index', {'id': app.user.id}) }}">Retour à vos message</a>
+    </div>
+{% else %}
+    <div class="container font center"> 
+       <p>Vous devez être inscrit et connecté pour envoyer des messages.</p>
+
+        <a class="btn btn-info" href="{{ path('home') }}">Retour à l'accueil</a>
+    </div>
+{% endif %}
+<script>document.getElementById('pas_vu').style.display ='block';</script>
+{% endblock %}

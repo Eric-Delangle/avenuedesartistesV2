@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Votre espace
+    
+{% endblock %}
+
+{% block body %}
+
+    <div class="container white liens_blancs">
+        <h1 class="text-center mt-5 massenet font_grand">
+            Votre espace
+            			
+            {{ app.user.firstName |capitalize }}
+        </h1>
+        <div class="avatar">
+            <img src="{{ asset(['images/avatars/', app.user.avatar]|join) }}" alt="avatar"></div>
+
+            <div class="container text-center mt-3">
+                <p class="h1 massenet">
+                    {{ app.user.firstName |capitalize }}
+                    {{ app.user.lastName |capitalize }}
+                </p>
+                <table class="test">
+                    <thead class="text-center">
+                        <tr>
+                            <th class="titre_profil_test massenet">
+                                Vous habitez
+                            </th>
+                            <th class="titre_profil_test massenet">
+                                Votre description
+                            </th>
+                            <th class="titre_profil_test massenet">
+                                Contact
+                            </th>
+                            <th class="titre_profil_test massenet">
+                                Vous apparaissez dans les catégories suivantes
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr>
+                            <td>
+                                <p class="mt-5">
+                                    {{ app.user.adress }}
+                                    {{ app.user.postalCode }}
+                                    à
+                                    				
+                                    {{ app.user.location |capitalize }}
+                                </p>
+                            </td>
+                            <td>
+                                {{ app.user.description2 }}
+                            </td>
+                            <td>
+                                <p>
+                                    <i class="fas fa-envelope">
+                                        {{ app.user.email }}
+                                    </i>
+                                </p>
+                                <p>
+                                    <i class="fas fa-phone-volume">
+                                        {{ app.user.tel }}
+                                    </i>
+                                </p>
+                            </td>
+                            <td>
+                                {% for item in app.user.categories %}
+                                    {% if loop.first != true %}
+                                        ,
+                                        				
+                                    {% endif %}
+
+                                    {{ item }}
+                                {% endfor %}
+                                .
+                                			
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <div class="d-flex text-center white mt-5">
+            <div class="col">
+                <button class="btn bouton">
+                    <a href="{{ path('galery_index', {'id': app.user.id }) }}" class="white lien">
+                        Gérer vos galeries d'échange
+                    </a>
+                </button>
+                <button class="btn bouton">
+                    <a href="{{ path('galery_new', {'id': app.user.id }) }}" class="white lien">
+                        Créer une galerie d'échange
+                    </a>
+                </button>
+                <div id="message" >
+                    <button class="btn bouton">
+                        <a href="{{ path('message_index', {'id': app.user.id }) }}" class="white lien">
+                            Consulter vos messages
+                        </a>
+                    </button>
+                    <button class="btn bouton">
+                        <a href="{{ path('user_edit', {'id': app.user.id }) }}" class="white lien">
+                            Modifier vos informations
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    <script>
+	document.getElementById('member').style.display = 'none';
+</script>
+    <script>
+	document.getElementById('bleudeco').style.display = 'none';
+</script>
+    <script>
+	document.getElementById('deconnexion').style.display = 'block';
+</script>
+    <script>
+	document.getElementById('achats').style.display = 'none';
+</script>
+    <script>
+	document.getElementById('member').style.display = 'none';
+</script>
+    <script>
+	document.getElementById('achat').style.display = 'none';
+</script>
+    <script>
+	document.getElementById('inscription').style.display = 'none';
+</script>
+    <script>
+	document.getElementById('connexion').style.display = 'none';
+</script>
+    <script>
+	document.getElementById('admin').style.display = 'none';
+</script>
+	{% if app.user %}
+		<script>
+		    document.getElementById('pas_vu').style.display = 'block';
+			document.getElementById('member').style.display = 'none';
+			document.getElementById('bleudeco').style.display = 'none';
+			document.getElementById('deco').style.display = 'block';
+			document.getElementById('deconnexion').style.display = 'block';
+			document.getElementById('echanges').style.display = 'block';
+			document.getElementById('inscription').style.display = 'none';
+			document.getElementById('connexion').style.display = 'none';
+			document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+{% endblock %}

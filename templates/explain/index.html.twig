@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment ça marche ?{% endblock %}
+
+{% block body %}
+<div class="container font"> 
+    <h1 class="text-center titre mt-5">Le concept</h1>
+    <br>
+    <p class="placeho mt-3">Vous avez toujours révé de posseder d'autres oeuvres que les votres mais votre budget de vous le permet pas ?
+        Pourquoi ne pas tenter d'en échanger une &nbsp;(ou plusieurs) contre une oeuvre &nbsp;(ou plusieurs) d'un artiste de votre domaine
+        ou d'un autre ?
+        Inscrivez vous puis:
+        Parcourez nos galeries dans leurs differentes catégories:
+         Dessin, peinture, sculpture, modelage, art-numérique et photographie.
+         Si une oeuvre vous plait vous pouvez proposer à son propriétaire de vous l'échanger contre une des votres.
+         Parcourez la <a href="{{ path('home') }}">carte</a> pour visualiser les artistes de votre région ainsi que leur(s) spécialité(s).
+         Si vous voyez un drapeau vert au lieu d'un drapeau bleu c'est que plusieurs membres habitent cette même ville.
+         Cliquez sur le drapeau pour tous les faire apparaitre.
+         Cliquez dans le vide sur la carte si vous souhaitez faire disparaitre la fenêtre d'informations.
+         Si aucun artiste n'apparait dans votre région c'est que vous êtes le premier.Un peu de patience,
+         d'autres ne vont pas tarder.
+    </p>
+</div>
+ 	<script>
+		document.getElementById('inscription').style.display = 'block';
+		document.getElementById('explain').style.display = 'none';
+		document.getElementById('connexion').style.display = 'block';
+		document.getElementById('admin').style.display = 'none';
+		document.getElementById('pas_vu').style.display = 'none';
+		document.getElementById('member').style.display = 'none';
+		document.getElementById('deconnexion').style.display = 'none';
+		document.getElementById('echanges').style.display = 'none';
+		document.getElementById('echange').style.display = 'none';
+		document.getElementById('achat').style.display = 'none';
+		document.getElementById('deco').style.display = 'none';
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+		document.getElementById('explain').style.display = 'none';
+			document.getElementById('member').style.display = 'block';
+			document.getElementById('bleudeco').style.display = 'block';
+			document.getElementById('deco').style.display = 'block';
+			document.getElementById('deconnexion').style.display = 'block';
+			document.getElementById('echanges').style.display = 'block';
+			document.getElementById('inscription').style.display = 'none';
+			document.getElementById('connexion').style.display = 'none';
+			document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+
+	{#
+	{% if is_granted('ROLE_ADMIN') %}
+		<script>
+			document.getElementById('admin').style.display = 'block';
+		</script>
+	{% endif %}
+	#}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la galerie{% endblock %}
+
+{% block body %}
+<h1 class="text-center mt-5">Modifier la galerie</h1>
+<div class="container mt-5" style="display:flex;" border style="text-align:center;">
+  
+    <div class="container">
+        {{dump(gallery)}}
+        <h3>Vos oeuvres</h3>
+        {% for artisticWork in gallery.artisticWorks %}
+        {{dump(artisticWork)}}
+            <td style="display:flex;"><img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}"  style="width: 300px; height: auto;"></td>
+            <a class="btn btn-danger" href="{{ path('artistic_work_edit', {'id': artisticWork.id}) }}">Options de cette image</a>
+            {% endfor %}
+    </div>
+<div class="container">
+    {{ include('gallery/_form.html.twig', {'button_label': 'Modifier nom et/ou catégorie'}) }}
+
+    <a class="btn btn-info" href="{{ path('artistic_work_new', {'id': gallery.id}) }}">Ajouter une image</a>
+   
+  
+    {# <a class="btn btn-primary" href="{{ path('gallery_index', {'id':app.user.id}) }}">Retour à la liste</a> #}
+</div>
+
+</div>
+<script>document.getElementById('inscription').style.display ='none';</script>
+<script>document.getElementById('connexion').style.display ='none';</script>
+
+ {% if  app.user.niveau == 2 %}
+<script>document.getElementById('admin').style.display ='block';</script>
+ {% else %}
+ <script>document.getElementById('admin').style.display ='none';</script>
+{% endif %}
+<script>document.getElementById('deconnexion').style.display ='block';</script>
+<script>document.getElementById('member').style.display ='block';</script>
+<script>document.getElementById('pas_vu').style.display ='block';</script>
+{% endblock %}

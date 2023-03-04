@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification d'image.
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center mt-5 massenet">Modification d'image d'échange.</h1>
+
+		{{ include('artistic_work/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+		<a href="{{ path('member_index') }}">Retour à la liste</a> 
+
+		{{ include('artistic_work/_delete_form.html.twig') }}
+	</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+security:
+    enable_authenticator_manager: true
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    providers:
+        in_database: 
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            provider: in_database
+        
+            form_login:
+                login_path: security_login
+                check_path: security_login
+                default_target_path: /member
+            logout:
+                path: security_logout
+                target: home
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }     
+            # https://symfony.com/doc/current/security/form_login_setup.html

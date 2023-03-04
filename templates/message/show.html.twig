@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Message{% endblock %}
+
+{% block body %}
+    <h1 class="center">Message</h1>
+    <br>
+<div class="container font"> 
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Expéditeur</th>
+                <td>{{ message.expediteur.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ message.titre }}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>{{ message.message }}</td>
+            </tr>
+            <tr>
+                <th>Posté le</th>
+                <td>{{ message.postedAt ? message.postedAt|date('d-m-Y- H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-success" href="{{ path('reponse_new', {'id': message.id}) }}">Repondre</a>
+    <a class="btn btn-info" href="{{ path('message_index', {'id': app.user.id}) }}">Retour à vos messages</a>
+
+    {{ include('message/_delete_form.html.twig') }}
+</div>
+<script>document.getElementById('pas_vu').style.display ='block';</script>
+{% endblock %}

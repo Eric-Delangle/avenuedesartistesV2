@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+<!-- Contact -->
+   
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-offset-2 col-md-8">
+            <div class="section-heading">
+              <h2>Contactez nous</h2>
+              <p>Nous vous répondrons dans les meilleurs delais. </p>
+            </div>
+          </div>
+        </div>
+  
+              <div class="row">
+
+                    {{ form_start(form)}}
+                    {{ form_row(form.name, {'attr': {'placeholder': "Votre nom"}})}} 
+                    {{ form_row(form.email, {'attr': {'placeholder': "Votre email"}})}} 
+                    {{ form_row(form.subject, {'attr': {'placeholder': "Sujet de votre message"}})}}
+                    {{ form_row(form.message, {'attr': {'placeholder': "Votre message"}})}}
+                    
+                          <!-- captcha -->
+                          <!-- Notre boite de vérification -->
+                          <div class="g-recaptcha" data-sitekey="6LdDO7wUAAAAAGdJHeLw21WKSVXEqVChyrpoWYvQ"></div>  
+                          <!-- fin captcha -->
+                          
+                          <div class="text-center"><button type="submit" class="btn btn-success btn-lg btn-block">Envoyer un message</button></div>
+                   
+  
+                      
+                      {{ form_end(form)}}
+                    </div>
+              </div>
+          </div>
+      </div>
+	<script>
+	    document.getElementById('contact').style.display = 'none';
+		document.getElementById('inscription').style.display = 'block';
+		document.getElementById('connexion').style.display = 'block';
+		document.getElementById('admin').style.display = 'none';
+		document.getElementById('pas_vu').style.display = 'block';
+		document.getElementById('member').style.display = 'none';
+		document.getElementById('deconnexion').style.display = 'none';
+		document.getElementById('echanger').style.display = 'block';
+		document.getElementById('achat').style.display = 'none';
+		document.getElementById('deco').style.display = 'none';
+		document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+		    document.getElementById('contact').style.display = 'none';
+		    document.getElementById('pas_vu').style.display = 'block';
+			document.getElementById('member').style.display = 'block';
+			document.getElementById('bleudeco').style.display = 'block';
+			document.getElementById('deco').style.display = 'block';
+			document.getElementById('deconnexion').style.display = 'block';
+		    document.getElementById('echanger').style.display = 'block';
+			document.getElementById('inscription').style.display = 'none';
+			document.getElementById('connexion').style.display = 'none';
+			document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+{% endblock %}

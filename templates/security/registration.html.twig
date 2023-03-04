@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Créer votre compte.
+{% endblock %}
+{% block steelsheets %}{% endblock %}
+{% block javascripts %}{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+	<div class="container">
+		<h1 class="titre text-center mt-5">Création de <span class="A_titre">v</span>otre compte</h1>
+		<br>
+		<p class="text-center">Lors de la création de votre compte vous aurez la possibilité d'échanger vos œuvres gratuitement.</p>
+		<br>
+
+		{{ form_start(form, {'attr': {'class': 'placeho'}})}}
+		{{ form_row(form.firstName, {'attr': {'placeholder': "Votre prénom"}})}}
+		{{ form_row(form.lastName, {'attr': {'placeholder': "Votre nom"}})}}
+		{{ form_row(form.location, {'attr': {'placeholder': "Votre ville"}})}}
+		{{ form_row(form.email, {'attr': {'placeholder': "Votre email"}})}}
+		{{ form_row(form.password, {'attr': {'placeholder': "Votre mot de passe"}})}}
+		{{ form_row(form.password_verify)}}
+
+		<!-- form_rest permet d'afficher la liste des catégories -->
+		{{ form_rest(form)}}<!-- captcha -->
+		<!-- Notre boite de vérification --><div class="g-recaptcha" data-sitekey=""> </div>
+
+		<!-- fin captcha -->
+		<br>
+		<button type="submit" class="btn bouton">Valider</button>
+		{{ form_end(form)}}
+	</div>
+	{# 
+																		<script src='https://www.google.com/recaptcha/api.js'></script>
+																		#}
+	<script>
+		document.getElementById('inscription').style.display = 'none';
+document.getElementById('connexion').style.display = 'none';
+document.getElementById('admin').style.display = 'none';
+document.getElementById('member').style.display = 'none';
+document.getElementById('deconnexion').style.display = 'none';
+document.getElementById('achats').style.display = 'none';
+document.getElementById('echanges').style.display = 'none';
+document.getElementById('echange').style.display = 'none';
+document.getElementById('achat').style.display = 'none';
+document.getElementById('deco').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'none';
+	</script>
+{% endblock %}
