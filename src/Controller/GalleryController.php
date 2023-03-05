@@ -53,7 +53,7 @@ class GalleryController extends AbstractController
      * @Route("/category/{id}", name="galery_category", methods={"GET"}, requirements={"id": "\d+"})
      */
     public function category(Request $request, PaginatorInterface $paginator, Category $category, GalleryRepository $galleryRepository)
-     {
+    {
         return $this->render('gallery/category.html.twig',[ 
          'galleries' => $paginator->paginate(
           $galleryRepository->findBy(['category' => $category]),
@@ -88,25 +88,20 @@ class GalleryController extends AbstractController
         ]);
     }
 
-      /**
+         /**
      * @Route("/edit/{id}", name="galery_edit", methods={"GET","POST"}, requirements={"id":"\d+"})
      */
-    public function edit(Request $request, GalleryRepository $galleryrepo): Response
+    public function edit(Request $request, Gallery $gallery): Response
     {
-        $gallery = $galleryrepo->findBy(['user' => $this->getUser()]);
-        //$gallery = new Gallery();
-       // dd($gallery);
-     if(!$gallery) {
-         return $this->redirectToRoute('member_index');
-     }
-        $form = $this->createForm(GalleryEditType::class, $gallery);
+     
+        $form = $this->createForm(GalleryType::class, $gallery);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre galerie a bien été mise à jour!');
             $this->doctrine->getManager()->flush();
            
-            return $this->redirectToRoute('galery_edit', ['id' => $gallery->getId()]);
+            return $this->redirectToRoute('gallery_edit', ['id' => $gallery->getId()]);
         }
 
         return $this->render('gallery/edit.html.twig', [
@@ -115,6 +110,7 @@ class GalleryController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/show/{id}", name="galery_showUser", methods={"GET"})

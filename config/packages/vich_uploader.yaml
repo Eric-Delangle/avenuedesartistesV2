@@ -1,22 +1,22 @@
 vich_uploader:
-    db_driver: orm        # or mongodb or phpcr - default db driver
-    twig: true            # set to false to disable twig integration
-    form: true            # set to false to disable form integration
-    storage: file_system  # or gaufrette or flysystem
-    metadata:
-        auto_detection: true
-        cache: file
-        type: annotation    # or attribut
-    mappings:
-        artisticWorks_image:
-            uri_prefix: '%app.path.artisticWorks_images%'
-            upload_destination: '%kernel.project_dir%/public/images/artisticWorks'
-            namer:
-              service: Vich\UploaderBundle\Naming\PropertyNamer
-              options: { property: 'slug' }
-        avatars:
-            uri_prefix: '%app.path.avatars%'
-            upload_destination: '%kernel.project_dir%/public/images/avatars'
-            namer:
-              service: Vich\UploaderBundle\Naming\PropertyNamer
-              options: { property: 'slug' }
+  db_driver: orm # or mongodb or phpcr - default db driver
+  twig: true # set to false to disable twig integration
+  form: true # set to false to disable form integration
+  storage: file_system # or gaufrette or flysystem
+  metadata:
+    auto_detection: true
+    cache: file
+    type: annotation # or attribut
+  mappings:
+    artisticWorks_images:
+      uri_prefix: "%app.path.artisticWorks_images%"
+      upload_destination: "%kernel.project_dir%/public/images/artisticWorks"
+      namer:
+        service: Vich\UploaderBundle\Naming\PropertyNamer
+        options: { property: "slug" }
+    avatars:
+      uri_prefix: "%app.path.avatars%"
+      upload_destination: "%kernel.project_dir%/public/images/avatars"
+      namer:
+        service: Vich\UploaderBundle\Naming\PropertyNamer
+        options: { property: "slug" }

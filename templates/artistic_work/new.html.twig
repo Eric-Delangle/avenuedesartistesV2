@@ -10,7 +10,7 @@
 		{{ include('artistic_work/_form.html.twig') }}
 
 		<button class="btn bouton mt-2">
-			<a href="{{ path('gallery_index') }}" style="color:#ffffff; text-decoration:none;">Retour à vos galeries d'échange</a>
+			<a href="{{ path('galery_index', {'id': gallery.id}) }}" style="color:#ffffff; text-decoration:none;">Retour à vos galeries d'échange</a>
 		</button>
 	</div>
 

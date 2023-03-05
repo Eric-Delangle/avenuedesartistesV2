@@ -7,24 +7,21 @@
 <div class="container mt-5" style="display:flex;" border style="text-align:center;">
   
     <div class="container">
-        {{dump(gallery)}}
         <h3>Vos oeuvres</h3>
-        {% for artisticWork in gallery.artisticWorks %}
-        {{dump(artisticWork)}}
-            <td style="display:flex;"><img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}"  style="width: 300px; height: auto;"></td>
-            <a class="btn btn-danger" href="{{ path('artistic_work_edit', {'id': artisticWork.id}) }}">Options de cette image</a>
-            {% endfor %}
+            {% if gallery.artisticWorks != '' %}
+                {% for artisticWork in gallery.artisticWorks %} 
+                    <td style="display:flex;"><img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}"  style="width: 300px; height: auto;"></td>
+                    <a class="btn btn-danger" href="{{ path('artistic_work_edit', {'id': artisticWork.id}) }}">Options de cette image</a>
+                {% endfor %}
+            {% endif %}
+            {{ include('gallery/_form.html.twig', {'button_label': 'Modifier nom et/ou catégorie'}) }}
+
+        <a class="btn btn-info" href="{{ path('artistic_work_new', {'id': gallery.id}) }}">Ajouter une image</a> 
+       
+      
+        {# <a class="btn btn-primary" href="{{ path('gallery_index', {'id':app.user.id}) }}">Retour à la liste</a> #}
     </div>
-<div class="container">
-    {{ include('gallery/_form.html.twig', {'button_label': 'Modifier nom et/ou catégorie'}) }}
-
-    <a class="btn btn-info" href="{{ path('artistic_work_new', {'id': gallery.id}) }}">Ajouter une image</a>
-   
-  
-    {# <a class="btn btn-primary" href="{{ path('gallery_index', {'id':app.user.id}) }}">Retour à la liste</a> #}
-</div>
-
-</div>
+    </div>
 <script>document.getElementById('inscription').style.display ='none';</script>
 <script>document.getElementById('connexion').style.display ='none';</script>
 

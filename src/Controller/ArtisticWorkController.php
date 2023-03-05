@@ -46,10 +46,11 @@ class ArtisticWorkController extends AbstractController
             $entityManager->persist($artisticWork);
             $entityManager->flush();
 
-            return $this->redirectToRoute('gallery_edit', ["id" =>$gallery->getId()]);
+            return $this->redirectToRoute('galery_edit', ["id" =>$gallery->getId()]);
         }
 
         return $this->render('artistic_work/new.html.twig', [
+            'gallery' => ["id" =>$gallery->getId()],
             'artistic_work' => $artisticWork,
             'form' => $form->createView(),
         ]);
