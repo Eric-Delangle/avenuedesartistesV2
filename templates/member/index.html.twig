@@ -21,63 +21,69 @@
                     {{ app.user.firstName |capitalize }}
                     {{ app.user.lastName |capitalize }}
                 </p>
-                <table class="test">
+                <table class="test table text-center mt-5">
                     <thead class="text-center">
-                        <tr>
-                            <th class="titre_profil_test massenet">
+                        <tr >
+                            <th class="titre_profil_test massenet boutonFixe">
                                 Vous habitez
                             </th>
-                            <th class="titre_profil_test massenet">
+                            <tr>
+                                <td>
+                                    <p class="mt-5">
+                                        {{ app.user.adress }}
+                                        {{ app.user.postalCode }}
+                                        à
+                                                        
+                                        {{ app.user.location |capitalize }}
+                                    </p>
+                                </td>
+                            </tr>
+                            <th class="titre_profil_test massenet boutonFixe">
                                 Votre description
                             </th>
-                            <th class="titre_profil_test massenet">
+                                <tr>
+                                    <td>
+                                        {{ app.user.description2 }}
+                                    </td>
+                                </tr>
+                            <th class="titre_profil_test massenet boutonFixe">
                                 Contact
                             </th>
-                            <th class="titre_profil_test massenet">
+                            <tr>
+                                <td>
+                                    <p>
+                                        <i class="fas fa-envelope">
+                                            {{ app.user.email }}
+                                        </i>
+                                    </p>
+                                    <p>
+                                        <i class="fas fa-phone-volume">
+                                            {{ app.user.tel }}
+                                        </i>
+                                    </p>
+                                </td>
+                                
+                            </tr>
+                            <th class="titre_profil_test massenet boutonFixe">
                                 Vous apparaissez dans les catégories suivantes
                             </th>
+                            <tr>
+                            <td>
+                            {% for item in app.user.categories %}
+                            {% if loop.first != true %}
+                                ,
+                                                
+                            {% endif %}
+
+                            {{ item }}
+                        {% endfor %}
+                        .
+                                    
+                    </td>
+                </tr>
                         </tr>
                     </thead>
-                    <tbody class="text-center">
-                        <tr>
-                            <td>
-                                <p class="mt-5">
-                                    {{ app.user.adress }}
-                                    {{ app.user.postalCode }}
-                                    à
-                                    				
-                                    {{ app.user.location |capitalize }}
-                                </p>
-                            </td>
-                            <td>
-                                {{ app.user.description2 }}
-                            </td>
-                            <td>
-                                <p>
-                                    <i class="fas fa-envelope">
-                                        {{ app.user.email }}
-                                    </i>
-                                </p>
-                                <p>
-                                    <i class="fas fa-phone-volume">
-                                        {{ app.user.tel }}
-                                    </i>
-                                </p>
-                            </td>
-                            <td>
-                                {% for item in app.user.categories %}
-                                    {% if loop.first != true %}
-                                        ,
-                                        				
-                                    {% endif %}
-
-                                    {{ item }}
-                                {% endfor %}
-                                .
-                                			
-                            </td>
-                        </tr>
-                    </tbody>
+            
                 </table>
             </div>
         </div>
