@@ -19,32 +19,35 @@ class ArtisticWorkRepository extends ServiceEntityRepository
         parent::__construct($registry, ArtisticWork::class);
     }
 
-    // /**
-    //  * @return ArtisticWork[] Returns an array of ArtisticWork objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findForMarketplace(array $filters = []): \Doctrine\ORM\Query
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.category', 'c')
+            ->addSelect('c')
+            ->where("a.listingType != 'none'")
+            ->andWhere("a.status = 'available'")
+            ->orderBy('a.createdAt', 'DESC');
 
-    /*
-    public function findOneBySomeField($value): ?ArtisticWork
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (!empty($filters['type'])) {
+            if ($filters['type'] === 'sale') {
+                $qb->andWhere("a.listingType IN ('sale', 'both')");
+            } elseif ($filters['type'] === 'exchange') {
+                $qb->andWhere("a.listingType IN ('exchange', 'both')");
+            }
+        }
+
+        if (!empty($filters['category']) && is_numeric($filters['category'])) {
+            $qb->andWhere('c.id = :cat')->setParameter('cat', (int) $filters['category']);
+        }
+
+        if (!empty($filters['priceMin']) && is_numeric($filters['priceMin'])) {
+            $qb->andWhere('(a.price >= :pmin OR a.price IS NULL)')->setParameter('pmin', (float) $filters['priceMin']);
+        }
+
+        if (!empty($filters['priceMax']) && is_numeric($filters['priceMax'])) {
+            $qb->andWhere('(a.price <= :pmax OR a.price IS NULL)')->setParameter('pmax', (float) $filters['priceMax']);
+        }
+
+        return $qb->getQuery();
     }
-    */
 }

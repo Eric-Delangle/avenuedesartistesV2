@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ work.name }} — Marketplace{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('marketplace_index') }}">Marketplace</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ work.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        {# Photo #}
+        <div class="col-md-6">
+            {% if work.picture %}
+                <img src="{{ asset('uploads/artisticWorks/' ~ work.picture) }}"
+                     class="img-fluid rounded shadow"
+                     alt="{{ work.name }}">
+            {% else %}
+                <div class="bg-light rounded d-flex align-items-center justify-content-center"
+                     style="height: 400px;">
+                    <i class="fas fa-image fa-5x text-muted"></i>
+                </div>
+            {% endif %}
+        </div>
+
+        {# Détails #}
+        <div class="col-md-6">
+            <h1 class="mb-3">{{ work.name }}</h1>
+
+            <div class="mb-3">
+                {% if work.listingType in ['sale', 'both'] %}
+                    <span class="badge badge-success badge-pill">Vente</span>
+                {% endif %}
+                {% if work.listingType in ['exchange', 'both'] %}
+                    <span class="badge badge-info badge-pill">Échange</span>
+                {% endif %}
+            </div>
+
+            {% if work.price is not null %}
+                <p class="h3 text-success mb-3">{{ work.price|number_format(2, ',', ' ') }} €</p>
+            {% else %}
+                <p class="text-muted font-italic mb-3">Prix sur échange</p>
+            {% endif %}
+
+            {% if work.description %}
+                <p class="card-text">{{ work.description }}</p>
+            {% endif %}
+
+            {% if work.listingType in ['exchange', 'both'] and work.exchangeDescription %}
+                <div class="alert alert-info mt-3">
+                    <strong>Conditions d'échange :</strong><br>
+                    {{ work.exchangeDescription }}
+                </div>
+            {% endif %}
+
+            {% if work.category %}
+                <p class="text-muted">
+                    <i class="fas fa-tag"></i> Catégorie : {{ work.category.name }}
+                </p>
+            {% endif %}
+
+            {% if work.gallery %}
+                <p class="text-muted">
+                    <i class="fas fa-store-alt"></i>
+                    Galerie :
+                    <a href="{{ path('galery_showUser', {'id': work.gallery.id}) }}">
+                        {{ work.gallery.name ?? 'Voir la galerie' }}
+                    </a>
+                </p>
+            {% endif %}
+
+            <div class="mt-4">
+                <button class="btn btn-primary btn-block" disabled title="Disponible prochainement">
+                    <i class="fas fa-handshake"></i> Faire une offre
+                    <small class="d-block text-white-50">(bientôt disponible)</small>
+                </button>
+                <a href="{{ path('marketplace_index') }}" class="btn btn-outline-secondary btn-block mt-2">
+                    Retour à la marketplace
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
