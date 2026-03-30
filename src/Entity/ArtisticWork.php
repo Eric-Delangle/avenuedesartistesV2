@@ -3,114 +3,75 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ArtisticWorkRepository")
- * @Vich\Uploadable()
- * @Assert\Expression(
- *     "!this.isForSale() or this.getPrice() != null",
- *     message="Le prix est requis pour une œuvre en vente."
- * )
- */
+#[ORM\Entity(repositoryClass: 'App\Repository\ArtisticWorkRepository')]
+#[Vich\Uploadable]
+#[Assert\Expression(
+    expression: '!this.isForSale() or this.getPrice() != null',
+    message: 'Le prix est requis pour une œuvre en vente.'
+)]
 class ArtisticWork
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-      /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="artisticWorks", cascade = {"persist"})
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Gallery', inversedBy: 'artisticWorks', cascade: ['persist'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private $gallery;
 
-     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="galleriesEchange", cascade = {"persist"})
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Category', inversedBy: 'galleriesEchange', cascade: ['persist'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private $category;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @var datetime|null
-     */
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable = true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $picture;
 
-     /**
-     * @Vich\UploadableField(mapping="artisticWorks_images", fileNameProperty="picture")
-     * @Assert\File(
-     * maxSize="1000k",
-     * maxSizeMessage="Le fichier excède 1000Ko.",
-     * mimeTypes={"image/png", "image/jpeg", "image/jpg", "image/gif"},
-     * mimeTypesMessage= "formats autorisés: png, jpeg, jpg, gif"
-     * )
-     * @var File|null
-     */
+    #[Vich\UploadableField(mapping: 'artisticWorks_images', fileNameProperty: 'picture')]
+    #[Assert\File(
+        maxSize: '1000k',
+        maxSizeMessage: 'Le fichier excède 1000Ko.',
+        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+        mimeTypesMessage: 'formats autorisés: png, jpeg, jpg, gif'
+    )]
     private $pictureFile;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $updated_at;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $description;
 
     public const LISTING_TYPES = ['none', 'sale', 'exchange', 'both'];
     public const STATUSES = ['available', 'reserved', 'sold', 'exchanged'];
 
-    /**
-     * @ORM\Column(type="string", length=20, options={"default": "none"})
-     */
+    #[ORM\Column(type: 'string', length: 20, options: ['default' => 'none'])]
     private string $listingType = 'none';
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
     private ?string $price = null;
 
-    /**
-     * @ORM\Column(type="string", length=3, nullable=true, options={"default": "EUR"})
-     */
+    #[ORM\Column(type: 'string', length: 3, nullable: true, options: ['default' => 'EUR'])]
     private ?string $currency = 'EUR';
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $exchangeDescription = null;
 
-    /**
-     * @ORM\Column(type="string", length=20, options={"default": "available"})
-     */
+    #[ORM\Column(type: 'string', length: 20, options: ['default' => 'available'])]
     private string $status = 'available';
 
     public function getId(): ?int
@@ -166,8 +127,6 @@ class ArtisticWork
         return $this;
     }
 
-    //getter et setter du slug
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -180,22 +139,16 @@ class ArtisticWork
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return (string) $this->getPicture();
     }
 
-    /**
-     * @return null|string
-     */
     public function getPictureFile(): ?File
-    { 
-    return $this->pictureFile;
+    {
+        return $this->pictureFile;
     }
 
-    /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $PictureFile
-     * @return ArtisticWork
-     */
     public function setPictureFile(?File $pictureFile): ArtisticWork
     {
         $this->pictureFile = $pictureFile;

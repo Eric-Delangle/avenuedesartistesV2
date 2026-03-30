@@ -7,13 +7,11 @@ use App\Repository\UserRepository;
 use App\Repository\GalleryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class MemberController extends AbstractController
 {
-    /**
-     * @Route("/member", name="member_index")
-     */
+    #[Route('/member', name: 'member_index')]
     public function index(UserRepository $userRepo, GalleryRepository $galleryrepo): Response
     {
 

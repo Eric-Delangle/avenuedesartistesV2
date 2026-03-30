@@ -13,7 +13,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\Mailer\MailerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -36,9 +36,7 @@ class SecurityController extends AbstractController
         $this->doctrine = $doctrine;
     }
 
-    /**
-     * @Route("/inscription", name="security_registration")
-     */
+    #[Route('/inscription', name: 'security_registration')]
     public function registration(UserPasswordHasherInterface $passwordHasher,
         Request $request, EntityManagerInterface $manager)
     {
@@ -50,7 +48,7 @@ class SecurityController extends AbstractController
         /*
         $recaptcha = new ReCaptcha('');
         $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
-  
+
         if (!$resp->isSuccess()) {
          // $this->addFlash('N\'oubliez pas de cocher la case "Je ne suis pas un robot"');
         } else {
@@ -102,9 +100,7 @@ class SecurityController extends AbstractController
     }
 
 
-    /**
-     * @Route("/activation/{token}", name="security_activation")
-     */
+    #[Route('/activation/{token}', name: 'security_activation')]
     public function activation($token, UserRepository $userRepo)
     {
         // on verifie si un utilsateur a ce token
@@ -127,9 +123,7 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('member_index');
     }
 
-    /**
-     * @Route("/connexion", name="security_login")
-     */
+    #[Route('/connexion', name: 'security_login')]
     public function login()
     {
 
@@ -142,7 +136,7 @@ class SecurityController extends AbstractController
         // Le service authentication_utils permet de récupérer le nom d'utilisateur
         // et l'erreur dans le cas où le formulaire a déjà été soumis mais était invalide
         // (mauvais mot de passe par exemple)
-       
+
 
         return $this->render('security/login.html.twig', array(
             'last_username' => $this->authenticationUtils->getLastUsername(),
@@ -152,17 +146,13 @@ class SecurityController extends AbstractController
         $this->addFlash('success', 'Vous êtes bien connecté !');
     }
 
-    /**
-     * @Route("/deconnexion", name="security_logout")
-     */
+    #[Route('/deconnexion', name: 'security_logout')]
     public function logout()
     {
         $this->addFlash('success', 'Vous êtes bien déconnecté !');
     }
-    
-     /**
-     * @Route("/oubli-pass", name="forgotten_password")
-     */
+
+    #[Route('/oubli-pass', name: 'forgotten_password')]
     public function oubliPass(
         Request $request,
         UserRepository $users,
@@ -232,9 +222,7 @@ class SecurityController extends AbstractController
         return $this->render('bundles/SyliusShopBundle/security/forgotten_password.html.twig', ['emailForm' => $form->createView()]);
     }
 
-    /**
-     * @Route("/reset_pass/{token}", name="reset_password")
-     */
+    #[Route('/reset_pass/{token}', name: 'reset_password')]
     public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
     {
         // On cherche un utilisateur avec le token donné

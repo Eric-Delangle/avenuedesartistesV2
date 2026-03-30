@@ -4,44 +4,28 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
- */
+#[ORM\Entity(repositoryClass: 'App\Repository\MessageRepository')]
 class Message
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="message", cascade = {"persist"})
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'message', cascade: ['persist'])]
     private $expediteur;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages", cascade={"persist"})
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'messages', cascade: ['persist'])]
     private $destinataire;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $titre;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $message;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $postedAt;
-
-
 
     public function getId(): ?int
     {
@@ -107,7 +91,6 @@ class Message
 
         return $this;
     }
-
 
     public function __toString()
     {

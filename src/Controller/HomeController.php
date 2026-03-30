@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Serializer;
@@ -16,15 +16,13 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class HomeController extends AbstractController
 {
-    
+
      public function __construct(private ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }
-    
-    /**
-     * @Route("/", name="home")
-     */
+
+    #[Route('/', name: 'home')]
     public function index(): Response
     {
         return $this->render('home/index.html.twig', [
@@ -34,9 +32,6 @@ class HomeController extends AbstractController
 
     /* la je veux recuperer les lieux de mes membres en bases de données afin de les transformer en json
     et pouvoir les afficher sur la map */
-    /**
-     * @Route("/", name="home")
-     */
 
     public function membersLocations(SerializerInterface $serializer)
     {
@@ -56,7 +51,7 @@ class HomeController extends AbstractController
             $user,
             'json',
 
-            ['attributes' => 
+            ['attributes' =>
                 ['id', 'firstName', 'lastName', 'slug', 'location', 'categories' =>
                  ['name'], 'messages' =>
                   ['message']

@@ -9,16 +9,12 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/marketplace")
- */
+#[Route('/marketplace')]
 class MarketplaceController extends AbstractController
 {
-    /**
-     * @Route("", name="marketplace_index", methods={"GET"})
-     */
+    #[Route('', name: 'marketplace_index', methods: ['GET'])]
     public function index(
         Request $request,
         ArtisticWorkRepository $artworkRepository,
@@ -47,9 +43,7 @@ class MarketplaceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="marketplace_show", methods={"GET"}, requirements={"id": "\d+"})
-     */
+    #[Route('/{id}', name: 'marketplace_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(ArtisticWork $work): Response
     {
         if ($work->getListingType() === 'none' || $work->getStatus() !== 'available') {

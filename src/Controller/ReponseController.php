@@ -10,15 +10,12 @@ use App\Repository\MessageRepository;
 use App\Repository\ReponseRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Doctrine\Persistence\ManagerRegistry;
 
 
-/**
- * @Route("/reponse")
- */
+#[Route('/reponse')]
 class ReponseController extends AbstractController
 {
 
@@ -27,9 +24,7 @@ class ReponseController extends AbstractController
         $this->doctrine = $doctrine;
     }
 
-    /**
-     * @Route("/", name="reponse_index", methods={"GET"})
-     */
+    #[Route('/', name: 'reponse_index', methods: ['GET'])]
     public function index(ReponseRepository $reponseRepository): Response
     {
         return $this->render('reponse/index.html.twig', [
@@ -37,25 +32,20 @@ class ReponseController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/show/{id}", name="reponse_new", methods={"GET"})
-     */
-    
-    public function messageReçu(Message $message): Response 
+    #[Route('/show/{id}', name: 'reponse_new', methods: ['GET'])]
+    public function messageReçu(Message $message): Response
     {
         return $this->render('reponse/new.html.twig', [
             'message' => $message,
             dump($message),
-        ]); 
+        ]);
     }
 
 
-    /**
-     * @Route("/new/{id}/reponse/", name="reponse_newRep", methods={"GET","POST"})
-     */
+    #[Route('/new/{id}/reponse/', name: 'reponse_newRep', methods: ['GET', 'POST'])]
     public function newRep(Request $request, Reponse $reponse): Response
     {
-     
+
             $expediteur = $reponse->getDestinataire();
             $destinataire = $reponse->getExpediteur();
             $rep = new Reponse();
@@ -79,15 +69,13 @@ class ReponseController extends AbstractController
                 'reponse' => $reponse,
                 'form' => $form->createView(),
             ]);
-        
+
     }
- 
-    /**
-     * @Route("/new/{id}", name="reponse_new", methods={"GET","POST"})
-     */
+
+    #[Route('/new/{id}', name: 'reponse_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Message $message): Response
     {
-     
+
             $expediteur = $message->getDestinataire();
             $destinataire = $message->getExpediteur();
             $reponse = new Reponse();
@@ -111,13 +99,10 @@ class ReponseController extends AbstractController
                 'reponse' => $reponse,
                 'form' => $form->createView(),
             ]);
-        
+
     }
 
-    /**
-     * @Route("/show/{id}", name="reponse_showRep", methods={"GET"})
-     */
-    
+    #[Route('/show/{id}', name: 'reponse_showRep', methods: ['GET'])]
     public function showrep(Reponse $reponse): Response
     {
         return $this->render('reponse/show.html.twig', [
@@ -125,11 +110,8 @@ class ReponseController extends AbstractController
         ]);
     }
 
-    
-    /**
-     * @Route("/show/{id}/message/{message}", name="reponse_show", methods={"GET"})
-     * @Entity("message", expr="repository.find(message)")
-     */
+
+    #[Route('/show/{id}/message/{message}', name: 'reponse_show', methods: ['GET'])]
     public function show(Reponse $reponse, Message $message): Response
     {
         return $this->render('reponse/show.html.twig', [
@@ -138,9 +120,7 @@ class ReponseController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="reponse_edit", methods={"GET","POST"})
-     */
+    #[Route('/{id}/edit', name: 'reponse_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reponse $reponse): Response
     {
         $form = $this->createForm(ReponseType::class, $reponse);
@@ -158,9 +138,7 @@ class ReponseController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="reponse_delete", methods={"DELETE"})
-     */
+    #[Route('/{id}', name: 'reponse_delete', methods: ['DELETE'])]
     public function delete(Request $request, Reponse $reponse): Response
     {
         if ($this->isCsrfTokenValid('delete'.$reponse->getId(), $request->request->get('_token'))) {
