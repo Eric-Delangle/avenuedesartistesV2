@@ -15,6 +15,14 @@ _Objectifs différés suite au split du 2026-03-30_
 - **Goal D** : Stratégie d'archivage des références user sur `Offer`/`Transaction` (éviter perte d'audit à la suppression d'un compte)
 - **Pre-existing** : `Gallery::$slug` sans propriété ni `@ORM\Column` — à corriger dans une story dédiée avant la production
 
+## Review findings différés (Goal B — 2026-03-30)
+
+- **Goal B** : `?type=both` dans l'URL silencieusement ignoré — pas de cas utilisateur réel (form n'a pas cette option)
+- **Goal B** : `createdAt` ordering sur anciennes données — vérifier DEFAULT CURRENT_TIMESTAMP dans migration `artistic_work` avant prod
+- **Goal B** : Bouton "Faire une offre" ne donne pas d'indice d'authentification aux visiteurs anonymes — à gérer lors de l'implémentation Goal C
+- **Goal B** : Enumération d'IDs via message 404 distinct (œuvre non disponible vs inexistante) — risque faible sur marketplace publique, à revoir si données sensibles
+- **Goal B** : Rate limiting sur `/marketplace` — hors scope, à ajouter en couche infrastructure si nécessaire
+
 ## C — Système d'offres
 - Entité `Offer` (prérequis : objectif A)
 - `OfferController` : new, accept, reject, cancel

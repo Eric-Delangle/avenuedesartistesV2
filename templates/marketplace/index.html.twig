@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marketplace — Avenue des Artistes{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Marketplace</h1>
+
+    {# Filtres #}
+    <form method="GET" action="{{ path('marketplace_index') }}" class="mb-4">
+        <div class="form-row align-items-end">
+            <div class="col-md-3 mb-2">
+                <label for="type">Type</label>
+                <select name="type" id="type" class="form-control">
+                    <option value="">Tous</option>
+                    <option value="sale" {% if filters.type == 'sale' %}selected{% endif %}>En vente</option>
+                    <option value="exchange" {% if filters.type == 'exchange' %}selected{% endif %}>En échange</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label for="category">Catégorie</label>
+                <select name="category" id="category" class="form-control">
+                    <option value="">Toutes</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if filters.category == category.id ~ '' %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2 mb-2">
+                <label for="priceMin">Prix min (€)</label>
+                <input type="number" name="priceMin" id="priceMin" class="form-control" min="0" step="0.01"
+                       value="{{ filters.priceMin }}">
+            </div>
+            <div class="col-md-2 mb-2">
+                <label for="priceMax">Prix max (€)</label>
+                <input type="number" name="priceMax" id="priceMax" class="form-control" min="0" step="0.01"
+                       value="{{ filters.priceMax }}">
+            </div>
+            <div class="col-md-2 mb-2">
+                <button type="submit" class="btn btn-primary btn-block">Filtrer</button>
+            </div>
+        </div>
+        {% if filters.type or filters.category or filters.priceMin or filters.priceMax %}
+            <a href="{{ path('marketplace_index') }}" class="btn btn-sm btn-outline-secondary mt-1">
+                Réinitialiser les filtres
+            </a>
+        {% endif %}
+    </form>
+
+    {# Grille d'œuvres #}
+    {% if works is empty %}
+        <div class="alert alert-info">Aucune œuvre disponible pour le moment.</div>
+    {% else %}
+        <div class="row">
+            {% for work in works %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if work.picture %}
+                            <img src="{{ asset('uploads/artisticWorks/' ~ work.picture) }}"
+                                 class="card-img-top"
+                                 alt="{{ work.name }}"
+                                 style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                                 style="height: 200px;">
+                                <i class="fas fa-image fa-3x text-muted"></i>
+                            </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ work.name }}</h5>
+
+                            <div class="mb-2">
+                                {% if work.listingType in ['sale', 'both'] %}
+                                    <span class="badge badge-success">Vente</span>
+                                {% endif %}
+                                {% if work.listingType in ['exchange', 'both'] %}
+                                    <span class="badge badge-info">Échange</span>
+                                {% endif %}
+                            </div>
+
+                            {% if work.price is not null %}
+                                <p class="card-text font-weight-bold">{{ work.price|number_format(2, ',', ' ') }} €</p>
+                            {% else %}
+                                <p class="card-text text-muted font-italic">Prix sur échange</p>
+                            {% endif %}
+
+                            {% if work.category %}
+                                <p class="card-text text-muted small">{{ work.category.name }}</p>
+                            {% endif %}
+
+                            <div class="mt-auto">
+                                <a href="{{ path('marketplace_show', {'id': work.id}) }}"
+                                   class="btn btn-outline-primary btn-sm btn-block">
+                                    Voir le détail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# Pagination #}
+        <div class="d-flex justify-content-center mt-3">
+            {{ knp_pagination_render(works) }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
