@@ -6,45 +6,31 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\GalleryRepository")
- */
+#[ORM\Entity(repositoryClass: 'App\Repository\GalleryRepository')]
 class Gallery
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="galleriesEchange")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Category', inversedBy: 'galleriesEchange')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private $category;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"remove"},inversedBy="galleryEchange")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', cascade: ['remove'], inversedBy: 'galleryEchange')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private $user;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArtisticWork", mappedBy="gallery")
-     */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\ArtisticWork', mappedBy: 'gallery')]
     private $artisticWorks;
 
     public const GALLERY_TYPES = ['showcase', 'sale', 'exchange', 'mixed'];
 
-    /**
-     * @ORM\Column(type="string", length=20, options={"default": "showcase"})
-     */
+    #[ORM\Column(type: 'string', length: 20, options: ['default' => 'showcase'])]
     private string $galleryType = 'showcase';
 
     public function __construct()
@@ -93,15 +79,13 @@ class Gallery
         return $this;
     }
 
-    /**
-     * @return Collection|ArtisticWork[]
-     */
     public function getArtisticWorks(): Collection
     {
         return $this->artisticWorks;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return (string) $this->getName();
     }
 
@@ -122,16 +106,11 @@ class Gallery
         return $this->galleryType !== 'showcase';
     }
 
-     public function getSlug()
+    public function getSlug()
     {
         return $this->slug;
     }
 
-    /**
-     * Set the value of slug
-     *
-     * @return  self
-     */
     public function setSlug($slug)
     {
         $this->slug = $slug;

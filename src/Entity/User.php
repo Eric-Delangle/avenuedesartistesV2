@@ -4,171 +4,106 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Notifier\Exception\InvalidArgumentException;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields="email")
- * @Vich\Uploadable()
- */
+#[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
+#[UniqueEntity(fields: 'email')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Groups({"group1"})
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['group1'])]
     private $id;
 
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $userIdentifier;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min="8", minMessage="Votre mot de passe doit contenir au minimum huit caractères", groups={"registration"})
-     * @Assert\EqualTo(propertyPath="password_verify", message="Vos mots de passe ne sont pas identiques", groups={"registration"})
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Length(min: 8, minMessage: 'Votre mot de passe doit contenir au minimum huit caractères', groups: ['registration'])]
+    #[Assert\EqualTo(propertyPath: 'password_verify', message: 'Vos mots de passe ne sont pas identiques', groups: ['registration'])]
     private $password;
 
-    /**
-     *  @Assert\EqualTo(propertyPath="password", message="Vos mots de passe ne sont pas identiques", groups={"registration"})
-     * @var string|null
-     */
+    #[Assert\EqualTo(propertyPath: 'password', message: 'Vos mots de passe ne sont pas identiques', groups: ['registration'])]
     public $password_verify;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"group1"})
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['group1'])]
     private $firstName;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"group1"})
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['group1'])]
     private $lastName;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"group1"})
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['group1'])]
     private $location;
 
-    /**
-     * @ORM\Column(name="avatar", type="string", length=255, nullable = false)
-     */
+    #[ORM\Column(name: 'avatar', type: 'string', length: 255, nullable: false)]
     private $avatar;
 
-    /**
-     * @Vich\UploadableField(mapping="avatars", fileNameProperty="avatar")
-     * @Assert\File(
-     * maxSize="1000k",
-     * maxSizeMessage="Le fichier excède 1000Ko.",
-     * mimeTypes={"image/png", "image/jpeg", "image/jpg", "image/gif"},
-     * mimeTypesMessage= "formats autorisés: png, jpeg, jpg, gif"
-     * )
-     * @var File|null
-     */
+    #[Vich\UploadableField(mapping: 'avatars', fileNameProperty: 'avatar')]
+    #[Assert\File(
+        maxSize: '1000k',
+        maxSizeMessage: 'Le fichier excède 1000Ko.',
+        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+        mimeTypesMessage: 'formats autorisés: png, jpeg, jpg, gif'
+    )]
     private $avatarFile;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $registeredAt;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="users")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     * @Groups({"group1"})
-     */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Category', inversedBy: 'users')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[Groups(['group1'])]
     private $categories;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Gallery", mappedBy="user")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Gallery', mappedBy: 'user')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private $galleryEchange;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $niveau;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="expediteur")
-     */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Message', mappedBy: 'expediteur')]
     private $message;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="destinataire")
-     */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Message', mappedBy: 'destinataire')]
     private $messages;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $description2;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $adress;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $postalCode;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $tel;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $activation_token;
-    
-     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $reset_token;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
-
 
     public function __construct()
     {
@@ -177,13 +112,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->messages = new ArrayCollection();
     }
 
-  /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -207,7 +138,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
 
         return $this;
     }
-
 
     public function getId(): ?int
     {
@@ -286,18 +216,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getAvatarFile(): ?File
     {
         return $this->avatarFile;
     }
 
-    /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $AvatarFile
-     *  @return User
-     */
     public function setAvatarFile(?File $avatarFile): User
     {
         $this->avatarFile = $avatarFile;
@@ -307,7 +230,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
 
         return $this;
     }
-
 
     public function getRegisteredAt(): ?\DateTimeInterface
     {
@@ -321,18 +243,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this;
     }
 
-    /**
-     * @return Collection|Category[]
-     * @Groups({"group2"})
-     */
-
+    #[Groups(['group2'])]
     public function getCategories(): Collection
     {
         return $this->categories;
     }
 
-
-    /** @see \Serializable::serialize() */
     public function serialize()
     {
         return serialize(array(
@@ -346,12 +262,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             $this->registeredAt,
             $this->niveau,
             $this->categories
-            // voir remarques sur salt plus haut
-            // $this->salt,
         ));
     }
 
-    /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
         list(
@@ -365,14 +278,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             $this->registeredAt,
             $this->niveau,
             $this->categories
-            // voir remarques sur salt plus haut
-            // $this->salt
         ) = unserialize($serialized);
     }
-    public function eraseCredentials()
+
+    public function eraseCredentials(): void
     {
     }
-   
+
     public function getSalt()
     {
     }
@@ -381,10 +293,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     {
         return (string) $this->getId();
     }
-
-    /**
-     * @return Collection|Message[]
-     */
 
     public function getMessages(): Collection
     {
@@ -426,19 +334,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this;
     }
 
-    /**
-     * Get the value of slug
-     */
     public function getSlug()
     {
         return $this->slug;
     }
 
-    /**
-     * Set the value of slug
-     *
-     * @return  self
-     */
     public function setSlug($slug)
     {
         $this->slug = $slug;
@@ -482,20 +382,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this;
     }
 
-
-    /**
-     * Get the value of galleryEchange
-     */
     public function getGalleryEchange()
     {
         return $this->galleryEchange;
     }
 
-    /**
-     * Set the value of galleryEchange
-     *
-     * @return  self
-     */
     public function setGalleryEchange($galleryEchange)
     {
         $this->galleryEchange = $galleryEchange;
@@ -503,11 +394,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this;
     }
 
-    /**
-     * Get the value of password_verify
-     *
-     * @return  string|null
-     */
     public function getPassword_verify()
     {
         return $this->password_verify;
@@ -525,27 +411,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this;
     }
 
-    /**
-     * Get the value of userIdentifier
-     */ 
-    public function getUserIdentifier() :string
+    public function getUserIdentifier(): string
     {
         return $this->email;
     }
 
-    /**
-     * Set the value of userIdentifier
-     *
-     * @return  self
-     */ 
-    public function setUserIdentifier($userIdentifier)
-    {
-        $this->userIdentifier = $userIdentifier;
-
-        return $this;
-    }
-    
-       public function getResetToken(): ?string
+    public function getResetToken(): ?string
     {
         return $this->reset_token;
     }

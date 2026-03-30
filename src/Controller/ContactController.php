@@ -8,8 +8,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\SwiftmailerBundle\Command\SendEmailCommand;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use ReCaptcha\ReCaptcha;
 
@@ -26,9 +25,8 @@ class ContactController extends AbstractController
     }
 
 
-    /**
-     * @Route("/contact", name="contact_us")
-     */
+    /*
+    #[Route('/contact', name: 'contact_us')]
     public function contact(Request $request)
     {
 
@@ -39,17 +37,17 @@ class ContactController extends AbstractController
 
 
         $form->handleRequest($request);
-        /* captcha */
-/*
+        /* captcha
+
         $recaptcha = new ReCaptcha('6LeGor4aAAAAAEROt0YUsp0L77m4KlNxtLgPPSTi');
         $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
-*/
+
         if ($form->isSubmitted() && $form->isValid()) {
-            /*
+
             if (!$resp->isSuccess()) {
                 $this->addFlash('warning', 'N\'oubliez pas de cocher la case "Je ne suis pas un robot"');
             } else {
-*/
+
                 $email = new Email();
                 $email->from(new Address("info@ericdelangle-deco.fr", "Eric Delangle"))
 
@@ -73,4 +71,5 @@ class ContactController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+    */
 }

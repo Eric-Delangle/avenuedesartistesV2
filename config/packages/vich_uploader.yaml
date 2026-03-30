@@ -6,7 +6,7 @@ vich_uploader:
   metadata:
     auto_detection: true
     cache: file
-    type: annotation # or attribut
+    type: attribute
   mappings:
     artisticWorks_images:
       uri_prefix: "%app.path.artisticWorks_images%"

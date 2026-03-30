@@ -6,14 +6,12 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\GalleryRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ShareController extends AbstractController
 {
-    /**
-     * @Route("/share", name="share_index")
-     */
+    #[Route('/share', name: 'share_index')]
     public function index(UserRepository $userRepo, GalleryRepository $galerieechange): Response
     {
         $user = $this->getUser();
@@ -38,9 +36,7 @@ class ShareController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/share/{slug}", name="share_one")
-     */
+    #[Route('/share/{slug}', name: 'share_one')]
     public function indexUser($slug, UserRepository $userRepo, GalleryRepository $galerieEchange): Response
     {
         // je dois trouver toutes les galeries de vente d'un seul user

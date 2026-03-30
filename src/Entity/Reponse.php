@@ -4,36 +4,24 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ReponseRepository")
- */
+#[ORM\Entity(repositoryClass: 'App\Repository\ReponseRepository')]
 class Reponse
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade = {"persist"})
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', cascade: ['persist'])]
     private $expediteur;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist"})
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', cascade: ['persist'])]
     private $destinataire;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $message;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $postedAt;
 
     public function getId(): ?int

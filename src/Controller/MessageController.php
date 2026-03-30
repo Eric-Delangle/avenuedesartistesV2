@@ -14,38 +14,32 @@ use App\Repository\MessageRepository;
 use App\Repository\ReponseRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @Route("/message")
- */
+#[Route('/message')]
 class MessageController extends AbstractController
 {
-    
+
     public function __construct(private ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }
-    
-    /**
-     * @Route("/user/{id}", name="message_index", methods={"GET"})
-     */
+
+    #[Route('/user/{id}', name: 'message_index', methods: ['GET'])]
     public function index(MessageRepository $repo, User $user, ReponseRepository $reponseRepo): Response
     {
         return $this->render('message/index.html.twig', [
-      
+
             'messages' => $repo->findBy(['destinataire' => $user]),
-            'message' => $repo->findBy(['expediteur' => $user]),       
-            'reponse' => $reponseRepo->findBy(['destinataire' => $user]),       
+            'message' => $repo->findBy(['expediteur' => $user]),
+            'reponse' => $reponseRepo->findBy(['destinataire' => $user]),
         ]);
     }
 
-    /**
-     * @Route("/new/{id}", name="message_new", methods={"GET","POST"})
-     */
+    #[Route('/new/{id}', name: 'message_new', methods: ['GET', 'POST'])]
     public function new(Request $request, User $user): Response
     {
         $message = new Message();
@@ -70,9 +64,7 @@ class MessageController extends AbstractController
     }
 
     // pour envoyer un message a un membre depuis son profil public
-    /**
-     * @Route("/new/user/{id}", name="message_newUserMess", methods={"GET","POST"})
-     */
+    #[Route('/new/user/{id}', name: 'message_newUserMess', methods: ['GET', 'POST'])]
     public function newUserMess(Request $request, User $user, GalleryRepository $galleryRepo): Response
     {
         $exp = $this->getUser();
@@ -101,9 +93,7 @@ class MessageController extends AbstractController
 
 
 
-    /**
-     * @Route("/show/{id}", name="message_show", methods={"GET"})
-     */
+    #[Route('/show/{id}', name: 'message_show', methods: ['GET'])]
     public function show(Message $message): Response
     {
         return $this->render('message/show.html.twig', [
@@ -113,9 +103,7 @@ class MessageController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{id}", name="message_delete", methods={"DELETE"})
-     */
+    #[Route('/{id}', name: 'message_delete', methods: ['DELETE'])]
     public function delete(Request $request, Message $message): Response
     {
         if ($this->isCsrfTokenValid('delete'.$message->getId(), $request->request->get('_token'))) {

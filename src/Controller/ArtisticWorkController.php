@@ -12,24 +12,20 @@ use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @Route("/artistic-work")
- */
+#[Route('/artistic-work')]
 class ArtisticWorkController extends AbstractController
 {
-    
+
       public function __construct(private ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }
 
-    /**
-     * @Route("/new{id}", name="artistic_work_new", methods={"GET","POST"}, requirements={"id": "\d+" })
-     */
+    #[Route('/new{id}', name: 'artistic_work_new', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function new(Request $request, Gallery $gallery): Response
     {
         $artisticWork = new ArtisticWork();
@@ -56,9 +52,7 @@ class ArtisticWorkController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="artistic_work_show", methods={"GET"}, requirements={"id": "\d+" })
-     */
+    #[Route('/{id}', name: 'artistic_work_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(ArtisticWork $artisticWork): Response
     {
         return $this->render('artistic_work/show.html.twig', [
@@ -66,9 +60,7 @@ class ArtisticWorkController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="artistic_work_edit", methods={"GET","POST"}, requirements={"id": "\d+" })
-     */
+    #[Route('/{id}/edit', name: 'artistic_work_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function edit(Request $request, ArtisticWork $artisticWork): Response
     {
         $form = $this->createForm(ArtisticWorkType::class, $artisticWork);
@@ -88,9 +80,7 @@ class ArtisticWorkController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="artistic_work_delete", methods={"DELETE","POST"}, requirements={"id": "\d+" })
-     */
+    #[Route('/{id}', name: 'artistic_work_delete', methods: ['DELETE', 'POST'], requirements: ['id' => '\d+'])]
     public function delete(Request $request, ArtisticWork $artisticWork): Response
     {
         if ($this->isCsrfTokenValid('delete'.$artisticWork->getId(), $request->request->get('_token'))) {

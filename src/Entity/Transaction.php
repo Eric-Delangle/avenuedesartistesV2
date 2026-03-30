@@ -4,73 +4,49 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TransactionRepository")
- */
+#[ORM\Entity(repositoryClass: 'App\Repository\TransactionRepository')]
 class Transaction
 {
     public const TYPES = ['sale', 'exchange'];
     public const STATUSES = ['pending', 'completed', 'cancelled', 'refunded'];
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
+    #[ORM\Column(type: 'string', length: 20)]
     private string $type;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
     private ?string $amount = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $stripePaymentIntentId = null;
 
-    /**
-     * @ORM\Column(type="string", length=20, options={"default": "pending"})
-     */
+    #[ORM\Column(type: 'string', length: 20, options: ['default' => 'pending'])]
     private string $status = 'pending';
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ArtisticWork")
-     * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\ArtisticWork')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
     private ?ArtisticWork $artwork = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\JoinColumn(name: 'buyer_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     private ?User $buyer = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="seller_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\JoinColumn(name: 'seller_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     private ?User $seller = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Offer")
-     * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
-     */
+    #[ORM\OneToOne(targetEntity: 'App\Entity\Offer')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
     private ?Offer $offer = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $completedAt = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
     public function __construct()

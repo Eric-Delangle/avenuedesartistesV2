@@ -11,7 +11,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\GalleryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -31,9 +31,7 @@ class PasswordController extends AbstractController
         $this->passwordHasher = $userPasswordHasherInterface;
     }
 
-    /**
-     * @Route("/password", name="reset_pass", methods={"GET","POST"})
-     */
+    #[Route('/password', name: 'reset_pass', methods: ['GET', 'POST'])]
     public function modificationPassword(Request $request, UserPasswordHasherInterface $encoder, ManagerRegistry $manager)
     {
 
@@ -41,7 +39,7 @@ class PasswordController extends AbstractController
         $passwordUpdate = new ChangePassword();
 
         $form = $this->createForm(PasswordType::class, $passwordUpdate);
-    
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

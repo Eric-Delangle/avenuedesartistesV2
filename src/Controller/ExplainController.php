@@ -3,13 +3,11 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ExplainController extends AbstractController
 {
-    /**
-     * @Route("/explain", name="explain")
-     */
+    #[Route('/explain', name: 'explain')]
     public function index()
     {
         return $this->render('explain/index.html.twig', [
