@@ -16,6 +16,10 @@ use Symfony\Component\Serializer\Serializer;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArtisticWorkRepository")
  * @Vich\Uploadable()
+ * @Assert\Expression(
+ *     "!this.isForSale() or this.getPrice() != null",
+ *     message="Le prix est requis pour une œuvre en vente."
+ * )
  */
 class ArtisticWork
 {
@@ -80,6 +84,34 @@ class ArtisticWork
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
+
+    public const LISTING_TYPES = ['none', 'sale', 'exchange', 'both'];
+    public const STATUSES = ['available', 'reserved', 'sold', 'exchanged'];
+
+    /**
+     * @ORM\Column(type="string", length=20, options={"default": "none"})
+     */
+    private string $listingType = 'none';
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private ?string $price = null;
+
+    /**
+     * @ORM\Column(type="string", length=3, nullable=true, options={"default": "EUR"})
+     */
+    private ?string $currency = 'EUR';
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private ?string $exchangeDescription = null;
+
+    /**
+     * @ORM\Column(type="string", length=20, options={"default": "available"})
+     */
+    private string $status = 'available';
 
     public function getId(): ?int
     {
@@ -208,5 +240,80 @@ class ArtisticWork
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getListingType(): string
+    {
+        return $this->listingType;
+    }
+
+    public function setListingType(string $listingType): self
+    {
+        $this->listingType = $listingType;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?string $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(?string $currency): self
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function getExchangeDescription(): ?string
+    {
+        return $this->exchangeDescription;
+    }
+
+    public function setExchangeDescription(?string $exchangeDescription): self
+    {
+        $this->exchangeDescription = $exchangeDescription;
+
+        return $this;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function isForSale(): bool
+    {
+        return in_array($this->listingType, ['sale', 'both']);
+    }
+
+    public function isForExchange(): bool
+    {
+        return in_array($this->listingType, ['exchange', 'both']);
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->status === 'available' && $this->listingType !== 'none';
     }
 }
