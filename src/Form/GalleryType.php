@@ -7,6 +7,7 @@ use App\Entity\ArtisticWork;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,11 +18,20 @@ class GalleryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('category', EntityType::class,  [ 
+            ->add('category', EntityType::class, [
                 'class' => Category::class,
-                 'choice_label' => 'name'
-              ]) 
-        
+                'choice_label' => 'name',
+            ])
+            ->add('galleryType', ChoiceType::class, [
+                'label' => 'Type de galerie',
+                'choices' => [
+                    'Vitrine (affichage uniquement)' => 'showcase',
+                    'Galerie de vente' => 'sale',
+                    'Galerie d\'échange' => 'exchange',
+                    'Vente et échange' => 'mixed',
+                ],
+                'required' => true,
+            ])
         ;
     }
 

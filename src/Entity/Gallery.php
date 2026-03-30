@@ -40,6 +40,13 @@ class Gallery
      */
     private $artisticWorks;
 
+    public const GALLERY_TYPES = ['showcase', 'sale', 'exchange', 'mixed'];
+
+    /**
+     * @ORM\Column(type="string", length=20, options={"default": "showcase"})
+     */
+    private string $galleryType = 'showcase';
+
     public function __construct()
     {
         $this->artisticWorks = new ArrayCollection();
@@ -96,5 +103,39 @@ class Gallery
 
     public function __toString() {
         return (string) $this->getName();
+    }
+
+    public function getGalleryType(): string
+    {
+        return $this->galleryType;
+    }
+
+    public function setGalleryType(string $galleryType): self
+    {
+        $this->galleryType = $galleryType;
+
+        return $this;
+    }
+
+    public function isMarketplace(): bool
+    {
+        return $this->galleryType !== 'showcase';
+    }
+
+     public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set the value of slug
+     *
+     * @return  self
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
