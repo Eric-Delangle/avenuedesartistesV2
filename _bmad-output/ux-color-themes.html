@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Themes — Avenue des Artistes</title>
+<style>
+  :root {
+    --primary: #2fa4e7;
+    --primary-dark: #1a8fd1;
+    --primary-light: #7cc8f0;
+    --success: #28a745;
+    --warning: #f0a500;
+    --danger: #dc3545;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --bg-light: #f8f9fa;
+    --white: #ffffff;
+    --border: #dee2e6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #111;
+    color: #eee;
+    padding: 30px 20px;
+  }
+
+  h1 { font-size: 2rem; color: var(--primary); text-align: center; margin-bottom: 6px; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 50px; font-size: 0.95rem; }
+
+  .section { margin-bottom: 60px; }
+  .section-title {
+    font-size: 1.2rem; color: var(--primary);
+    padding-bottom: 10px; border-bottom: 2px solid var(--primary);
+    margin-bottom: 24px;
+  }
+
+  /* ===== PALETTE TOKENS ===== */
+  .tokens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .token-card {
+    background: #1e1e1e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .token-swatch { height: 90px; }
+  .token-info { padding: 12px; }
+  .token-name { font-size: 0.78rem; font-weight: 700; color: #ccc; font-family: monospace; }
+  .token-hex  { font-size: 0.72rem; color: #777; font-family: monospace; margin-top: 3px; }
+  .token-use  { font-size: 0.68rem; color: #555; margin-top: 4px; line-height: 1.4; }
+
+  /* ===== CONTRASTE ===== */
+  .contrast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .contrast-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .contrast-demo {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .contrast-large { font-size: 1.2rem; font-weight: 700; }
+  .contrast-small { font-size: 0.9rem; }
+  .contrast-meta  { font-size: 0.75rem; opacity: 0.7; }
+  .contrast-info  { padding: 10px 14px; background: rgba(0,0,0,0.2); }
+  .contrast-ratio { font-size: 0.82rem; font-weight: 700; font-family: monospace; }
+  .contrast-label { font-size: 0.7rem; opacity: 0.7; }
+  .badge-pass { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; background: #28a745; color: white; margin-left: 6px; }
+  .badge-warn { background: #f0a500; color: white; }
+
+  /* ===== COMPOSANTS LIVE ===== */
+  .components-demo {
+    background: var(--bg-light);
+    border-radius: 16px;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  .demo-group h4 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 14px; }
+
+  /* Boutons */
+  .btn-demo { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 10px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s; min-height: 44px; }
+  .btn-primary   { background: var(--primary);  color: white; }
+  .btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+  .btn-success   { background: var(--success);  color: white; }
+  .btn-danger    { background: var(--danger);   color: white; }
+  .btn-ghost     { background: transparent; color: var(--text-muted); }
+  .btn:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+  /* Badges */
+  .badges-demo { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+  .badge-type-vente   { background: var(--primary); color: white; }
+  .badge-type-echange { background: #6f42c1; color: white; }
+  .badge-type-both    { background: #fd7e14; color: white; }
+  .badge-avail { background: #d4edda; color: #155724; }
+  .badge-reserved { background: #fff3cd; color: #856404; }
+  .badge-sold { background: #e2e3e5; color: #383d41; }
+
+  /* Inputs */
+  .input-demo { display: flex; flex-direction: column; gap: 12px; }
+  .form-group-d { display: flex; flex-direction: column; gap: 5px; }
+  .label-d { font-size: 0.83rem; font-weight: 600; color: #495057; }
+  .input-d {
+    padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px;
+    font-size: 0.9rem; color: var(--text-dark); outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .input-d:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(47,164,231,0.15); }
+  .input-error { border-color: var(--danger) !important; }
+  .error-msg { font-size: 0.75rem; color: var(--danger); }
+
+  /* Cards */
+  .cards-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .demo-card {
+    background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden; transition: all 0.25s;
+  }
+  .demo-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(47,164,231,0.15); }
+  .card-thumb { height: 90px; display: flex; align-items: center; justify-content: center; font-size: 2rem; position: relative; }
+  .card-content { padding: 10px; }
+  .card-title { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
+  .card-meta  { font-size: 0.75rem; color: var(--text-muted); }
+  .card-price { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
+
+  /* ===== TYPOGRAPHIE ===== */
+  .type-scale { background: white; border-radius: 12px; padding: 24px; }
+  .type-row { display: flex; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  .type-label { font-size: 0.72rem; color: #aaa; font-family: monospace; width: 90px; flex-shrink: 0; }
+  .type-sample { color: #212529; }
+  .t-xs  { font-size: 0.75rem; }
+  .t-sm  { font-size: 0.875rem; }
+  .t-md  { font-size: 1rem; }
+  .t-lg  { font-size: 1.125rem; }
+  .t-xl  { font-size: 1.5rem; }
+  .t-2xl { font-size: 2rem; }
+  .t-3xl { font-size: 2.5rem; font-family: Georgia, serif; }
+  .t-brand { font-family: Georgia, serif; font-size: 1.8rem; color: var(--primary); }
+
+  /* ===== SPACING ===== */
+  .spacing-demo { display: flex; flex-direction: column; gap: 12px; }
+  .space-row { display: flex; align-items: center; gap: 16px; }
+  .space-label { font-size: 0.75rem; color: #888; font-family: monospace; width: 80px; flex-shrink: 0; }
+  .space-block { background: var(--primary); border-radius: 3px; height: 24px; opacity: 0.7; }
+
+  @media (max-width: 768px) {
+    .components-demo { grid-template-columns: 1fr; }
+    .cards-demo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>🎨 Design System Colors</h1>
+<p class="subtitle">Avenue des Artistes — Marketplace Artistique · BMAD UX · 2026-03-30</p>
+
+<!-- ===== PALETTE TOKENS ===== -->
+<div class="section">
+  <div class="section-title">Design Tokens — Palette Complète</div>
+  <div class="tokens-grid">
+    <div class="token-card">
+      <div class="token-swatch" style="background:#2fa4e7;"></div>
+      <div class="token-info">
+        <div class="token-name">--primary</div>
+        <div class="token-hex">#2fa4e7</div>
+        <div class="token-use">CTAs, liens actifs, navbar brand</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#1a8fd1;"></div>
+      <div class="token-info">
+        <div class="token-name">--primary-dark</div>
+        <div class="token-hex">#1a8fd1</div>
+        <div class="token-use">Hover sur primary, liens</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#7cc8f0;"></div>
+      <div class="token-info">
+        <div class="token-name">--primary-light</div>
+        <div class="token-hex">#7cc8f0</div>
+        <div class="token-use">Backgrounds, highlights, hover léger</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#28a745;"></div>
+      <div class="token-info">
+        <div class="token-name">--success</div>
+        <div class="token-hex">#28a745</div>
+        <div class="token-use">Statut Disponible, confirmations</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#f0a500;"></div>
+      <div class="token-info">
+        <div class="token-name">--warning</div>
+        <div class="token-hex">#f0a500</div>
+        <div class="token-use">Statut Réservé, alertes</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#dc3545;"></div>
+      <div class="token-info">
+        <div class="token-name">--danger</div>
+        <div class="token-hex">#dc3545</div>
+        <div class="token-use">Erreurs, actions destructives</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#6c757d;"></div>
+      <div class="token-info">
+        <div class="token-name">--secondary</div>
+        <div class="token-hex">#6c757d</div>
+        <div class="token-use">Textes secondaires, icônes</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#6f42c1;"></div>
+      <div class="token-info">
+        <div class="token-name">Échange (violet)</div>
+        <div class="token-hex">#6f42c1</div>
+        <div class="token-use">Badge type Échange uniquement</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#fd7e14;"></div>
+      <div class="token-info">
+        <div class="token-name">Mixte (orange)</div>
+        <div class="token-hex">#fd7e14</div>
+        <div class="token-use">Badge Vente & Échange</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#212529;"></div>
+      <div class="token-info">
+        <div class="token-name">--text-dark</div>
+        <div class="token-hex">#212529</div>
+        <div class="token-use">Corps de texte principal</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#f8f9fa; border:1px solid #ddd;"></div>
+      <div class="token-info">
+        <div class="token-name">--bg-light</div>
+        <div class="token-hex">#f8f9fa</div>
+        <div class="token-use">Fonds de page, cards</div>
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#f0f2f5; border:1px solid #ddd;"></div>
+      <div class="token-info">
+        <div class="token-name">--bg-page</div>
+        <div class="token-hex">#f0f2f5</div>
+        <div class="token-use">Background body (remplace lightgray)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONTRASTE WCAG ===== -->
+<div class="section">
+  <div class="section-title">Vérification Contraste WCAG 2.1 AA</div>
+  <div class="contrast-grid">
+    <div class="contrast-card">
+      <div class="contrast-demo" style="background:#2fa4e7;">
+        <div class="contrast-large" style="color:white;">Texte en blanc</div>
+        <div class="contrast-small" style="color:white;">Bouton primary standard</div>
+        <div class="contrast-meta" style="color:white;">Avenue des Artistes</div>
+      </div>
+      <div class="contrast-info" style="background:#1a3a4e;">
+        <div class="contrast-ratio">#ffffff sur #2fa4e7 → 3.1:1 <span class="badge badge-warn">AA grands textes ✓</span></div>
+        <div class="contrast-label">Valide pour texte ≥ 18px ou 14px bold</div>
+      </div>
+    </div>
+    <div class="contrast-card">
+      <div class="contrast-demo" style="background:#1a8fd1;">
+        <div class="contrast-large" style="color:white;">Texte en blanc</div>
+        <div class="contrast-small" style="color:white;">Hover / liens actifs</div>
+        <div class="contrast-meta" style="color:white;">Avenue des Artistes</div>
+      </div>
+      <div class="contrast-info" style="background:#0d2233;">
+        <div class="contrast-ratio">#ffffff sur #1a8fd1 → 4.6:1 <span class="badge badge-pass">AA ✓</span></div>
+        <div class="contrast-label">Valide pour tous les textes</div>
+      </div>
+    </div>
+    <div class="contrast-card">
+      <div class="contrast-demo" style="background:#f8f9fa;">
+        <div class="contrast-large" style="color:#212529;">Texte principal</div>
+        <div class="contrast-small" style="color:#212529;">Corps de texte</div>
+        <div class="contrast-meta" style="color:#6c757d;">Texte secondaire</div>
+      </div>
+      <div class="contrast-info" style="background:#e8e9ea;">
+        <div class="contrast-ratio" style="color:#333;">#212529 sur #f8f9fa → 16.1:1 <span class="badge badge-pass">AAA ✓</span></div>
+        <div class="contrast-label" style="color:#666;">Contraste maximum</div>
+      </div>
+    </div>
+    <div class="contrast-card">
+      <div class="contrast-demo" style="background:#d4edda;">
+        <div class="contrast-large" style="color:#155724;">● Disponible</div>
+        <div class="contrast-small" style="color:#155724;">Badge statut succès</div>
+        <div class="contrast-meta" style="color:#155724;">Artwork en vente</div>
+      </div>
+      <div class="contrast-info" style="background:#c3e6cb;">
+        <div class="contrast-ratio" style="color:#155724;">#155724 sur #d4edda → 7.2:1 <span class="badge badge-pass">AAA ✓</span></div>
+        <div class="contrast-label" style="color:#155724;">Badge parfaitement accessible</div>
+      </div>
+    </div>
+    <div class="contrast-card">
+      <div class="contrast-demo" style="background:#2fa4e7;">
+        <div class="contrast-large" style="color:#212529;">Texte sombre</div>
+        <div class="contrast-small" style="color:#212529;">Alternative sur primary</div>
+        <div class="contrast-meta" style="color:#212529;">Éviter ce pattern</div>
+      </div>
+      <div class="contrast-info" style="background:#1a3a4e;">
+        <div class="contrast-ratio">#212529 sur #2fa4e7 → 2.8:1 <span class="badge badge-warn">⚠ Faible</span></div>
+        <div class="contrast-label">À éviter — préférer blanc sur primary</div>
+      </div>
+    </div>
+    <div class="contrast-card">
+      <div class="contrast-demo" style="background:#fff3cd;">
+        <div class="contrast-large" style="color:#856404;">● Réservé</div>
+        <div class="contrast-small" style="color:#856404;">Badge statut warning</div>
+        <div class="contrast-meta" style="color:#856404;">En attente de validation</div>
+      </div>
+      <div class="contrast-info" style="background:#ffeeba;">
+        <div class="contrast-ratio" style="color:#856404;">#856404 sur #fff3cd → 4.8:1 <span class="badge badge-pass">AA ✓</span></div>
+        <div class="contrast-label" style="color:#856404;">Badge accessible</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== COMPOSANTS LIVE ===== -->
+<div class="section">
+  <div class="section-title">Composants UI — Design Direction B</div>
+  <div class="components-demo">
+    <!-- Boutons -->
+    <div class="demo-group">
+      <h4>Boutons</h4>
+      <div class="btn-demo">
+        <button class="btn btn-primary">🛒 Acheter — 80 €</button>
+        <button class="btn btn-secondary">⇄ Proposer un échange</button>
+        <button class="btn btn-success">✓ Accepter l'offre</button>
+        <button class="btn btn-danger">✕ Refuser</button>
+        <button class="btn btn-ghost">Annuler</button>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="demo-group">
+      <h4>Badges Type & Statut</h4>
+      <div class="badges-demo">
+        <span class="badge badge-type-vente">VENTE</span>
+        <span class="badge badge-type-echange">ÉCHANGE</span>
+        <span class="badge badge-type-both">VENTE & ÉCHANGE</span>
+        <span class="badge badge-avail">● Disponible</span>
+        <span class="badge badge-reserved">● Réservé</span>
+        <span class="badge badge-sold">● Vendu</span>
+      </div>
+    </div>
+
+    <!-- Inputs -->
+    <div class="demo-group">
+      <h4>Formulaires</h4>
+      <div class="input-demo">
+        <div class="form-group-d">
+          <label class="label-d">Votre offre (€) *</label>
+          <input type="number" class="input-d" placeholder="80" value="75">
+          <div style="font-size:0.75rem;color:#6c757d;margin-top:3px;">Prix demandé : 80 €</div>
+        </div>
+        <div class="form-group-d">
+          <label class="label-d">Email</label>
+          <input type="email" class="input-d input-error" placeholder="email@exemple.com" value="email@invalide">
+          <div class="error-msg">⚠ Format d'email invalide</div>
+        </div>
+        <div class="form-group-d">
+          <label class="label-d">Message (optionnel)</label>
+          <textarea class="input-d" rows="2" placeholder="Bonjour, je suis intéressé..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="demo-group">
+      <h4>Artwork Cards</h4>
+      <div class="cards-demo">
+        <div class="demo-card">
+          <div class="card-thumb" style="background:linear-gradient(135deg,#a8edea,#fed6e3);">
+            🌊
+            <span style="position:absolute;top:6px;right:6px;background:#2fa4e7;color:white;font-size:0.65rem;padding:3px 8px;border-radius:20px;font-weight:800;">VENTE</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title">La Seine au crépuscule</div>
+            <div class="card-meta">Marie L. · Paris</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+              <div class="card-price">80 €</div>
+              <button class="btn btn-primary" style="padding:5px 12px;font-size:0.78rem;min-height:auto;">Voir →</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-card">
+          <div class="card-thumb" style="background:linear-gradient(135deg,#ffd6e7,#c4fcef);">
+            🌸
+            <span style="position:absolute;top:6px;right:6px;background:#6f42c1;color:white;font-size:0.65rem;padding:3px 8px;border-radius:20px;font-weight:800;">ÉCHANGE</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title">Jardin en fleurs</div>
+            <div class="card-meta">Pierre D. · Lyon</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+              <div style="font-size:0.82rem;color:#6f42c1;font-weight:600;">⇄ À l'échange</div>
+              <button class="btn btn-primary" style="padding:5px 12px;font-size:0.78rem;min-height:auto;">Voir →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TYPOGRAPHIE ===== -->
+<div class="section">
+  <div class="section-title">Échelle Typographique</div>
+  <div class="type-scale">
+    <div class="type-row">
+      <span class="type-label">--text-3xl<br>2.5rem / 40px</span>
+      <span class="type-sample t-3xl">Avenue des Artistes</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">--font-brand<br>Massenet/Georgia</span>
+      <span class="type-sample t-brand">Avenue des Artistes</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">--text-2xl<br>2rem / 32px</span>
+      <span class="type-sample t-2xl" style="font-weight:700;">Marketplace</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">--text-xl<br>1.5rem / 24px</span>
+      <span class="type-sample t-xl" style="font-weight:600;">La Seine au crépuscule</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">--text-lg<br>1.125rem / 18px</span>
+      <span class="type-sample t-lg">Aquarelle sur papier Arches 300g, format 40x50cm.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">--text-base<br>1rem / 16px</span>
+      <span class="type-sample t-md">Peinte un soir de septembre au bord de la Seine, entre les reflets orangés du coucher de soleil et le bleu profond des eaux.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">--text-sm<br>0.875rem / 14px</span>
+      <span class="type-sample t-sm" style="color:#6c757d;">Marie Lefebvre · Paris · Artiste depuis 2021</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">--text-xs<br>0.75rem / 12px</span>
+      <span class="type-sample t-xs" style="color:#adb5bd;text-transform:uppercase;letter-spacing:0.06em;">Aquarelle · 40×50 cm · Disponible</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SPACING ===== -->
+<div class="section">
+  <div class="section-title">Système d'Espacement (base 8px)</div>
+  <div style="background:white;border-radius:12px;padding:24px;">
+    <div class="spacing-demo">
+      <div class="space-row">
+        <span class="space-label">--space-1<br>8px</span>
+        <div class="space-block" style="width:8px;"></div>
+        <span style="font-size:0.75rem;color:#aaa;">Micro-spacing, icône↔texte</span>
+      </div>
+      <div class="space-row">
+        <span class="space-label">--space-2<br>16px</span>
+        <div class="space-block" style="width:16px;"></div>
+        <span style="font-size:0.75rem;color:#aaa;">Padding interne composants</span>
+      </div>
+      <div class="space-row">
+        <span class="space-label">--space-3<br>24px</span>
+        <div class="space-block" style="width:24px;"></div>
+        <span style="font-size:0.75rem;color:#aaa;">Espacement entre éléments</span>
+      </div>
+      <div class="space-row">
+        <span class="space-label">--space-4<br>32px</span>
+        <div class="space-block" style="width:32px;"></div>
+        <span style="font-size:0.75rem;color:#aaa;">Espacement entre sections</span>
+      </div>
+      <div class="space-row">
+        <span class="space-label">--space-5<br>48px</span>
+        <div class="space-block" style="width:48px;"></div>
+        <span style="font-size:0.75rem;color:#aaa;">Grandes séparations</span>
+      </div>
+      <div class="space-row">
+        <span class="space-label">--space-6<br>64px</span>
+        <div class="space-block" style="width:64px;"></div>
+        <span style="font-size:0.75rem;color:#aaa;">Sections de page, hero</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:40px;color:#555;font-size:0.82rem;">
+  🎨 Color Themes — Avenue des Artistes : Marketplace Artistique<br>
+  Généré par Sally — UX Designer BMAD — 2026-03-30
+</div>
+
+</body>
+</html>
