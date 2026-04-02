@@ -25,15 +25,15 @@
 						<i class="fas fa-store-alt"></i> Galeries
 					</a>
 					<div class="dropdown-menu" aria-labelledby="galeriesDropdown">
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 2}) }}">Peinture</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 1}) }}">Dessin</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 3}) }}">Sculpture</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 4}) }}">Modelage</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 5}) }}">Art numérique</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 6}) }}">Photographie</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 11}) }}">Mosaïque</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 12}) }}">Collectionneur</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 13}) }}">Céramique</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'id': 11}) }}">Peinture</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'id': 10}) }}">Dessin</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'id': 12}) }}">Sculpture</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'id': 13}) }}">Modelage</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'id': 14}) }}">Art numérique</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'id': 15}) }}">Photographie</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'id': 17}) }}">Mosaïque</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'id': 18}) }}">Collectionneur</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'id': 16}) }}">Céramique</a>
 					</div>
 				</li>
 			</ul>
@@ -51,6 +51,13 @@
 				<li class="nav-item" id="deco" style="display:none;">
 					<a class="nav-link" href="{{ path('security_logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
 				</li>
+				{% if app.user and not is_subscribed() %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('subscription_index') }}" style="color: #f0a500 !important; font-weight: 600;">
+						<i class="fas fa-star"></i> S'abonner
+					</a>
+				</li>
+				{% endif %}
 				<li class="nav-item" id="bleudeco" style="display:none;">
 					<a class="nav-btn btn btn-sm" href="{{ path('member_index') }}"><i class="fas fa-home"></i> Mon compte</a>
 				</li>

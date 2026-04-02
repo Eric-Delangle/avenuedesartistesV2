@@ -7,19 +7,16 @@ use App\Entity\Category;
 use ReCaptcha\ReCaptcha;
 use Cocur\Slugify\Slugify;
 use App\Form\RegistrationType;
-use App\Entity\AdminController;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use Symfony\Component\Mailer\MailerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -68,7 +65,6 @@ class SecurityController extends AbstractController
             $slugify = new AsciiSlugger();
             $slug = $slugify->slug($user->getFirstName() . '' . $user->getLastName());
             $user->setSlug($slug);
-            $user->getCategories(new Category());
             $user->setRegisteredAt(new \DateTime());
             $user->setNiveau(1);
             $user->setUserIdentifier($user->getEmail());
@@ -142,8 +138,6 @@ class SecurityController extends AbstractController
             'last_username' => $this->authenticationUtils->getLastUsername(),
             'error'         => $this->authenticationUtils->getLastAuthenticationError(),
         ));
-
-        $this->addFlash('success', 'Vous êtes bien connecté !');
     }
 
     #[Route('/deconnexion', name: 'security_logout')]
@@ -153,109 +147,66 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/oubli-pass', name: 'forgotten_password')]
-    public function oubliPass(
-        Request $request,
-        UserRepository $users,
-        MailerInterface $mailer,
-        TokenGeneratorInterface $tokenGenerator
-    ): Response {
-        // On initialise le formulaire
+    public function oubliPass(Request $request, UserRepository $users): Response
+    {
         $form = $this->createForm(ResetPassType::class);
-
-        // On traite le formulaire
         $form->handleRequest($request);
 
-        // Si le formulaire est valide
         if ($form->isSubmitted() && $form->isValid()) {
-            // On récupère les données
             $donnees = $form->getData();
-
-            // On cherche un utilisateur ayant cet e-mail
             $user = $users->findOneByEmail($donnees['email']);
 
-            // Si l'utilisateur n'existe pas
             if ($user === null) {
-                // On envoie une alerte disant que l'adresse e-mail est inconnue
                 $this->addFlash('danger', 'Cette adresse e-mail est inconnue');
-
-                // On retourne sur la page de connexion
                 return $this->redirectToRoute('security_login');
             }
 
-            // On génère un token
-            $token = $tokenGenerator->generateToken();
+            $token = bin2hex(random_bytes(32));
 
-            // On essaie d'écrire le token en base de données
             try {
                 $user->setResetToken($token);
-                $entityManager = $this->doctrine->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
+                $em = $this->doctrine->getManager();
+                $em->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
                 return $this->redirectToRoute('security_login');
             }
 
-            // On génère l'URL de réinitialisation de mot de passe
-            $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+            $url = $this->generateUrl('reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
-            // On génère l'e-mail
             $email = (new Email())
-                ->from('hello@example.com')
+                ->from('infos@avenuedesartistes.com')
                 ->to($user->getEmail())
-                ->text(
-                    "Bonjour, une demande de réinitialisation de mot de passe a été effectuée pour le site avenuedesartistes.com Veuillez cliquer sur le lien suivant : " . $url,
-                    'text/html'
-                );
+                ->subject('Réinitialisation de votre mot de passe')
+                ->text("Bonjour,\n\nUne demande de réinitialisation de mot de passe a été effectuée.\nCliquez sur ce lien pour choisir un nouveau mot de passe :\n\n" . $url . "\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail.");
 
-            // On envoie l'e-mail
-            $mailer->send($email);
+            $this->mailer->send($email);
+            $this->addFlash('success', 'Un e-mail de réinitialisation vous a été envoyé.');
 
-            // On crée le message flash de confirmation
-            $this->addFlash('message', 'E-mail de réinitialisation du mot de passe envoyé !');
-
-            // On redirige vers la page de login
             return $this->redirectToRoute('security_login');
         }
 
-        // On envoie le formulaire à la vue
-        return $this->render('bundles/SyliusShopBundle/security/forgotten_password.html.twig', ['emailForm' => $form->createView()]);
+        return $this->render('security/forgotten_password.html.twig', ['emailForm' => $form->createView()]);
     }
 
     #[Route('/reset_pass/{token}', name: 'reset_password')]
-    public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
+    public function resetPassword(Request $request, string $token, UserPasswordHasherInterface $passwordHasher): Response
     {
-        // On cherche un utilisateur avec le token donné
         $user = $this->doctrine->getRepository(User::class)->findOneBy(['reset_token' => $token]);
 
-        // Si l'utilisateur n'existe pas
         if ($user === null) {
-            // On affiche une erreur
-            $this->addFlash('danger', 'Token Inconnu');
+            $this->addFlash('danger', 'Token inconnu ou expiré.');
             return $this->redirectToRoute('security_login');
         }
 
-        // Si le formulaire est envoyé en méthode post
         if ($request->isMethod('POST')) {
-            // On supprime le token
             $user->setResetToken(null);
-
-            // On chiffre le mot de passe
-            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
-
-            // On stocke
-            $entityManager = $this->doctrine->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            // On crée le message flash
-            $this->addFlash('message', 'Mot de passe mis à jour');
-
-            // On redirige vers la page de connexion
+            $user->setPassword($passwordHasher->hashPassword($user, $request->request->get('password')));
+            $this->doctrine->getManager()->flush();
+            $this->addFlash('success', 'Mot de passe mis à jour. Vous pouvez vous connecter.');
             return $this->redirectToRoute('security_login');
-        } else {
-            // Si on n'a pas reçu les données, on affiche le formulaire
-            return $this->render('security/reset_password.html.twig', ['token' => $token]);
         }
+
+        return $this->render('security/reset_password.html.twig', ['token' => $token]);
     }
 }

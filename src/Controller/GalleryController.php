@@ -12,6 +12,7 @@ use App\Repository\UserRepository;
 use App\Repository\GalleryRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ArtisticWorkRepository;
+use App\Repository\SubscriptionRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,10 +58,11 @@ class GalleryController extends AbstractController
     }
 
     #[Route('/new/{id}', name: 'galery_new', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
-    public function new(Request $request, User $user): Response
+    public function new(Request $request, User $user, SubscriptionRepository $subRepo): Response
     {
         $gallery = new Gallery();
-        $form = $this->createForm(GalleryType::class, $gallery);
+        $canSell = ($sub = $this->getUser() ? $subRepo->findOneBy(['user' => $this->getUser()]) : null) && $sub->isActive();
+        $form = $this->createForm(GalleryType::class, $gallery, ['can_sell' => $canSell]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -80,17 +82,18 @@ class GalleryController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'galery_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
-    public function edit(Request $request, Gallery $gallery): Response
+    public function edit(Request $request, Gallery $gallery, SubscriptionRepository $subRepo): Response
     {
 
-        $form = $this->createForm(GalleryType::class, $gallery);
+        $canSell = ($sub = $this->getUser() ? $subRepo->findOneBy(['user' => $this->getUser()]) : null) && $sub->isActive();
+        $form = $this->createForm(GalleryType::class, $gallery, ['can_sell' => $canSell]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre galerie a bien été mise à jour!');
             $this->doctrine->getManager()->flush();
 
-            return $this->redirectToRoute('gallery_edit', ['id' => $gallery->getId()]);
+            return $this->redirectToRoute('galery_edit', ['id' => $gallery->getId()]);
         }
 
         return $this->render('gallery/edit.html.twig', [
@@ -121,7 +124,7 @@ class GalleryController extends AbstractController
             $this->addFlash('success', 'Votre galerie a bien été supprimée!');
         }
 
-        return $this->redirectToRoute('gallery_index');
+        return $this->redirectToRoute('galery_index', ['id' => $this->getUser()->getId()]);
     }
 
 }

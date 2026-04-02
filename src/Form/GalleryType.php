@@ -24,12 +24,17 @@ class GalleryType extends AbstractType
             ])
             ->add('galleryType', ChoiceType::class, [
                 'label' => 'Type de galerie',
-                'choices' => [
-                    'Vitrine (affichage uniquement)' => 'showcase',
-                    'Galerie de vente' => 'sale',
-                    'Galerie d\'échange' => 'exchange',
-                    'Vente et échange' => 'mixed',
-                ],
+                'choices' => $options['can_sell']
+                    ? [
+                        'Vitrine (affichage uniquement)' => 'showcase',
+                        'Galerie de vente'               => 'sale',
+                        'Galerie d\'échange'             => 'exchange',
+                        'Vente et échange'               => 'mixed',
+                    ]
+                    : [
+                        'Vitrine (affichage uniquement)' => 'showcase',
+                        'Galerie d\'échange'             => 'exchange',
+                    ],
                 'required' => true,
             ])
         ;
@@ -40,6 +45,7 @@ class GalleryType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Gallery::class,
             'translation_domain' => 'forms',
+            'can_sell' => false,
         ]);
     }
 }

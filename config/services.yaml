@@ -27,4 +27,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    
+
+    App\Controller\SubscriptionController:
+        arguments:
+            $stripeSecretKey:     '%env(STRIPE_SECRET_KEY)%'
+            $stripePublicKey:     '%env(STRIPE_PUBLIC_KEY)%'
+            $stripePriceId:       '%env(STRIPE_PRICE_ID)%'
+            $stripeWebhookSecret: '%env(STRIPE_WEBHOOK_SECRET)%'
+        tags: ['controller.service_arguments']
