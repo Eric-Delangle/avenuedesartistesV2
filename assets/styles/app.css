@@ -142,7 +142,7 @@ img { max-width: 100%; height: auto; }
     font-weight: 700;
     color: var(--white);
     line-height: 1.2;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
     letter-spacing: -0.5px;
 }
 
@@ -158,6 +158,50 @@ img { max-width: 100%; height: auto; }
     display: flex;
     gap: 14px;
     flex-wrap: wrap;
+}
+
+@media (max-width: 575px) {
+    .navbar-brand {
+        margin: 0 auto;
+    }
+    .hero-section {
+        padding: 0 20px;
+    }
+    .hero-content {
+        padding: 48px 0 40px;
+    }
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    .hero-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+    }
+    .hero-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        width: 100%;
+        text-align: center;
+        padding: 13px 20px;
+    }
+    .features-section {
+        padding: 40px 0;
+    }
+    .features-section .col-md-4 {
+        margin-bottom: 16px;
+    }
+    .feature-card {
+        padding: 24px 20px;
+    }
+    .map-section {
+        padding: 40px 0;
+    }
+    .section-title {
+        font-size: 1.4rem;
+    }
 }
 
 .btn-hero-primary {
