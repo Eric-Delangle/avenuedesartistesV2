@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /member
+Disallow: /user/
+Disallow: /message/
+Disallow: /reponse/
+Disallow: /subscription/
+Disallow: /artistic-work/
+Disallow: /galeries/new/
+Disallow: /galeries/edit/
+Disallow: /galeries/delete/
+Disallow: /_profiler/
+Disallow: /_wdt/
+
+Sitemap: https://avenuedesartistes.com/sitemap.xml

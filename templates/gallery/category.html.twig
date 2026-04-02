@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Galeries{% endblock %}
+{% block title %}Galeries {{ category.name }} — Avenue des Artistes{% endblock %}
+{% block meta_description %}Parcourez les galeries d'artistes spécialisés en {{ category.name }} sur Avenue des Artistes. Découvrez et achetez des œuvres originales.{% endblock %}
 
 {% block body %}
 <div class="container font galerie text-center mt-5"> 
