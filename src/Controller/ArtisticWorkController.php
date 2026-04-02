@@ -9,6 +9,7 @@ use App\Entity\Category;
 use App\Form\ArtisticWorkType;
 use App\Repository\ArtisticWorkRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\SubscriptionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,11 +27,13 @@ class ArtisticWorkController extends AbstractController
     }
 
     #[Route('/new{id}', name: 'artistic_work_new', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
-    public function new(Request $request, Gallery $gallery): Response
+    public function new(Request $request, Gallery $gallery, SubscriptionRepository $subRepo): Response
     {
         $artisticWork = new ArtisticWork();
         $artisticWork->setGallery($gallery);
-        $form = $this->createForm(ArtisticWorkType::class, $artisticWork);
+        $sub = $this->getUser() ? $subRepo->findOneBy(['user' => $this->getUser()]) : null;
+        $canSell = $sub !== null && $sub->isActive();
+        $form = $this->createForm(ArtisticWorkType::class, $artisticWork, ['can_sell' => $canSell]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,16 +64,18 @@ class ArtisticWorkController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'artistic_work_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
-    public function edit(Request $request, ArtisticWork $artisticWork): Response
+    public function edit(Request $request, ArtisticWork $artisticWork, SubscriptionRepository $subRepo): Response
     {
-        $form = $this->createForm(ArtisticWorkType::class, $artisticWork);
+        $sub = $this->getUser() ? $subRepo->findOneBy(['user' => $this->getUser()]) : null;
+        $canSell = $sub !== null && $sub->isActive();
+        $form = $this->createForm(ArtisticWorkType::class, $artisticWork, ['can_sell' => $canSell]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre image a bien été modifiée!');
             $this->doctrine->getManager()->flush();
 
-            return $this->redirectToRoute('member');
+            return $this->redirectToRoute('member_index');
         }
 
         return $this->render('artistic_work/edit.html.twig', [

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Fond rond bleu nuit -->
+  <rect width="64" height="64" rx="14" fill="#1a1a2e"/>
+  <!-- Lettre A stylisée -->
+  <text
+    x="32"
+    y="47"
+    font-family="Georgia, serif"
+    font-size="42"
+    font-weight="700"
+    fill="#2fa4e7"
+    text-anchor="middle"
+    letter-spacing="-1">A</text>
+  <!-- Petit point décoratif (pinceau) -->
+  <circle cx="50" cy="14" r="4" fill="#2fa4e7" opacity="0.6"/>
+  <circle cx="44" cy="10" r="2.5" fill="#7cc8f0" opacity="0.5"/>
+</svg>

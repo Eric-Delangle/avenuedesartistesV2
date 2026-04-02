@@ -32,12 +32,11 @@ class ReponseController extends AbstractController
         ]);
     }
 
-    #[Route('/show/{id}', name: 'reponse_new', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'reponse_show_message', methods: ['GET'])]
     public function messageReçu(Message $message): Response
     {
         return $this->render('reponse/new.html.twig', [
             'message' => $message,
-            dump($message),
         ]);
     }
 
@@ -51,8 +50,6 @@ class ReponseController extends AbstractController
             $rep = new Reponse();
             $form = $this->createForm(ReponseType::class, $rep);
             $form->handleRequest($request);
-            dump($expediteur);
-            dump($destinataire);
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->addFlash('success', 'Votre reponse a bien été envoyée !');
                 $rep->setExpediteur($expediteur);
@@ -62,7 +59,7 @@ class ReponseController extends AbstractController
                 $entityManager->persist($rep);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('member');
+                return $this->redirectToRoute('member_index');
             }
 
             return $this->render('reponse/new.html.twig', [
@@ -81,8 +78,6 @@ class ReponseController extends AbstractController
             $reponse = new Reponse();
             $form = $this->createForm(ReponseType::class, $reponse);
             $form->handleRequest($request);
-            dump($expediteur);
-            dump($destinataire);
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->addFlash('success', 'Votre reponse a bien été envoyée !');
                 $reponse->setExpediteur($expediteur);
@@ -92,7 +87,7 @@ class ReponseController extends AbstractController
                 $entityManager->persist($reponse);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('member');
+                return $this->redirectToRoute('member_index');
             }
 
             return $this->render('reponse/new.html.twig', [
@@ -147,6 +142,6 @@ class ReponseController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('member');
+        return $this->redirectToRoute('member_index');
     }
 }

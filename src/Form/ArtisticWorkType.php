@@ -26,12 +26,17 @@ class ArtisticWorkType extends AbstractType
             ])
             ->add('listingType', ChoiceType::class, [
                 'label' => 'Type d\'annonce',
-                'choices' => [
-                    'Vitrine uniquement' => 'none',
-                    'En vente' => 'sale',
-                    'En échange' => 'exchange',
-                    'Vente et échange' => 'both',
-                ],
+                'choices' => $options['can_sell']
+                    ? [
+                        'Vitrine uniquement' => 'none',
+                        'En vente' => 'sale',
+                        'En échange' => 'exchange',
+                        'Vente et échange' => 'both',
+                    ]
+                    : [
+                        'Vitrine uniquement' => 'none',
+                        'En échange' => 'exchange',
+                    ],
                 'required' => true,
             ])
             ->add('price', MoneyType::class, [
@@ -53,6 +58,7 @@ class ArtisticWorkType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ArtisticWork::class,
             'translation_domain' => 'forms',
+            'can_sell' => false,
         ]);
     }
 }

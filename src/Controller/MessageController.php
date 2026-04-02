@@ -54,7 +54,7 @@ class MessageController extends AbstractController
             $entityManager->persist($message);
             $entityManager->flush();
 
-            return $this->redirectToRoute('message_new');
+            return $this->redirectToRoute('message_new', ['id' => $user->getId()]);
         }
 
         return $this->render('message/new.html.twig', [
@@ -98,7 +98,6 @@ class MessageController extends AbstractController
     {
         return $this->render('message/show.html.twig', [
             'message' => $message,
-            dump($message),
         ]);
     }
 
@@ -113,6 +112,6 @@ class MessageController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('message_delete');
+        return $this->redirectToRoute('message_index', ['id' => $this->getUser()->getId()]);
     }
 }
