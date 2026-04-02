@@ -49,7 +49,7 @@ class ArtisticWorkController extends AbstractController
         }
 
         return $this->render('artistic_work/new.html.twig', [
-            'gallery' => ["id" =>$gallery->getId()],
+            'gallery' => $gallery,
             'artistic_work' => $artisticWork,
             'form' => $form->createView(),
         ]);

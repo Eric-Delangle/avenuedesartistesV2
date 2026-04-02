@@ -70,6 +70,12 @@
                         {% endif %}
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ work.name }}</h5>
+                            {% if work.gallery and work.gallery.user %}
+                                <p class="card-text text-muted small mb-1">
+                                    <i class="fas fa-user"></i>
+                                    {{ work.gallery.user.firstName|capitalize }} {{ work.gallery.user.lastName|capitalize }}
+                                </p>
+                            {% endif %}
 
                             <div class="mb-2">
                                 {% if work.listingType in ['sale', 'both'] %}
