@@ -4,6 +4,25 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{% block title %}Avenue des Artistes | Échange et vente d'œuvres d'art{% endblock %}</title>
+	<meta name="description" content="{% block meta_description %}Avenue des Artistes — Achetez, vendez et échangez des œuvres d'art originales entre artistes et collectionneurs. Peinture, sculpture, dessin, photographie et plus.{% endblock %}">
+	<meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
+	<link rel="canonical" href="{% block canonical %}{{ app.request.uri }}{% endblock %}">
+
+	{# Open Graph #}
+	<meta property="og:type"        content="{% block og_type %}website{% endblock %}">
+	<meta property="og:title"       content="{% block og_title %}{% block _og_title %}{{ block('title') }}{% endblock %}{% endblock %}">
+	<meta property="og:description" content="{% block og_description %}{{ block('meta_description') }}{% endblock %}">
+	<meta property="og:url"         content="{{ app.request.uri }}">
+	<meta property="og:image"       content="{% block og_image %}{{ app.request.schemeAndHttpHost }}/images/favicon.svg{% endblock %}">
+	<meta property="og:site_name"   content="Avenue des Artistes">
+	<meta property="og:locale"      content="fr_FR">
+
+	{# Twitter Card #}
+	<meta name="twitter:card"        content="summary_large_image">
+	<meta name="twitter:title"       content="{{ block('og_title') }}">
+	<meta name="twitter:description" content="{{ block('meta_description') }}">
+	<meta name="twitter:image"       content="{{ block('og_image') }}">
+
 	<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
 	<link rel="shortcut icon" type="image/png" href="/images/faviconavenue.png"/>
 	<!-- Google Fonts -->

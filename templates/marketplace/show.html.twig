@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ work.name }} — Marketplace{% endblock %}
+{% block title %}{{ work.name }}{% if work.gallery and work.gallery.user %} par {{ work.gallery.user.firstName|capitalize }} {{ work.gallery.user.lastName|capitalize }}{% endif %} — Avenue des Artistes{% endblock %}
+{% block meta_description %}{{ work.description ? work.description|slice(0,155) : work.name ~ ' — œuvre originale disponible sur Avenue des Artistes.' }}{% endblock %}
+{% block og_type %}product{% endblock %}
+{% block og_image %}{% if work.picture %}{{ app.request.schemeAndHttpHost }}/images/artisticWorks/{{ work.picture }}{% else %}{{ app.request.schemeAndHttpHost }}/images/favicon.svg{% endif %}{% endblock %}
+{% block canonical %}{{ url('marketplace_show', {'id': work.id}) }}{% endblock %}
 
 {% block body %}
 <div class="container mt-4">
@@ -151,4 +155,25 @@
         </div>
     </div>
 </div>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "{{ work.name|e('js') }}",
+    {% if work.description %}"description": "{{ work.description|slice(0,200)|e('js') }}",{% endif %}
+    {% if work.picture %}"image": "{{ app.request.schemeAndHttpHost }}/images/artisticWorks/{{ work.picture }}",{% endif %}
+    "url": "{{ url('marketplace_show', {'id': work.id}) }}",
+    {% if work.price %}"offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "{{ work.price }}",
+        "availability": "https://schema.org/InStock"
+    },{% endif %}
+    {% if work.gallery and work.gallery.user %}"seller": {
+        "@type": "Person",
+        "name": "{{ work.gallery.user.firstName|capitalize|e('js') }} {{ work.gallery.user.lastName|capitalize|e('js') }}"
+    }{% endif %}
+}
+</script>
 {% endblock %}

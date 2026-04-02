@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Galerie de {{ gallery.user.firstName }}{% endblock %}
+{% block title %}Galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} — Avenue des Artistes{% endblock %}
+{% block meta_description %}Découvrez la galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} sur Avenue des Artistes : œuvres originales disponibles à la vente et à l'échange.{% endblock %}
+{% block canonical %}{{ url('galery_showUser', {'id': gallery.id}) }}{% endblock %}
 
 {% block body %}
 <div class="container font">
