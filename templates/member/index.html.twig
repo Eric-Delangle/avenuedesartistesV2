@@ -102,9 +102,9 @@
                 </button>
 
                 {% if is_subscribed() %}
-                <button class="btn bouton" style="background: linear-gradient(135deg, #2fa4e7, #1a8fd1); border: none;">
+                <button class="btn bouton">
                     <a href="{{ path('galery_new', {'id': app.user.id }) }}" class="white lien">
-                        <i class="fas fa-store"></i> Créer une galerie de vente
+                         Créer une galerie de vente
                     </a>
                 </button>
                 {% else %}
