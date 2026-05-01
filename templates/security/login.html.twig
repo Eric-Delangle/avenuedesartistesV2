@@ -11,9 +11,10 @@
 				<input placeholder="Votre email" required name="_username" type="text" class="form-control">
 			</div>
 			<div class="form-group">
-				<input placeholder="Votre mot de passe" required name="_password" type="password" class="form-control" id="pass"/>
-				<img src="images/closed_eye.png" id="eye" onclick="changer()"/>
-				
+				<div style="position: relative;">
+					<input placeholder="Votre mot de passe" required name="_password" type="password" class="form-control" id="pass" style="padding-right: 40px;"/>
+					<img src="images/closed_eye.png" id="eye" onclick="changer()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; width: 24px; height: 24px;"/>
+				</div>
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn bouton">Envoyer</button>
