@@ -27,13 +27,9 @@ body {
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-body > *:not(nav):not(#footer) {
-    flex: 1;
 }
 
 img { max-width: 100%; height: auto; }
