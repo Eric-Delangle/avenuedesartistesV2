@@ -421,6 +421,13 @@ img { max-width: 100%; height: auto; }
    ---------------------------------------------------------------- */
 .no_point { list-style: none; padding: 0; margin: 0; }
 
+.avatar img, img.avatar {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 .btn {
     border-radius: 8px;
     font-weight: 600;
