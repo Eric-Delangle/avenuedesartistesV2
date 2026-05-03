@@ -24,17 +24,10 @@ class GalleryType extends AbstractType
             ])
             ->add('galleryType', ChoiceType::class, [
                 'label' => 'Type de galerie',
-                'choices' => $options['can_sell']
-                    ? [
-                        'Vitrine (affichage uniquement)' => 'showcase',
-                        'Galerie de vente'               => 'sale',
-                        'Galerie d\'échange'             => 'exchange',
-                        'Vente et échange'               => 'mixed',
-                    ]
-                    : [
-                        'Vitrine (affichage uniquement)' => 'showcase',
-                        'Galerie d\'échange'             => 'exchange',
-                    ],
+                'choices' => [
+                    'Vitrine (affichage uniquement)' => 'showcase',
+                    'Galerie d\'échange'             => 'exchange',
+                ],
                 'required' => true,
             ])
         ;
