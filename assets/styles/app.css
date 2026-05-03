@@ -27,9 +27,10 @@ body {
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 img { max-width: 100%; height: auto; }
@@ -359,8 +360,15 @@ img { max-width: 100%; height: auto; }
 /* ----------------------------------------------------------------
    FOOTER
    ---------------------------------------------------------------- */
+#footer {
+    margin-top: auto;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+}
+
 #footer .jumbotron {
-    background: linear-gradient(135deg, #1a1a2e, #0f3460) !important;
+    background: transparent !important;
     margin: 0 !important;
     border-radius: 0 !important;
     padding: 48px 0 !important;
@@ -402,10 +410,23 @@ img { max-width: 100%; height: auto; }
     color: #155724;
 }
 
+.flash-info {
+    border-left-color: #0d6efd;
+    background: #cfe2ff;
+    color: #084298;
+}
+
 /* ----------------------------------------------------------------
    UTILITAIRES GLOBAUX
    ---------------------------------------------------------------- */
 .no_point { list-style: none; padding: 0; margin: 0; }
+
+.avatar img, img.avatar {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
 
 .btn {
     border-radius: 8px;

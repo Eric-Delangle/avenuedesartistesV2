@@ -48,7 +48,7 @@
                    
                 {% endfor %}
             </div>
-            <div class="center"> 
+            <div class="center mt-3"> 
                 <a class="btn btn-success" href="{{ path('message_newUserMess', {'id': gallerie.user.id}) }}">Envoyer un message à {{ gallerie.user.firstName|title}}</a>
                 <a class="btn btn-info" href="{{ path('user_show', {'slug': gallerie.user.slug}) }}">Voir son profil</a>
             </div>

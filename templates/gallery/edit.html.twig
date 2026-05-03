@@ -16,7 +16,7 @@
             {% endif %}
             {{ include('gallery/_form.html.twig', {'button_label': 'Modifier nom et/ou catégorie'}) }}
 
-        <a class="btn btn-info" href="{{ path('artistic_work_new', {'id': gallery.id}) }}">Ajouter une image</a> 
+        <a class="btn btn-info mb-3" href="{{ path('artistic_work_new', {'id': gallery.id}) }}">Ajouter une image</a> 
        
       
         {# <a class="btn btn-primary" href="{{ path('gallery_index', {'id':app.user.id}) }}">Retour à la liste</a> #}
