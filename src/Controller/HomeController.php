@@ -3,14 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use App\Entity\User;
-use App\Entity\Message;
 use App\Entity\Category;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,53 +26,29 @@ class HomeController extends AbstractController
         ]);
     }
 
-    /* la je veux recuperer les lieux de mes membres en bases de données afin de les transformer en json
-    et pouvoir les afficher sur la map */
-
-    public function membersLocations(SerializerInterface $serializer)
+    #[Route('/members.json', name: 'members_json')]
+    public function membersLocations(): JsonResponse
     {
+        $users = $this->doctrine->getRepository(User::class)->findAll();
 
-        //je récupere le repository des users et je vais checher ses infos
-        $repositoryCat = $this->doctrine->getRepository(Category::class);
-        $repositoryUser = $this->doctrine->getRepository(User::class);
-        $repositoryMess = $this->doctrine->getRepository(Message::class);
-        $user = $repositoryUser->findAll();
+        $data = [];
+        foreach ($users as $user) {
+            if (!$user->getLocation()) {
+                continue;
+            }
+            $data[] = [
+                'id'         => $user->getId(),
+                'firstName'  => $user->getFirstName(),
+                'lastName'   => $user->getLastName(),
+                'slug'       => $user->getSlug(),
+                'location'   => $user->getLocation(),
+                'categories' => array_map(
+                    fn($c) => ['name' => $c->getName()],
+                    $user->getCategories()->toArray()
+                ),
+            ];
+        }
 
-        // la je vais chercher ses catégories
-
-        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
-
-
-        $data = $serializer->serialize(
-            $user,
-            'json',
-
-            ['attributes' =>
-                ['id', 'firstName', 'lastName', 'slug', 'location', 'categories' =>
-                 ['name'], 'messages' =>
-                  ['message']
-                ]
-            ]
-        );
-        json_encode($data);
-
-
-
-        // Création du fichier json user
-
-        // Nom du fichier à créer
-        $members = 'members.json';
-
-        // Ouverture du fichier
-        $members = fopen($members, 'w+');
-
-        // Ecriture dans le fichier
-        fwrite($members, $data);
-
-
-        // Fermeture du fichier
-        fclose($members);
-
-        return $this->render('home/index.html.twig');
+        return new JsonResponse($data);
     }
 }
