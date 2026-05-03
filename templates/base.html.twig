@@ -49,6 +49,11 @@
 		<div class="flash-message flash-success">✓ {{ message }}</div>
 	</div>
 {% endfor %}
+{% for message in app.flashes('info') %}
+	<div class="flash-messages">
+		<div class="flash-message flash-info">ℹ {{ message }}</div>
+	</div>
+{% endfor %}
 
 {% block body %}{% endblock %}
 

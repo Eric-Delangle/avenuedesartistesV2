@@ -26,6 +26,9 @@ class MarketplaceController extends AbstractController
         CategoryRepository $categoryRepository,
         PaginatorInterface $paginator
     ): Response {
+        $this->addFlash('info', 'Le marché arrive bientôt ! Cette fonctionnalité sera disponible prochainement.');
+        return $this->redirectToRoute('home');
+
         $filters = [
             'type'     => $request->query->get('type', ''),
             'category' => $request->query->get('category', ''),
@@ -55,6 +58,9 @@ class MarketplaceController extends AbstractController
         ArtisticWorkRepository $artworkRepository,
         EntityManagerInterface $em
     ): Response {
+        $this->addFlash('info', 'Le marché arrive bientôt ! Cette fonctionnalité sera disponible prochainement.');
+        return $this->redirectToRoute('home');
+
         if ($work->getListingType() === 'none' || $work->getStatus() !== 'available') {
             throw $this->createNotFoundException('Cette œuvre n\'est pas disponible sur la marketplace.');
         }
