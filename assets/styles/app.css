@@ -27,8 +27,8 @@ body {
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
 }
 
@@ -359,6 +359,10 @@ img { max-width: 100%; height: auto; }
 /* ----------------------------------------------------------------
    FOOTER
    ---------------------------------------------------------------- */
+#footer {
+    margin-top: auto;
+}
+
 #footer .jumbotron {
     background: linear-gradient(135deg, #1a1a2e, #0f3460) !important;
     margin: 0 !important;
