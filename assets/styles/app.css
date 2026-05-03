@@ -402,6 +402,12 @@ img { max-width: 100%; height: auto; }
     color: #155724;
 }
 
+.flash-info {
+    border-left-color: #0d6efd;
+    background: #cfe2ff;
+    color: #084298;
+}
+
 /* ----------------------------------------------------------------
    UTILITAIRES GLOBAUX
    ---------------------------------------------------------------- */
