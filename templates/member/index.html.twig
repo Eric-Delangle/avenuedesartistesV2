@@ -101,23 +101,9 @@
                     </a>
                 </button>
 
-                {% if is_subscribed() %}
-                <button class="btn bouton">
-                    <a href="{{ path('galery_new', {'id': app.user.id }) }}" class="white lien">
-                         Créer une galerie de vente
-                    </a>
+                <button class="btn bouton" style="opacity: 0.5; cursor: not-allowed;" disabled title="Bientôt disponible">
+                    <span class="white lien">Galerie de vente <small>— bientôt</small></span>
                 </button>
-                {% else %}
-                <button class="btn bouton" style="opacity: 0.5; cursor: not-allowed;" disabled title="Abonnement requis">
-                    <span class="white lien">
-                        <i class="fas fa-lock"></i> Galerie de vente
-                        <small class="d-block" style="font-size:0.75em;">Abonnement requis</small>
-                    </span>
-                </button>
-                <a href="{{ path('subscription_index') }}" style="display:block; margin-top:6px; color:#f0a500; font-size:0.85rem;">
-                    <i class="fas fa-star"></i> S'abonner — 4,99€/mois
-                </a>
-                {% endif %}
                 <div id="message" >
                     <button class="btn bouton">
                         <a href="{{ path('message_index', {'id': app.user.id }) }}" class="white lien">

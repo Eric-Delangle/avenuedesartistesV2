@@ -5,7 +5,7 @@
 {% block canonical %}{{ url('galery_showUser', {'id': gallery.id}) }}{% endblock %}
 
 {% block body %}
-<div class="container font">
+<div class="container font mt-3">
     <h1 class="center">Galerie de {{ gallery.user.firstName|title }}</h1>
     
     <br>
@@ -24,7 +24,7 @@
                   
                 {% endfor %}
         </div>
-        <div class="center">
+        <div class="center mb-3">
             
             <a class="btn btn-info" href="{{ path('user_show', {'slug': gallery.user.slug}) }}">Voir son profil</a>
             <a class="btn btn-success" href="{{ path('message_newUserMess', {'id': gallery.user.id}) }}">Envoyer un message</a>

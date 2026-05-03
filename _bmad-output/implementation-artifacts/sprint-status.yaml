@@ -1,0 +1,62 @@
+# generated: 2026-05-02
+# last_updated: 2026-05-02
+# project: avenuedesartistesV2
+# project_key: AVD
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+
+generated: 2026-05-02
+last_updated: 2026-05-02
+project: avenuedesartistesV2
+project_key: AVD
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # ── Epic 1 : Fondations DB & Entités ──────────────────────────────────────
+  epic-1: done
+  1-1-schema-db-et-entites-goal-a: done
+  1-2-abonnement-stripe-goal-d: done
+  epic-1-retrospective: optional
+
+  # ── Epic 2 : Page Marketplace Browse ──────────────────────────────────────
+  epic-2: done
+  2-1-page-marketplace-browse-goal-b: done
+  epic-2-retrospective: optional
+
+  # ── Epic 3 : Système d'Offres ──────────────────────────────────────────────
+  epic-3: in-progress
+  3-1-implementation-systeme-offres-goal-c: done
+  3-2-securite-et-validation-des-offres: backlog
+  epic-3-retrospective: optional
+
+  # ── Epic 4 : Qualité & Production ─────────────────────────────────────────
+  epic-4: backlog
+  4-1-correction-gallery-slug: backlog
+  4-2-archivage-references-utilisateur: backlog
+  4-3-corrections-ux-et-donnees-marketplace: backlog
+  epic-4-retrospective: optional
+
+  # ── Epic 5 : Design & Expérience Utilisateur ──────────────────────────────
+  epic-5: in-progress
+  5-1-refonte-design-page-membres-et-finitions-ui: in-progress
+  5-2-seo-et-metadonnees: done
+  epic-5-retrospective: optional

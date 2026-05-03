@@ -67,7 +67,9 @@ class SecurityController extends AbstractController
             $user->setSlug($slug);
             $user->setRegisteredAt(new \DateTime());
             $user->setNiveau(1);
-            $user->setUserIdentifier($user->getEmail());
+        
+           // $user->setUserIdentifier($user->getEmail());
+        
             $manager->persist($user);
             $manager->flush();
             $this->addFlash('success', 'Votre compte a bien été créé, vérifiez vos emails pour pouvoir l\'activer.');
