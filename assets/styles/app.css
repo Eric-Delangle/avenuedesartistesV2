@@ -30,6 +30,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 img { max-width: 100%; height: auto; }
@@ -361,10 +362,13 @@ img { max-width: 100%; height: auto; }
    ---------------------------------------------------------------- */
 #footer {
     margin-top: auto;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
 }
 
 #footer .jumbotron {
-    background: linear-gradient(135deg, #1a1a2e, #0f3460) !important;
+    background: transparent !important;
     margin: 0 !important;
     border-radius: 0 !important;
     padding: 48px 0 !important;
