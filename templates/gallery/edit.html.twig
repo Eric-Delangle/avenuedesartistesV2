@@ -1,36 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier la galerie{% endblock %}
+{% block title %}Modifier la galerie | Art et partage{% endblock %}
 
 {% block body %}
-<h1 class="text-center mt-5">Modifier la galerie</h1>
-<div class="container mt-5" style="display:flex;" border style="text-align:center;">
-  
-    <div class="container">
-        <h3>Vos oeuvres</h3>
-            {% if gallery.artisticWorks != '' %}
-                {% for artisticWork in gallery.artisticWorks %} 
-                    <td style="display:flex;"><img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}"  style="width: 300px; height: auto;"></td>
-                    <a class="btn btn-danger" href="{{ path('artistic_work_edit', {'id': artisticWork.id}) }}">Options de cette image</a>
-                {% endfor %}
-            {% endif %}
-            {{ include('gallery/_form.html.twig', {'button_label': 'Modifier nom et/ou catégorie'}) }}
+<section class="container mt-5 mb-5" style="max-width:800px;">
 
-        <a class="btn btn-info mb-3" href="{{ path('artistic_work_new', {'id': gallery.id}) }}">Ajouter une image</a> 
-       
-      
-        {# <a class="btn btn-primary" href="{{ path('gallery_index', {'id':app.user.id}) }}">Retour à la liste</a> #}
-    </div>
-    </div>
-<script>document.getElementById('inscription').style.display ='none';</script>
-<script>document.getElementById('connexion').style.display ='none';</script>
+    <h1 class="text-center mb-5" style="color:#2c3e50;font-weight:700;">Modifier la galerie</h1>
 
- {% if  app.user.niveau == 2 %}
-<script>document.getElementById('admin').style.display ='block';</script>
- {% else %}
- <script>document.getElementById('admin').style.display ='none';</script>
-{% endif %}
-<script>document.getElementById('deconnexion').style.display ='block';</script>
-<script>document.getElementById('member').style.display ='block';</script>
-<script>document.getElementById('pas_vu').style.display ='block';</script>
+    {% if gallery.artisticWorks|length > 0 %}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <h5 style="color:#e67e22;" class="mb-4">Vos œuvres</h5>
+            {% for artisticWork in gallery.artisticWorks %}
+            <div class="text-center mb-4 p-3" style="background:#f8f9fa;border-radius:10px;">
+                <img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}" style="max-width:300px;width:100%;border-radius:10px;margin-bottom:15px;">
+                <br>
+                <a href="{{ path('artistic_work_edit', {'id': artisticWork.id}) }}" class="btn btn-sm" style="background-color:#dc3545;color:white;border-radius:20px;">
+                    Options de cette image
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <h5 style="color:#e67e22;" class="mb-4">⚙️ Modifier nom et/ou catégorie</h5>
+            {{ include('gallery/_form.html.twig', {'button_label': 'Modifier'}) }}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center flex-wrap">
+        <a href="{{ path('artistic_work_new', {'id': gallery.id}) }}" class="btn btn-lg" style="background-color:#e67e22;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Ajouter une image
+        </a>
+        <a href="{{ path('galery_index', {'id': app.user.id}) }}" class="btn btn-lg" style="background-color:#6c757d;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Retour à vos galeries
+        </a>
+    </div>
+
+</section>
 {% endblock %}

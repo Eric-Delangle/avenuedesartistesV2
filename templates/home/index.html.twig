@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Avenue des Artistes | Achetez, vendez et échangez des œuvres d'art{% endblock %}
+{% block title %}Art et partage | Achetez, vendez et échangez des œuvres d'art{% endblock %}
 {% block meta_description %}Rejoignez Avenue des Artistes : la plateforme française pour vendre, acheter et échanger des œuvres d'art originales. Peinture, sculpture, dessin, photographie, céramique. 0% de commission.{% endblock %}
 
 {% block body %}
@@ -10,7 +10,7 @@
 	<div class="hero-overlay"></div>
 	<div class="container hero-content">
 		<h1 class="hero-title">L'art circule <br>entre ceux qui l'aiment.</h1>
-		<p class="hero-subtitle">Vendez, échangez et découvrez des œuvres uniques créées par des artistes près de chez vous.</p>
+		<p class="hero-subtitle">Échangez, vendez (bientôt) et découvrez des œuvres uniques créées par des artistes près de chez vous.</p>
 		<div class="hero-actions">
 			<span class="btn btn-hero-primary" style="opacity:0.5; cursor:not-allowed;" title="Bientôt disponible">Explorer le marché <small>— bientôt</small></span>
 			<a href="{{ path('share_index') }}" class="btn btn-hero-secondary">Proposer un échange</a>
@@ -27,7 +27,7 @@
 		</div>
 		<div class="map-wrapper">
 			<div id="map"></div>
-			<div id="infoMember" class="map-info-card">
+			<div id="infoMember" class="map-info-card" style="display:none;">
 				<ul id="listeInfos" class="no_point">
 					<li><span id="nomMembre"></span></li>
 					<li><span id="categorie"></span></li>
@@ -68,4 +68,19 @@
 	</div>
 </section>
 
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var info = document.getElementById('infoMember');
+    var observer = new MutationObserver(function() {
+        if (document.getElementById('nomMembre').textContent.trim()) {
+            info.style.display = 'block';
+        }
+    });
+    observer.observe(document.getElementById('nomMembre'), {childList: true, characterData: true, subtree: true});
+});
+</script>
 {% endblock %}

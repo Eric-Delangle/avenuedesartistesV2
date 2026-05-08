@@ -1,60 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vos galeries{% endblock %}
+{% block title %}Vos galeries | Art et partage{% endblock %}
 
 {% block body %}
-   
-<div class="container font">
-        <h1 class="center titre mt-3">Vos galerie(s)</h1>
-        <br>
-    <table class="table">
-        <thead>
-            <tr>
-                
-                <th>Categorie</th>
-            
-                <th>Nom de votre galerie</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-                <tr>
-                    {% if galeries %}
-                    {% for galerie in galeries %}
-                    
-                    <td>{{ galerie.category }}</td>
-                   
-                    <td>{{ galerie.name }}</td>
-                    <td>
-                        <a class=" btn btn-info" href="{{ path('galery_edit', {'id': galerie.id}) }}">Gérer cette galerie</a>
-                       
-                    </td>
-                </tr>
+<section class="container mt-5 mb-5" style="max-width:800px;">
+
+    <h1 class="text-center mb-5" style="color:#2c3e50;font-weight:700;">Vos galeries</h1>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            {% if galeries %}
+                {% for galerie in galeries %}
+                <div class="d-flex justify-content-between align-items-center p-3 mb-2" style="background:#f8f9fa;border-radius:10px;">
+                    <div>
+                        <strong>{{ galerie.name }}</strong>
+                        <p class="mb-0 text-muted" style="font-size:.9rem;">{{ galerie.category }}</p>
+                    </div>
+                    <a href="{{ path('galery_edit', {'id': galerie.id}) }}" class="btn btn-sm" style="background:#2fa4e7;color:white;border-radius:20px;">
+                        Gérer
+                    </a>
+                </div>
                 {% endfor %}
-                {% else %}
-                <tr>
-                    <td colspan="3">Pas de galerie enregistrée.</td>
-                </tr>
-            
-            
+            {% else %}
+                <p class="text-muted text-center">Pas de galerie enregistrée.</p>
             {% endif %}
-         
-        </tbody>
-    </table>
-    <a class="btn btn-success" href="{{ path('galery_new', {'id': app.user.id}) }}">Créer une nouvelle galerie</a>
-</div>
-    
+        </div>
+    </div>
 
+    <div class="d-flex justify-content-center flex-wrap">
+        <a href="{{ path('galery_new', {'id': app.user.id}) }}" class="btn btn-lg" style="background-color:#e67e22;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Créer une nouvelle galerie
+        </a>
+        <a href="{{ path('member_index') }}" class="btn btn-lg" style="background-color:#6c757d;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Retour à votre espace
+        </a>
+    </div>
 
-<script>document.getElementById('inscription').style.display ='none';</script>
-<script>document.getElementById('connexion').style.display ='none';</script>
-
- {% if  app.user.niveau == 2 %}
-<script>document.getElementById('admin').style.display ='block';</script>
- {% else %}
- <script>document.getElementById('admin').style.display ='none';</script>
-{% endif %}
-<script>document.getElementById('deconnexion').style.display ='block';</script>
-<script>document.getElementById('espace_membre').style.display ='block';</script>
-<script>document.getElementById('pas_vu').style.display ='block';</script>
+</section>
 {% endblock %}

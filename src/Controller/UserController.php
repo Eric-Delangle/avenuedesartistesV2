@@ -18,6 +18,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 
 #[Route('/user')]
@@ -128,16 +132,41 @@ class UserController extends AbstractController
         ]);
     }
 
-
     #[Route('/{id}', name: 'user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user): Response
-    {
+    public function delete(Request $request, User $user, \Symfony\Component\HttpFoundation\RequestStack $requestStack, TokenStorageInterface $tokenStorage, MailerInterface $mailer): Response {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->doctrine->getManager();
+
+            // Notif admin avant suppression
+            $notif = (new Email())
+                ->from('info@artetpartage.com')
+                ->to('info@artetpartage.com')
+                ->subject('Suppression de compte sur Art et Partage')
+                ->text('Un utilisateur vient de supprimer son compte : ' . $user->getFirstName() . ' ' . $user->getLastName() . ' (' . $user->getEmail() . ')');
+            $mailer->send($notif);
+
+            $reponses = $entityManager->getRepository(\App\Entity\Reponse::class)->findBy(['destinataire' => $user]);
+            foreach ($reponses as $reponse) { $entityManager->remove($reponse); }
+            $reponses = $entityManager->getRepository(\App\Entity\Reponse::class)->findBy(['expediteur' => $user]);
+            foreach ($reponses as $reponse) { $entityManager->remove($reponse); }
+
+            $messages = $entityManager->getRepository(\App\Entity\Message::class)->findBy(['destinataire' => $user]);
+            foreach ($messages as $message) { $entityManager->remove($message); }
+            $messages = $entityManager->getRepository(\App\Entity\Message::class)->findBy(['expediteur' => $user]);
+            foreach ($messages as $message) { $entityManager->remove($message); }
+
+            $galleries = $entityManager->getRepository(\App\Entity\Gallery::class)->findBy(['user' => $user]);
+            foreach ($galleries as $gallery) { $entityManager->remove($gallery); }
+
+            $entityManager->flush();
             $entityManager->remove($user);
             $entityManager->flush();
+
+            $tokenStorage->setToken(null);
+            $requestStack->getSession()->invalidate();
         }
 
-        return $this->redirectToRoute('user_index');
+        return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('home'));
     }
+  
 }

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{% block title %}Avenue des Artistes | Échange et vente d'œuvres d'art{% endblock %}</title>
+	<title>{% block title %}Art et partage | Échange et vente d'œuvres d'art{% endblock %}</title>
 	<meta name="description" content="{% block meta_description %}Avenue des Artistes — Achetez, vendez et échangez des œuvres d'art originales entre artistes et collectionneurs. Peinture, sculpture, dessin, photographie et plus.{% endblock %}">
 	<meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
 	<link rel="canonical" href="{% block canonical %}{{ app.request.uri }}{% endblock %}">
@@ -14,7 +14,7 @@
 	<meta property="og:description" content="{% block og_description %}{{ block('meta_description') }}{% endblock %}">
 	<meta property="og:url"         content="{{ app.request.uri }}">
 	<meta property="og:image"       content="{% block og_image %}{{ app.request.schemeAndHttpHost }}/images/favicon.svg{% endblock %}">
-	<meta property="og:site_name"   content="Avenue des Artistes">
+	<meta property="og:site_name"   content="Art et partage">
 	<meta property="og:locale"      content="fr_FR">
 
 	{# Twitter Card #}
@@ -54,8 +54,15 @@
 		<div class="flash-message flash-info">ℹ {{ message }}</div>
 	</div>
 {% endfor %}
+{% for message in app.flashes('danger') %}
+    <div class="flash-messages">
+        <div class="flash-message" style="background:#f8d7da;border-left:4px solid #dc3545;color:#721c24;">✗ {{ message }}</div>
+    </div>
+{% endfor %}
 
+<main style="flex:1;">
 {% block body %}{% endblock %}
+</main>
 
 {% include "partials/_footer.html.twig" %}
 

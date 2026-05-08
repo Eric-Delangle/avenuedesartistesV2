@@ -1,59 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Comment ça marche ?{% endblock %}
+{% block title %}Comment ça marche ? | Art et Partage{% endblock %}
 
 {% block body %}
-<div class="container font"> 
-    <h1 class="text-center titre mt-5">Le concept</h1>
-    <br>
-    <p class="placeho mt-3">Vous avez toujours révé de posseder d'autres oeuvres que les votres mais votre budget de vous le permet pas ?
-        Pourquoi ne pas tenter d'en échanger une &nbsp;(ou plusieurs) contre une oeuvre &nbsp;(ou plusieurs) d'un artiste de votre domaine
-        ou d'un autre ?
-        Inscrivez vous puis:
-        Parcourez nos galeries dans leurs differentes catégories:
-         Dessin, peinture, sculpture, modelage, art-numérique et photographie.
-         Si une oeuvre vous plait vous pouvez proposer à son propriétaire de vous l'échanger contre une des votres.
-         Parcourez la <a href="{{ path('home') }}">carte</a> pour visualiser les artistes de votre région ainsi que leur(s) spécialité(s).
-         Si vous voyez un drapeau vert au lieu d'un drapeau bleu c'est que plusieurs membres habitent cette même ville.
-         Cliquez sur le drapeau pour tous les faire apparaitre.
-         Cliquez dans le vide sur la carte si vous souhaitez faire disparaitre la fenêtre d'informations.
-         Si aucun artiste n'apparait dans votre région c'est que vous êtes le premier.Un peu de patience,
-         d'autres ne vont pas tarder.
-    </p>
-</div>
- 	<script>
-		document.getElementById('inscription').style.display = 'block';
-		document.getElementById('explain').style.display = 'none';
-		document.getElementById('connexion').style.display = 'block';
-		document.getElementById('admin').style.display = 'none';
-		document.getElementById('pas_vu').style.display = 'none';
-		document.getElementById('member').style.display = 'none';
-		document.getElementById('deconnexion').style.display = 'none';
-		document.getElementById('echanges').style.display = 'none';
-		document.getElementById('echange').style.display = 'none';
-		document.getElementById('achat').style.display = 'none';
-		document.getElementById('deco').style.display = 'none';
-		document.getElementById('bleudeco').style.display = 'none';
-	</script>
-	{% if app.user %}
-		<script>
-		document.getElementById('explain').style.display = 'none';
-			document.getElementById('member').style.display = 'block';
-			document.getElementById('bleudeco').style.display = 'block';
-			document.getElementById('deco').style.display = 'block';
-			document.getElementById('deconnexion').style.display = 'block';
-			document.getElementById('echanges').style.display = 'block';
-			document.getElementById('inscription').style.display = 'none';
-			document.getElementById('connexion').style.display = 'none';
-			document.getElementById('admin').style.display = 'none';
-		</script>
-	{% endif %}
 
-	{#
-	{% if is_granted('ROLE_ADMIN') %}
-		<script>
-			document.getElementById('admin').style.display = 'block';
-		</script>
-	{% endif %}
-	#}
+<section class="container mt-5 mb-5" style="max-width: 800px;">
+
+    <h1 class="text-center mb-4" style="color: #2c3e50; font-weight: 700;">Comment ça marche ?</h1>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <h5 style="color: #e67e22;">Le concept</h5>
+            <p>Vous rêvez de posséder d'autres œuvres mais votre budget ne vous le permet pas ? Pourquoi ne pas en échanger une ou plusieurs contre une œuvre d'un autre artiste ?</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <h5 style="color: #e67e22;">Comment procéder ?</h5>
+            <ol class="mt-2">
+                <li class="mb-2">Inscrivez-vous et créez votre profil d'artiste.</li>
+                <li class="mb-2">Parcourez les galeries par catégorie : dessin, peinture, sculpture, modelage, art numérique, photographie.</li>
+                <li class="mb-2">Si une œuvre vous plait, proposez à son propriétaire de l'échanger contre l'une des vôtres.</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <h5 style="color: #e67e22;">La carte des artistes</h5>
+            <p>Parcourez la <a href="{{ path('home') }}#map">carte</a> pour visualiser les artistes de votre région ainsi que leurs spécialités.</p>
+            <ul class="mt-2">
+                <li class="mb-1">Un marqueur = un artiste dans cette ville.</li>
+                <li class="mb-1">Un groupe de marqueurs = plusieurs artistes au même endroit -> cliquez pour les voir.</li>
+                <li class="mb-1">Aucun artiste près de chez vous ? Vous serez le premier et d'autres ne tarderont pas !</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        {% if not app.user %}
+        <a href="{{ path('security_registration') }}" class="btn btn-lg" style="background-color: #e67e22; color: white; border-radius: 30px; padding: 12px 40px;">
+            Je m'inscris
+        </a>
+        {% else %}
+        <a href="{{ path('share_index') }}" class="btn btn-lg" style="background-color: #e67e22; color: white; border-radius: 30px; padding: 12px 40px;">
+            Proposer un échange
+        </a>
+        {% endif %}
+    </div>
+
+</section>
+
 {% endblock %}

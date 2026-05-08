@@ -102,6 +102,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $reset_token;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $website;
+
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
@@ -424,6 +427,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setResetToken(?string $reset_token): self
     {
         $this->reset_token = $reset_token;
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
 
         return $this;
     }

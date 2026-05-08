@@ -1,94 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Galeries {{ category.name }} — Avenue des Artistes{% endblock %}
-{% block meta_description %}Parcourez les galeries d'artistes spécialisés en {{ category.name }} sur Avenue des Artistes. Découvrez et achetez des œuvres originales.{% endblock %}
+{% block title %}Galeries {{ category.name }} | Art et partage{% endblock %}
+{% block meta_description %}Parcourez les galeries d'artistes spécialisés en {{ category.name }} sur Avenue des Artistes.{% endblock %}
 
 {% block body %}
-<div class="container font galerie text-center mt-5"> 
-        
-        <h1 class="center titre">Vous visitez les galeries de la <span class="A_titre">c</span>atégorie {{ category.name }}.</h1>
-           
-               
-           
+<section class="container mt-5 mb-5" style="max-width:800px;">
+
+    <h1 class="text-center mb-5" style="color:#2c3e50;font-weight:700;">
+        Galeries — {{ category.name }}
+    </h1>
 
     {% for gallerie in galleries %}
- 
-    <br>
-    
-       <div class="center fontDiv font_titres flex">
-           
-           <div> 
-                <p style="color:orange;font-weight: bold;font-size:1.2em;">Nom de la galerie</p>
-             
-                <p>{{ gallerie.name }}</p>
+    <div class="card shadow-sm border-0 mb-5">
+        <div class="card-body p-4">
+
+            <div class="text-center mb-3">
+                <p><span style="color:#e67e22;font-weight:600;">Galerie :</span> {{ gallerie.name }}</p>
+                <p><span style="color:#e67e22;font-weight:600;">Membre :</span> {{ gallerie.user.firstName|title }} {{ gallerie.user.lastName|title }}</p>
+                <p><span style="color:#e67e22;font-weight:600;">Ville :</span> {{ gallerie.user.location|title }}</p>
             </div>
-            <div>
-                <p style="color:orange;font-weight: bold;font-size:1.2em;">Membre</p>
-                    {{ gallerie.user.firstName|title}}
-                
-                    {{ gallerie.user.lastName|title }}
+
+            <h5 class="text-center mb-4" style="color:#e67e22;">Œuvres</h5>
+
+            {% for artisticWork in gallerie.artisticWorks %}
+            <div class="text-center mb-4">
+                <img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}" style="max-width:350px;width:100%;border-radius:10px;margin-bottom:10px;">
+                <p><strong>{{ artisticWork.name|title }}</strong></p>
+                <p class="text-muted">{{ artisticWork.description }}</p>
             </div>
-            <div>
-                <p style="color:orange;font-weight: bold;font-size:1.2em;">Ville</p>
-                
-                    {{ gallerie.user.location|title }}
+            {% endfor %}
+
+            <div class="d-flex justify-content-center flex-wrap mt-3">
+                <a href="{{ path('message_newUserMess', {'id': gallerie.user.id}) }}" class="btn btn-lg" style="background-color:#e67e22;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+                    Envoyer un message à {{ gallerie.user.firstName|title }}
+                </a>
+                <a href="{{ path('user_show', {'slug': gallerie.user.slug}) }}" class="btn btn-lg" style="background-color:#2fa4e7;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+                    Voir son profil
+                </a>
             </div>
         </div>
-        
-               <p class="center" style="color:orange;font-weight: bold;font-size:1.2em;">Oeuvres</p>
-               <br>
-               <div class="fontDiv font_titres galerie center"> 
-                <!-- l'array sur lequel je dois boucler c'est gallery.artisticWorks -->
-                {% for artisticWork in gallerie.artisticWorks %}
-                
-                    <p><img src=" {{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="images" ></p>
-                    <br>
-                    <p>{{ artisticWork.name|title }}:</p>
-                    <p>{{ artisticWork.description }}</p>
-                   
-                {% endfor %}
-            </div>
-            <div class="center mt-3"> 
-                <a class="btn btn-success" href="{{ path('message_newUserMess', {'id': gallerie.user.id}) }}">Envoyer un message à {{ gallerie.user.firstName|title}}</a>
-                <a class="btn btn-info" href="{{ path('user_show', {'slug': gallerie.user.slug}) }}">Voir son profil</a>
-            </div>
-            <hr style="height: 5px;">
-            
-    {% endfor %}
-    <div class="pagination center">
-        {{ knp_pagination_render (galleries)}}
     </div>
-   
-</div>
+    {% endfor %}
 
- <script>document.getElementById('pas_vu').style.display ='block';</script>
- 
- 
- 	<script>
- 	    document.getElementById('pas_vu').style.display = 'block';
-		document.getElementById('inscription').style.display = 'block';
-		document.getElementById('connexion').style.display = 'block';
-		document.getElementById('admin').style.display = 'none';
-		document.getElementById('member').style.display = 'none';
-		document.getElementById('deconnexion').style.display = 'none';
-		document.getElementById('echanges').style.display = 'none';
-		document.getElementById('echange').style.display = 'none';
-		document.getElementById('achat').style.display = 'none';
-		document.getElementById('deco').style.display = 'none';
-		document.getElementById('bleudeco').style.display = 'none';
-	</script>
-	{% if app.user %}
-		<script>
-		    document.getElementById('pas_vu').style.display = 'block';
-			document.getElementById('member').style.display = 'block';
-			document.getElementById('bleudeco').style.display = 'block';
-			document.getElementById('deco').style.display = 'block';
-			document.getElementById('deconnexion').style.display = 'block';
-			document.getElementById('echanges').style.display = 'block';
-			document.getElementById('inscription').style.display = 'none';
-			document.getElementById('connexion').style.display = 'none';
-			document.getElementById('admin').style.display = 'none';
-		</script>
-	{% endif %}
- 
+    <div class="text-center mt-3">
+        {{ knp_pagination_render(galleries) }}
+    </div>
+
+</section>
 {% endblock %}

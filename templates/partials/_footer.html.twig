@@ -1,17 +1,22 @@
-<footer id="footer" class="foot mb-0">
-	<div class="jumbotron mb-0 liens_blancs" style="background-color:#2fa4e7;">
-		<div class="col">
-			<a href="#" class="text-center cadre1">
-				<i class="fab fa-instagram fa-2x"></i>
-			</a>
-		</div>
-		<div class="col mt-2">
-			<a href="https://www.facebook.com/profile.php?id=100065667452523" class="text-center cadre2">
-				<i class="fab fa-facebook fa-2x"></i>
-			</a>
-		</div>
-		<div class="col mt-2" style="color: white;">
-				<p>Copyright ©2026 l'avenue des artistes tous droits réservés.</p>
-		</div>
-	</div>
+<footer style="background-color: #2c3e50; padding: 20px 0;">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+            <div class="d-flex align-items-center">
+                <a href="#" style="color: white; margin-right: 20px;">
+                    <i class="fab fa-instagram fa-2x"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588821437415" style="color: white;">
+                    <i class="fab fa-facebook fa-2x"></i>
+                </a>
+            </div>
+            <p class="mb-0 text-center" style="color: white;">
+                Copyright ©2026 artetpartage.com tous droits réservés.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center">
+                <a href="{{ path('mentions_legales') }}" style="color:#2fa4e7;margin:0 15px;">Mentions légales</a>
+                <a href="{{ path('confidentialite') }}" style="color:#2fa4e7;margin:0 15px;">Politique de confidentialité</a>
+                <a href="{{ path('cgu') }}" style="color:#2fa4e7;margin:0 15px;">CGU</a>
+            </div>
+        </div>
+    </div>
 </footer>

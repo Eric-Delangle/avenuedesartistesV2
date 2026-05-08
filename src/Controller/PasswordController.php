@@ -44,11 +44,12 @@ class PasswordController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $newPassword = $passwordUpdate->getNewPassword();
+            $newPassword = $passwordUpdate->getPassword();
             $hash = $encoder->hashPassword($user, $newPassword);
             $user->setPassword($hash);
-            $manager->persist($user);
-            $manager->flush();
+            $em = $manager->getManager();
+            $em->persist($user);
+            $em->flush();
             $this->addFlash('success', "Votre mot de passe a bien été modifié !");
             return $this->redirectToRoute('member_index');
         }

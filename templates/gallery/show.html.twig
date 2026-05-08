@@ -1,59 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} — Avenue des Artistes{% endblock %}
-{% block meta_description %}Découvrez la galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} sur Avenue des Artistes : œuvres originales disponibles à la vente et à l'échange.{% endblock %}
+{% block title %}Galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} | Art et partage{% endblock %}
+{% block meta_description %}Découvrez la galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} sur Avenue des Artistes.{% endblock %}
 {% block canonical %}{{ url('galery_showUser', {'id': gallery.id}) }}{% endblock %}
 
 {% block body %}
-<div class="container font mt-3">
-    <h1 class="center">Galerie de {{ gallery.user.firstName|title }}</h1>
-    
-    <br>
-        <div class="center fontDiv font_titres"> 
-            <p><span class="bleu">Nom de la galerie: </span> {{ gallery.name|title }}</p>
+<section class="container mt-5 mb-5" style="max-width:800px;">
 
-            <p><span class="bleu">Catégorie: </span> {{ gallery.category }}</p>
+    <h1 class="text-center mb-4" style="color:#2c3e50;font-weight:700;">
+        Galerie de {{ gallery.user.firstName|title }} {{ gallery.user.lastName|title }}
+    </h1>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4 text-center">
+            <p><span style="color:#e67e22;font-weight:600;">Nom :</span> {{ gallery.name|title }}</p>
+            <p><span style="color:#e67e22;font-weight:600;">Catégorie :</span> {{ gallery.category }}</p>
         </div>
-        <div class="center fontDiv font_titres">
-                <p><span class="bleu">Oeuvres</span></p>
-                <!-- l'array sur lequel je dois boucler c'est gallery.artisticWorks -->
-                {% for artisticWork in gallery.artisticWorks %}
-                    <p><img src=" {{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="images" ></p>
-                    <p>{{ artisticWork.name|title }}:</p>
-                    <p>{{ artisticWork.description }}</p>
-                  
-                {% endfor %}
+    </div>
+
+    <h3 class="text-center mb-4" style="color:#2c3e50;">Œuvres</h3>
+
+    {% for artisticWork in gallery.artisticWorks %}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4 text-center">
+            <img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}" style="max-width:400px;width:100%;border-radius:10px;margin-bottom:15px;">
+            <h5 style="color:#2c3e50;">{{ artisticWork.name|title }}</h5>
+            <p class="text-muted">{{ artisticWork.description }}</p>
         </div>
-        <div class="center mb-3">
-            
-            <a class="btn btn-info" href="{{ path('user_show', {'slug': gallery.user.slug}) }}">Voir son profil</a>
-            <a class="btn btn-success" href="{{ path('message_newUserMess', {'id': gallery.user.id}) }}">Envoyer un message</a>
-      
-        </div>
-</div>
-   <script>
-		document.getElementById('inscription').style.display = 'block';
-		document.getElementById('connexion').style.display = 'block';
-		document.getElementById('admin').style.display = 'none';
-		document.getElementById('pas_vu').style.display = 'none';
-		document.getElementById('member').style.display = 'none';
-		document.getElementById('deconnexion').style.display = 'none';
-		document.getElementById('echanges').style.display = 'none';
-		document.getElementById('echange').style.display = 'none';
-		document.getElementById('achat').style.display = 'none';
-		document.getElementById('deco').style.display = 'none';
-		document.getElementById('bleudeco').style.display = 'none';
-	</script>
-	{% if app.user %}
-		<script>
-			document.getElementById('member').style.display = 'block';
-			document.getElementById('bleudeco').style.display = 'block';
-			document.getElementById('deco').style.display = 'block';
-			document.getElementById('deconnexion').style.display = 'block';
-			document.getElementById('echanges').style.display = 'block';
-			document.getElementById('inscription').style.display = 'none';
-			document.getElementById('connexion').style.display = 'none';
-			document.getElementById('admin').style.display = 'none';
-		</script>
-	{% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="d-flex justify-content-center flex-wrap mt-4">
+        <a href="{{ path('user_show', {'slug': gallery.user.slug}) }}" class="btn btn-lg" style="background-color:#2fa4e7;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Voir son profil
+        </a>
+        <a href="{{ path('message_newUserMess', {'id': gallery.user.id}) }}" class="btn btn-lg" style="background-color:#e67e22;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Envoyer un message
+        </a>
+    </div>
+
+</section>
 {% endblock %}

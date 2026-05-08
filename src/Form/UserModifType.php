@@ -17,7 +17,8 @@ class UserModifType extends AbstractType
             ->add('lastName')
             ->add('location')
             ->add('description2')
-            ->add('categories');
+            ->add('categories')
+            ->add('website');
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,10 +1,10 @@
 
-	Message de validation
-
-
-	Lien d'activation
-	Vous avez créé un compte sur avenuedesartistes.com, veuillez cliquer sur le lien ci-dessous pour l'activer.
-
-		{{ absolute_url(path('security_activation', {'token':token}))}}
-
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Lien d'activation</h1>
+    <p>Vous avez créé un compte sur artetpartage.com, veuillez cliquer sur le lien ci-dessous pour l'activer.</p>
+    <a href="{{ absolute_url(path('security_activation', {'token':token})) }}">Activer mon compte</a>
+</body>
+</html>
 
