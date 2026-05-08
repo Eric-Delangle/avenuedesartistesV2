@@ -1,39 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Votre nouvelle galerie{% endblock %}
+{% block title %}Créer une galerie | Art et partage{% endblock %}
 
 {% block body %}
-<div class ="container mt-5">
-    <h1 class="center">Créer une galerie</h1>
+<section class="container mt-5 mb-5" style="max-width:700px;">
 
-    {{ include('gallery/_form.html.twig') }}
+    <h1 class="text-center mb-5" style="color:#2c3e50;font-weight:700;">Créer une galerie</h1>
 
-    <a class="btn btn-info" href="{{ path('galery_index', {'id': app.user.id}) }}">Retour à la liste de vos galeries</a>
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            {{ include('gallery/_form.html.twig') }}
+        </div>
     </div>
-    
-    <script>
-		document.getElementById('inscription').style.display = 'block';
-		document.getElementById('connexion').style.display = 'block';
-		document.getElementById('admin').style.display = 'none';
-		document.getElementById('pas_vu').style.display = 'none';
-		document.getElementById('member').style.display = 'none';
-		document.getElementById('deconnexion').style.display = 'none';
-		document.getElementById('echanges').style.display = 'none';
-		document.getElementById('echange').style.display = 'none';
-		document.getElementById('achat').style.display = 'none';
-		document.getElementById('deco').style.display = 'none';
-		document.getElementById('bleudeco').style.display = 'none';
-	</script>
-	{% if app.user %}
-		<script>
-			document.getElementById('member').style.display = 'block';
-			document.getElementById('bleudeco').style.display = 'block';
-			document.getElementById('deco').style.display = 'block';
-			document.getElementById('deconnexion').style.display = 'block';
-			document.getElementById('echanges').style.display = 'block';
-			document.getElementById('inscription').style.display = 'none';
-			document.getElementById('connexion').style.display = 'none';
-			document.getElementById('admin').style.display = 'none';
-		</script>
-	{% endif %}
+
+    <div class="d-flex justify-content-center flex-wrap">
+        <a href="{{ path('galery_index', {'id': app.user.id}) }}" class="btn btn-lg" style="background-color:#6c757d;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Retour à vos galeries
+        </a>
+    </div>
+
+</section>
 {% endblock %}

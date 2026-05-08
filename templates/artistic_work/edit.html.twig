@@ -1,17 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modification d'image.
-{% endblock %}
+{% block title %}Modification d'image | Art et partage{% endblock %}
 
 {% block body %}
-	<div class="container">
-		<h1 class="text-center mt-5 massenet">Modification d'image d'échange.</h1>
+<section class="container mt-5 mb-5" style="max-width:700px;">
 
-		{{ include('artistic_work/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    <h1 class="text-center mb-5" style="color:#2c3e50;font-weight:700;">Modification d'image</h1>
 
-		<a href="{{ path('member_index') }}">Retour à la liste</a> 
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            {{ include('artistic_work/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+        </div>
+    </div>
 
-		{{ include('artistic_work/_delete_form.html.twig') }}
-	</div>
+    <div class="d-flex justify-content-center flex-wrap">
+        <a href="{{ path('member_index') }}" class="btn btn-lg" style="background-color:#6c757d;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Retour à votre espace
+        </a>
+        {{ include('artistic_work/_delete_form.html.twig') }}
+    </div>
 
+</section>
 {% endblock %}

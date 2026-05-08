@@ -19,6 +19,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Form\ResetPassType;
+use Symfony\Component\HttpFoundation\Response;
 
 class SecurityController extends AbstractController
 {
@@ -78,15 +80,23 @@ class SecurityController extends AbstractController
             // email d'activation
 
             $email = (new Email())
-                ->from('infos@avenuedesartistes.com')
+                ->from('info@artetpartage.com')
                 ->to($user->getEmail())
 
                 ->subject('Activation de votre compte')
-                ->text($this->renderView('emails/activation.html.twig', ['token' => $user->getActivationToken()]));
+                ->html($this->renderView('emails/activation.html.twig', ['token' => $user->getActivationToken()]));
 
 
             $this->mailer->send($email);
 
+            // Mail de notification à l'admin
+            $notif = (new Email())
+                ->from('info@artetpartage.com')
+                ->to('info@artetpartage.com')
+                ->subject('Nouvelle inscription sur Art et Partage')
+                ->text('Un nouvel utilisateur vient de s\'inscrire : ' . $user->getFirstName() . ' ' . $user->getLastName() . ' (' . $user->getEmail() . ')');
+
+            $this->mailer->send($notif);
 
             return $this->redirectToRoute('security_login');
         }
@@ -99,48 +109,32 @@ class SecurityController extends AbstractController
 
 
     #[Route('/activation/{token}', name: 'security_activation')]
-    public function activation($token, UserRepository $userRepo)
-    {
-        // on verifie si un utilsateur a ce token
-        $user = $userRepo->findoneBy(['activation_token' => $token]);
-        // si aucun utilisateur n'existe avec ce token
-        if (!$user) {
-            throw $this->createNotFoundException('Cet utilsateur n\'existe pas');
-        }
-        // on supprime le token
-        $user->setActivationToken(null);
-        $em = $this->doctrine->getManager();
+public function activation($token, UserRepository $userRepo)
+{
+    $user = $userRepo->findOneBy(['activation_token' => $token]);
 
-        $em->persist($user);
-        $em->flush();
-
-        // on envoie un message flash
-        $this->addFlash('message', 'Vous avez bien activé votre compte.');
-
-        // on va sur l'espace membre
-        return $this->redirectToRoute('member_index');
+    if (!$user) {
+        $this->addFlash('danger', 'Token invalide ou déjà utilisé.');
+        return $this->redirectToRoute('security_login');
     }
 
-    #[Route('/connexion', name: 'security_login')]
-    public function login()
-    {
+    $user->setActivationToken(null);
+    $em = $this->doctrine->getManager();
+    $em->persist($user);
+    $em->flush();
 
-        // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        /*
-        if ($this->getSubscribedServices(['security.authorization_checker'])->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirectToRoute('member_index');
-       }
-*/
-        // Le service authentication_utils permet de récupérer le nom d'utilisateur
-        // et l'erreur dans le cas où le formulaire a déjà été soumis mais était invalide
-        // (mauvais mot de passe par exemple)
+    $this->addFlash('success', 'Votre compte est activé, vous pouvez vous connecter.');
+    return $this->redirectToRoute('security_login');
+}
 
-
-        return $this->render('security/login.html.twig', array(
-            'last_username' => $this->authenticationUtils->getLastUsername(),
-            'error'         => $this->authenticationUtils->getLastAuthenticationError(),
-        ));
-    }
+#[Route('/connexion', name: 'security_login')]
+public function login()
+{
+    return $this->render('security/login.html.twig', [
+        'last_username' => $this->authenticationUtils->getLastUsername(),
+        'error'         => $this->authenticationUtils->getLastAuthenticationError(),
+    ]);
+}
 
     #[Route('/deconnexion', name: 'security_logout')]
     public function logout()
@@ -177,7 +171,7 @@ class SecurityController extends AbstractController
             $url = $this->generateUrl('reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
             $email = (new Email())
-                ->from('infos@avenuedesartistes.com')
+                ->from('info@artetpartage.com')
                 ->to($user->getEmail())
                 ->subject('Réinitialisation de votre mot de passe')
                 ->text("Bonjour,\n\nUne demande de réinitialisation de mot de passe a été effectuée.\nCliquez sur ce lien pour choisir un nouveau mot de passe :\n\n" . $url . "\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail.");

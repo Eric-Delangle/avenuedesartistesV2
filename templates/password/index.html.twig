@@ -1,13 +1,30 @@
-{% extends "base.html.twig" %}
-{% block title %}
-	<h1>Modifier votre mot de passe</h1>
-{% endblock %}
-{% block body %}
-	<h1>Ici vous pouvez changer votre mot de passe.</h1>
-	{{ form_start(form)}}
+{% extends 'base.html.twig' %}
 
-	{{ form_rest(form)}}
-	<!-- captcha -->
-	<button type="submit" class="btn bouton">Valider</button>
-	{{ form_end(form)}}
+{% block title %}Modifier votre mot de passe | Art et partage{% endblock %}
+
+{% block body %}
+<section class="container mt-5 mb-5" style="max-width:600px;">
+
+    <h1 class="text-center mb-5" style="color:#2c3e50;font-weight:700;">Changer votre mot de passe</h1>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            {{ form_start(form) }}
+            {{ form_rest(form) }}
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-lg" style="background-color:#e67e22;color:white;border-radius:30px;padding:10px 30px;">
+                    Valider
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <a href="{{ path('member_index') }}" class="btn btn-lg" style="background-color:#6c757d;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Retour à votre espace
+        </a>
+    </div>
+
+</section>
 {% endblock %}

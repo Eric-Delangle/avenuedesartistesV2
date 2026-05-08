@@ -1,65 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editer votre profil
-{% endblock %}
+{% block title %}Modifier votre profil | Art et partage{% endblock %}
 
 {% block body %}
-	<div class="container text-center">
-		<h1 class="mt-5">Modifier vos informations.</h1>
+<section class="container mt-5 mb-5" style="max-width:700px;">
 
+    <h1 class="text-center mb-5" style="color:#2c3e50;font-weight:700;">Modifier votre profil</h1>
 
-		{{ form_start(form, {'attr': {'class': 'placeho'}})}}
-		{{ form_row(form.firstName, {'attr': {'placeholder': "Votre prénom"}})}}
-		{{ form_row(form.lastName, {'attr': {'placeholder': "Votre nom"}})}}
-		{{ form_row(form.location, {'attr': {'placeholder': "Votre ville"}})}}
-		{{ form_row(form.email, {'attr': {'placeholder': "Votre email"}})}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            {{ form_start(form) }}
+            {{ form_row(form.firstName, {'attr': {'placeholder': "Votre prénom"}}) }}
+            {{ form_row(form.lastName, {'attr': {'placeholder': "Votre nom"}}) }}
+            {{ form_row(form.location, {'attr': {'placeholder': "Votre ville"}}) }}
+            {{ form_row(form.email, {'attr': {'placeholder': "Votre email"}}) }}
+            {{ form_rest(form) }}
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-lg" style="background-color:#e67e22;color:white;border-radius:30px;padding:10px 30px;">
+                    Valider
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 
-		<!-- form_rest permet d'afficher la liste des catégories -->
-		{{ form_rest(form)}}
-		<!-- captcha -->
-		<button type="submit" class="btn bouton">Valider</button>
-		{{ form_end(form)}}
-		<a href="{{ path('member_index') }}">Retourner sur votre espace.</a>
+    <div class="d-flex justify-content-center flex-wrap">
+        <a href="{{ path('member_index') }}" class="btn btn-lg" style="background-color:#2fa4e7;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Retour à votre espace
+        </a>
+        <a href="{{ path('reset_pass') }}" class="btn btn-lg" style="background-color:#6c757d;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Changer de mot de passe
+        </a>
+        <a href="{{ path('edit_avatar', {'id': user.id}) }}" class="btn btn-lg" style="background-color:#6c757d;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
+            Changer votre photo de profil
+        </a>
+        {{ include('user/_delete_form.html.twig') }}
+    </div>
 
-		{{ include('user/_delete_form.html.twig') }}
-		<button class="btn btn-warning mt-3">
-		    
-			<a href="{{ path('reset_pass', {'token': user.resetToken}) }}" style="color:white; text-decoration:none;">Changer de mot de passe.</a>
-	
-	</button>
-		<button class="btn btn-warning mt-3">
-			<a href="{{ path('edit_avatar', {'id': user.id}) }}" style="color:white; text-decoration:none;">Changer votre photo de profil.</a>
-		</button>
-	</div>
-
-	<script>
-		document.getElementById('member').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('bleudeco').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('deconnexion').style.display = 'block';
-	</script>
-	<script>
-		document.getElementById('achats').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('echanges').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('achat').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('echange').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('inscription').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('connexion').style.display = 'none';
-	</script>
-	<script>
-		document.getElementById('admin').style.display = 'none';
-	</script>
+</section>
 {% endblock %}

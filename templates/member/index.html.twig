@@ -1,162 +1,74 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    Votre espace
-    
-{% endblock %}
+{% block title %}Votre espace | Art et partage{% endblock %}
 
 {% block body %}
+<section class="container mt-5 mb-5" style="max-width:800px;">
 
-    <div class="container white liens_blancs">
-        <h1 class="text-center mt-5 massenet font_grand">
-            Votre espace
-            			
-            {{ app.user.firstName |capitalize }}
-        </h1>
-        <div class="avatar">
-            <img src="{{ asset(['images/avatars/', app.user.avatar]|join) }}" alt="avatar"></div>
+    <h1 class="text-center mb-4" style="color:#2c3e50;font-weight:700;">Votre espace, {{ app.user.firstName|capitalize }}</h1>
 
-            <div class="container text-center mt-3">
-                <p class="h1 massenet">
-                    {{ app.user.firstName |capitalize }}
-                    {{ app.user.lastName |capitalize }}
-                </p>
-                <table class="test table text-center mt-5">
-                    <thead class="text-center">
-                        <tr >
-                            <th class="titre_profil_test massenet boutonFixe">
-                                Vous habitez
-                            </th>
-                            <tr>
-                                <td>
-                                    <p class="mt-5">
-                                        {{ app.user.adress }}
-                                        {{ app.user.postalCode }}
-                                        à
-                                                        
-                                        {{ app.user.location |capitalize }}
-                                    </p>
-                                </td>
-                            </tr>
-                            <th class="titre_profil_test massenet boutonFixe">
-                                Votre description
-                            </th>
-                                <tr>
-                                    <td>
-                                        {{ app.user.description2 }}
-                                    </td>
-                                </tr>
-                            <th class="titre_profil_test massenet boutonFixe">
-                                Contact
-                            </th>
-                            <tr>
-                                <td>
-                                    <p>
-                                        <i class="fas fa-envelope">
-                                            {{ app.user.email }}
-                                        </i>
-                                    </p>
-                                    <p>
-                                        <i class="fas fa-phone-volume">
-                                            {{ app.user.tel }}
-                                        </i>
-                                    </p>
-                                </td>
-                                
-                            </tr>
-                            <th class="titre_profil_test massenet boutonFixe">
-                                Vous apparaissez dans les catégories suivantes
-                            </th>
-                            <tr>
-                            <td>
-                            {% for item in app.user.categories %}
-                            {% if loop.first != true %}
-                                ,
-                                                
-                            {% endif %}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4 text-center">
+            <img src="{{ asset(['images/avatars/', app.user.avatar]|join) }}" alt="avatar" style="width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:15px;">
+            <h2 style="color:#2c3e50;font-weight:700;">{{ app.user.firstName|capitalize }} {{ app.user.lastName|capitalize }}</h2>
+        </div>
+    </div>
 
-                            {{ item }}
-                        {% endfor %}
-                        .
-                                    
-                    </td>
-                </tr>
-                        </tr>
-                    </thead>
-            
-                </table>
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4 text-center">
+            <h5 style="color:#e67e22;">📍 Adresse</h5>
+            <p>{{ app.user.adress }} {{ app.user.postalCode }} — {{ app.user.location|capitalize }}</p>
+
+            <h5 style="color:#e67e22;" class="mt-3">Description</h5>
+            <p>{{ app.user.description2 ?: 'Aucune description.' }}</p>
+
+            <h5 style="color:#e67e22;" class="mt-3">📬 Contact</h5>
+            <p><i class="fas fa-envelope mr-2"></i> {{ app.user.email }}</p>
+            <p><i class="fas fa-phone-volume mr-2"></i> {{ app.user.tel ?: 'Non renseigné' }}</p>
+
+            <h5 style="color:#e67e22;" class="mt-3">Catégories</h5>
+            <p>
+                {% for item in app.user.categories %}
+                    {% if not loop.first %}, {% endif %}{{ item }}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <h5 style="color:#e67e22;" class="mb-4">⚙️ Actions</h5>
+            <div class="d-flex flex-wrap justify-content-center">
+                <a href="{{ path('galery_index', {'id': app.user.id}) }}" class="btn btn-lg" style="background-color:#e67e22;color:white;border-radius:30px;padding:10px 25px;">
+                    Gérer vos galeries
+                </a>
+                <a href="{{ path('galery_new', {'id': app.user.id}) }}" class="btn btn-lg" style="background-color:#e67e22;color:white;border-radius:30px;padding:10px 25px;margin: 5px 10px;">
+                    Créer une galerie
+                </a>
+                <a href="{{ path('message_index', {'id': app.user.id}) }}" class="btn btn-lg" style="background-color:#2fa4e7;color:white;border-radius:30px;padding:10px 25px;margin: 5px 10px;">
+                    Consulter vos messages
+                    {% if nbMessages > 0 %}
+                        <span style="background:red;color:white;border-radius:50%;padding:2px 7px;font-size:0.8em;">{{ nbMessages }}</span>
+                    {% endif %}
+                </a>
+                <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="btn btn-lg" style="background-color:#2fa4e7;color:white;border-radius:30px;padding:10px 25px;margin: 5px 10px;">
+                    Modifier mes informations
+                </a>
+               <a href="{{ path('reset_pass') }}" class="btn btn-lg" style="background-color:#6c757d;color:white;border-radius:30px;padding:10px 25px;margin: 5px 10px;">
+                    Changer mon mot de passe
+                </a>
             </div>
         </div>
-    
-        <div class="d-flex text-center white mt-5">
-            <div class="col">
-                <button class="btn bouton">
-                    <a href="{{ path('galery_index', {'id': app.user.id }) }}" class="white lien">
-                        Gérer vos galeries
-                    </a>
-                </button>
-                <button class="btn bouton">
-                    <a href="{{ path('galery_new', {'id': app.user.id }) }}" class="white lien">
-                        Créer une galerie d'échange
-                    </a>
-                </button>
+    </div>
 
-                <button class="btn bouton" style="opacity: 0.5; cursor: not-allowed;" disabled title="Bientôt disponible">
-                    <span class="white lien">Galerie de vente <small>— bientôt</small></span>
-                </button>
-                <div id="message" >
-                    <button class="btn bouton">
-                        <a href="{{ path('message_index', {'id': app.user.id }) }}" class="white lien">
-                            Consulter vos messages
-                        </a>
-                    </button>
-                    <button class="btn bouton">
-                        <a href="{{ path('user_edit', {'id': app.user.id }) }}" class="white lien">
-                            Modifier vos informations
-                        </a>
-                    </button>
-                </div>
-            </div>
-        </div>
+    <div class="text-center mt-3">
+        <form method="post" action="{{ path('user_delete', {'id': app.user.id}) }}" onsubmit="return confirm('Vous êtes sûr(e) de vouloir supprimer votre compte ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+            <button type="submit" class="btn btn-lg" style="background-color:#dc3545;color:white;border-radius:30px;padding:10px 25px;">
+                Supprimer mon compte
+            </button>
+        </form>
+    </div>
 
-    <script>
-	document.getElementById('member').style.display = 'none';
-</script>
-    <script>
-	document.getElementById('bleudeco').style.display = 'none';
-</script>
-    <script>
-	document.getElementById('deconnexion').style.display = 'block';
-</script>
-    <script>
-	document.getElementById('achats').style.display = 'none';
-</script>
-    <script>
-	document.getElementById('member').style.display = 'none';
-</script>
-    <script>
-	document.getElementById('achat').style.display = 'none';
-</script>
-    <script>
-	document.getElementById('inscription').style.display = 'none';
-</script>
-    <script>
-	document.getElementById('connexion').style.display = 'none';
-</script>
-    <script>
-	document.getElementById('admin').style.display = 'none';
-</script>
-	{% if app.user %}
-		<script>
-		    document.getElementById('pas_vu').style.display = 'block';
-			document.getElementById('member').style.display = 'none';
-			document.getElementById('bleudeco').style.display = 'none';
-			document.getElementById('deco').style.display = 'block';
-			document.getElementById('deconnexion').style.display = 'block';
-			document.getElementById('echanges').style.display = 'block';
-			document.getElementById('inscription').style.display = 'none';
-			document.getElementById('connexion').style.display = 'none';
-			document.getElementById('admin').style.display = 'none';
-		</script>
-	{% endif %}
+</section>
 {% endblock %}

@@ -70,7 +70,7 @@ async function main() {
             `<strong>${member.firstName} ${member.lastName}</strong><br>` +
             `${member.location}<br>` +
             `<small>${categories}</small><br>` +
-            `<a href="/share/${member.slug}">Voir le profil →</a>`
+            `<a href="/user/${member.slug}">Voir le profil →</a>`
         );
 
         marker.on('click', () => {
@@ -82,7 +82,7 @@ async function main() {
             if (nomEl)   nomEl.textContent   = `${member.firstName} ${member.lastName}`;
             if (catEl)   catEl.textContent   = categories;
             if (villeEl) villeEl.textContent = member.location;
-            if (profilEl) profilEl.innerHTML = `<a href="/share/${member.slug}">Voir le profil</a>`;
+            if (profilEl) profilEl.innerHTML = `<a href="/user/${member.slug}">Voir le profil</a>`;
         });
 
         clusterGroup.addLayer(marker);

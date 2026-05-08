@@ -47,7 +47,7 @@ class MessageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Votre message a bien été envoyé !');
+            $this->addFlash('success', 'Votre message a bien Ã©tÃ© envoyÃ© !');
             $message->setExpediteur($user);
             $message->setPostedAt(new \DateTime());
             $entityManager = $this->doctrine->getManager();
@@ -68,6 +68,10 @@ class MessageController extends AbstractController
     public function newUserMess(Request $request, User $user, GalleryRepository $galleryRepo): Response
     {
         $exp = $this->getUser();
+        if ($exp === $user) {
+            $this->addFlash('danger', 'Vous ne pouvez pas vous envoyer un message à vous-même.');
+            return $this->redirectToRoute('member_index');
+        }
         $message = new Message();
         $form = $this->createForm(MessageDirectType::class, $message);
         $form->handleRequest($request);
@@ -92,14 +96,22 @@ class MessageController extends AbstractController
     }
 
 
+#[Route('/show/{id}', name: 'message_show', methods: ['GET'])]
+public function show(Message $message, ReponseRepository $reponseRepo): Response
+{
+    $reponses = $reponseRepo->createQueryBuilder('r')
+        ->where('(r.expediteur = :exp AND r.destinataire = :dest) OR (r.expediteur = :dest AND r.destinataire = :exp)')
+        ->setParameter('exp', $message->getExpediteur())
+        ->setParameter('dest', $message->getDestinataire())
+        ->orderBy('r.postedAt', 'ASC')
+        ->getQuery()
+        ->getResult();
 
-    #[Route('/show/{id}', name: 'message_show', methods: ['GET'])]
-    public function show(Message $message): Response
-    {
-        return $this->render('message/show.html.twig', [
-            'message' => $message,
-        ]);
-    }
+    return $this->render('message/show.html.twig', [
+        'message' => $message,
+        'reponses' => $reponses,
+    ]);
+}
 
 
     #[Route('/{id}', name: 'message_delete', methods: ['DELETE'])]

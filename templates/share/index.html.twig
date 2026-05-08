@@ -1,81 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Choisir une œuvre.
-{% endblock %}
+{% block title %}Choisir un artiste | Art et partage{% endblock %}
 
 {% block body %}
-	<div class="container">
-		<div class="listeGaleries">
-			<h1 class="text-center mt-5 massenet titre">Sélectionnez un <span class="A_titre">a</span>rtiste avec qui échanger.</h1>
-			<p class="mt-5">
+<div class="container mt-5 mb-5" style="min-height: calc(100vh - 200px);">
+    <h1 class="text-center titre mb-5">Sélectionnez un artiste avec qui échanger.</h1>
 
-				{% for item in users %}
-
-					<p>
-						<span class='titre_profil massenet' style="color:#ffffff;">Artiste :</span>
-						{{ item.firstName }}
-						{{ item.lastName }}<br>
-					</p>
-					<p>
-						<img src="{{ asset(['images/avatars/', item.avatar]|join) }}" alt="avatar" class="avatar">
-					</p>
-					<p>
-						<span class='titre_profil massenet' style="color:#ffffff;">Ses catégories :</span>
-						{% for item in item.categories %}
-							{% if loop.first != true %}
-								,
-							{% endif %}
-							{{ item }}
-						{% endfor %}
-						.
-					</p>
-					<p>
-						<span class='titre_profil massenet' style="color:#ffffff;">Ses galeries d'échange :</span>
-
-						{% for item in item.galleryEchange %}
-							<a href="{{path('galery_showUser', {'id': item.id})}}" class="bouton">{{ item.name }}</a>
-						{% else %}
-
-							Ce membre n'a pas de galerie d'échange
-						{% endfor %}
-						.
-					</p>
-				</p>
-			</p>
-			<p>
-				<span class='titre_profil massenet' style="color:#ffffff;">Il vit à :</span>
-				{{ item.location }}</p>
-
-			<button class="btn bouton liens_blancs">
-				<a href="{{path('user_show', {'slug' : item.slug})}}">Profil</a>
-			</button>
-			<hr>
-		{% endfor %}
-	</p>
-</p></div>
-	<script>
-	    document.getElementById('pas_vu').style.display = 'block';
-		document.getElementById('inscription').style.display = 'block';
-		document.getElementById('connexion').style.display = 'block';
-		document.getElementById('admin').style.display = 'none';
-		document.getElementById('member').style.display = 'none';
-		document.getElementById('deconnexion').style.display = 'none';
-		document.getElementById('echanger').style.display = 'none';
-		document.getElementById('achat').style.display = 'none';
-		document.getElementById('deco').style.display = 'none';
-		document.getElementById('bleudeco').style.display = 'none';
-	</script>
-	{% if app.user %}
-		<script>
-		    document.getElementById('pas_vu').style.display = 'block';
-			document.getElementById('member').style.display = 'block';
-			document.getElementById('bleudeco').style.display = 'block';
-			document.getElementById('deco').style.display = 'block';
-			document.getElementById('deconnexion').style.display = 'block';
-			document.getElementById('echanger').style.display = 'none';
-			document.getElementById('inscription').style.display = 'none';
-			document.getElementById('connexion').style.display = 'none';
-			document.getElementById('admin').style.display = 'none';
-		</script>
-	{% endif %}
+    {% for item in users %}
+    <div class="card mb-4 p-4">
+        <div class="d-flex align-items-center mb-3">
+            <img src="{{ asset(['images/avatars/', item.avatar]|join) }}" alt="avatar" class="avatar" style="margin-right: 20px;">
+            <div class="ms-3">
+    			<strong>{{ item.firstName }} {{ item.lastName }}</strong><br>
+   				<small class="text-muted">{{ item.location }}</small>
+			</div>
+        </div>
+        <p>
+            {% for cat in item.categories %}
+                {% if not loop.first %}, {% endif %}{{ cat }}
+            {% endfor %}
+        </p>
+        <p>
+            {% for gallery in item.galleryEchange %}
+                <a href="{{ path('galery_showUser', {'id': gallery.id}) }}" class="btn btn-sm bouton me-1">{{ gallery.name }}</a>
+            {% else %}
+                <span class="text-muted">Ce membre n'a pas de galerie d'échange</span>
+            {% endfor %}
+        </p>
+        <a href="{{ path('user_show', {'slug': item.slug}) }}" class="btn bouton">Profil</a>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -58,6 +58,13 @@ class RegistrationType extends AbstractType
             ->add('postalCode', TextType::class, ['label' => 'Votre code postal.', 'attr' => [
                 'placeholder' => 'Code postal.'
             ]])
+            ->add('website', TextType::class, [
+                'label' => 'Votre site internet',
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'https://www.monsite.com'
+                ]
+            ])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
