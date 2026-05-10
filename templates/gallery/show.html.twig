@@ -26,6 +26,10 @@
             <img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}" style="max-width:400px;width:100%;border-radius:10px;margin-bottom:15px;">
             <h5 style="color:#2c3e50;">{{ artisticWork.name|title }}</h5>
             <p class="text-muted">{{ artisticWork.description }}</p>
+            {% if artisticWork.exchangeDescription %}
+                <p style="color:#e67e22;font-weight:600;">Souhaite en échange :</p>
+                <p class="text-muted">{{ artisticWork.exchangeDescription }}</p>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

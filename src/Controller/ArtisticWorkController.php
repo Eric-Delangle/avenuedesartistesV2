@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Event\OeuvrePublieeEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 #[Route('/artistic-work')]
 class ArtisticWorkController extends AbstractController
@@ -27,7 +29,7 @@ class ArtisticWorkController extends AbstractController
     }
 
     #[Route('/new{id}', name: 'artistic_work_new', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
-    public function new(Request $request, Gallery $gallery, SubscriptionRepository $subRepo): Response
+    public function new(Request $request, Gallery $gallery, SubscriptionRepository $subRepo, EventDispatcherInterface $dispatcher): Response
     {
         $artisticWork = new ArtisticWork();
         $artisticWork->setGallery($gallery);
@@ -44,6 +46,9 @@ class ArtisticWorkController extends AbstractController
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($artisticWork);
             $entityManager->flush();
+
+            $event = new OeuvrePublieeEvent($artisticWork);
+            $dispatcher->dispatch($event, OeuvrePublieeEvent::NAME);
 
             return $this->redirectToRoute('galery_edit', ["id" =>$gallery->getId()]);
         }

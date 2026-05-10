@@ -1,19 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% set is_sale = gallery.galleryType in ['sale', 'mixed'] %}
-{% block title %}Ajouter une image à votre galerie {% if is_sale %}de vente{% else %}d'échange{% endif %}{% endblock %}
+{% block title %}Ajouter une image | Art et partage{% endblock %}
 
 {% block body %}
-	<div class="container">
-		<h1 class="text-center mt-5">
-			Ajouter une image à votre galerie {% if is_sale %}de vente{% else %}d'échange{% endif %}.
-		</h1>
+<section class="container mt-5 mb-5" style="max-width:700px;">
 
-		{{ include('artistic_work/_form.html.twig') }}
+    <h1 class="text-center mb-5" style="color:#2c3e50;font-weight:700;">
+        Ajouter une image à votre galerie {% if is_sale %}de vente{% else %}d'échange{% endif %}
+    </h1>
 
-		<button class="btn bouton mt-2">
-			<a href="{{ path('galery_index', {'id': gallery.id}) }}" style="color:#ffffff; text-decoration:none;">Retour à vos galeries</a>
-		</button>
-	</div>
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            {{ include('artistic_work/_form.html.twig') }}
+        </div>
+    </div>
 
+    <div class="d-flex justify-content-center">
+        <a href="{{ path('galery_index', {'id': gallery.id}) }}" class="btn btn-lg" style="background-color:#6c757d;color:white;border-radius:30px;padding:10px 25px;">
+            Retour à vos galeries
+        </a>
+    </div>
+
+</section>
 {% endblock %}

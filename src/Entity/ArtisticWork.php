@@ -43,8 +43,8 @@ class ArtisticWork
 
     #[Vich\UploadableField(mapping: 'artisticWorks_images', fileNameProperty: 'picture')]
     #[Assert\File(
-        maxSize: '1000k',
-        maxSizeMessage: 'Le fichier excède 1000Ko.',
+        maxSize: '5M',
+        maxSizeMessage: 'Le fichier excède 5Mo.',
         mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
         mimeTypesMessage: 'formats autorisés: png, jpeg, jpg, gif'
     )]

@@ -22,3 +22,15 @@
 
 </section>
 {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('label').forEach(function(label) {
+        if (label.textContent.includes('vich_uploader')) {
+            label.textContent = 'Supprimer image actuelle';
+        }
+    });
+});
+</script>
+{% endblock %}

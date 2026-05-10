@@ -1,8 +1,8 @@
 vich_uploader:
-  db_driver: orm # or mongodb or phpcr - default db driver
-  twig: true # set to false to disable twig integration
-  form: true # set to false to disable form integration
-  storage: file_system # or gaufrette or flysystem
+  db_driver: orm
+  twig: true
+  form: true
+  storage: file_system
   metadata:
     auto_detection: true
     cache: file
@@ -12,8 +12,7 @@ vich_uploader:
       uri_prefix: "%app.path.artisticWorks_images%"
       upload_destination: "%kernel.project_dir%/public/images/artisticWorks"
       namer:
-        service: Vich\UploaderBundle\Naming\PropertyNamer
-        options: { property: "slug" }
+        service: Vich\UploaderBundle\Naming\UniqidNamer
     avatars:
       uri_prefix: "%app.path.avatars%"
       upload_destination: "%kernel.project_dir%/public/images/avatars"

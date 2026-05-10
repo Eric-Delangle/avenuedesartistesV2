@@ -11,5 +11,6 @@ Disallow: /galeries/edit/
 Disallow: /galeries/delete/
 Disallow: /_profiler/
 Disallow: /_wdt/
+Disallow: /admin/
 
-Sitemap: https://avenuedesartistes.com/sitemap.xml
+Sitemap: https://www.artetpartage.com/sitemap.xml

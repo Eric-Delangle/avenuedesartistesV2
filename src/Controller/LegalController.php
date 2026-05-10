@@ -22,4 +22,9 @@ class LegalController extends AbstractController
     public function cgu(): Response {
         return $this->render('legal/cgu.html.twig');
     }
+
+    #[Route('/apropos', name: 'apropos')]
+    public function apropos(): Response{
+        return $this->render('legal/apropos.html.twig');
+    }
 }

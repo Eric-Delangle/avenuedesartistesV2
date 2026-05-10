@@ -35,3 +35,15 @@ services:
             $stripePriceId:       '%env(STRIPE_PRICE_ID)%'
             $stripeWebhookSecret: '%env(STRIPE_WEBHOOK_SECRET)%'
         tags: ['controller.service_arguments']
+
+    App\EventListener\FacebookPublisherListener:
+        tags:
+            - name: kernel.event_listener
+            event: oeuvre.publiee
+            method: onOeuvrePubliee
+
+    App\Service\FacebookPageService:
+        arguments:
+            $pageId:           '%env(FACEBOOK_PAGE_ID)%'
+            $pageAccessToken:  '%env(FACEBOOK_PAGE_ACCESS_TOKEN)%'
+            $siteBaseUrl:      '%env(SITE_BASE_URL)%'

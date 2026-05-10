@@ -36,76 +36,68 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/inscription', name: 'security_registration')]
-    public function registration(UserPasswordHasherInterface $passwordHasher,
-        Request $request, EntityManagerInterface $manager)
-    {
-        $user = new User();
-        $form = $this->createForm(RegistrationType::class, $user);
-        $form->handleRequest($request);
+public function registration(UserPasswordHasherInterface $passwordHasher,
+    Request $request, EntityManagerInterface $manager)
+{
+    $user = new User();
+    $form = $this->createForm(RegistrationType::class, $user);
+    $form->handleRequest($request);
 
-        /* captcha */
-        /*
-        $recaptcha = new ReCaptcha('');
-        $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        // Vérification reCAPTCHA v3
+        $recaptcha = new ReCaptcha('6LcVueEsAAAAAM2xXXu2HNwfCk2E8ZfLn0yjQAPn');
+        $resp = $recaptcha->setExpectedAction('register')
+                          ->setScoreThreshold(0.5)
+                          ->verify($request->request->get('recaptcha_token'), $request->getClientIp());
+           
 
         if (!$resp->isSuccess()) {
-         // $this->addFlash('N\'oubliez pas de cocher la case "Je ne suis pas un robot"');
-        } else {
-       */
-        if ($form->isSubmitted() && $form->isValid()) {
-            $hash = $passwordHasher->hashPassword(
-                $user,
-                $user->getPassword()
-            );
-            $user->setPassword($hash);
-
-            // on génère le token d'activation
-
-            $user->setActivationToken(md5(uniqid()));
-
-
-            $slugify = new AsciiSlugger();
-            $slug = $slugify->slug($user->getFirstName() . '' . $user->getLastName());
-            $user->setSlug($slug);
-            $user->setRegisteredAt(new \DateTime());
-            $user->setNiveau(1);
-        
-           // $user->setUserIdentifier($user->getEmail());
-        
-            $manager->persist($user);
-            $manager->flush();
-            $this->addFlash('success', 'Votre compte a bien été créé, vérifiez vos emails pour pouvoir l\'activer.');
-
-
-            // email d'activation
-
-            $email = (new Email())
-                ->from('info@artetpartage.com')
-                ->to($user->getEmail())
-
-                ->subject('Activation de votre compte')
-                ->html($this->renderView('emails/activation.html.twig', ['token' => $user->getActivationToken()]));
-
-
-            $this->mailer->send($email);
-
-            // Mail de notification à l'admin
-            $notif = (new Email())
-                ->from('info@artetpartage.com')
-                ->to('info@artetpartage.com')
-                ->subject('Nouvelle inscription sur Art et Partage')
-                ->text('Un nouvel utilisateur vient de s\'inscrire : ' . $user->getFirstName() . ' ' . $user->getLastName() . ' (' . $user->getEmail() . ')');
-
-            $this->mailer->send($notif);
-
-            return $this->redirectToRoute('security_login');
+            $this->addFlash('danger', 'Vérification anti-bot échouée. Veuillez réessayer.');
+            return $this->redirectToRoute('security_registration');
         }
-        // }
 
-        return $this->render('security/registration.html.twig', [
-            'form' => $form->createView()
-        ]);
+        $hash = $passwordHasher->hashPassword($user, $user->getPassword());
+        $user->setPassword($hash);
+
+        $user->setActivationToken(md5(uniqid()));
+
+        $slugify = new AsciiSlugger();
+        $slug = $slugify->slug($user->getFirstName() . '' . $user->getLastName());
+        $user->setSlug($slug);
+        $user->setRegisteredAt(new \DateTime());
+        $user->setNiveau(1);
+
+        $manager->persist($user);
+        $manager->flush();
+
+        $this->addFlash('success', 'Votre compte a bien été créé, vérifiez vos emails pour pouvoir l\'activer.');
+
+        // Email d'activation
+        $email = (new Email())
+            ->from('info@artetpartage.com')
+            ->to($user->getEmail())
+            ->subject('Activation de votre compte')
+            ->html($this->renderView('emails/activation.html.twig', ['token' => $user->getActivationToken()]));
+
+        $this->mailer->send($email);
+
+        // Mail de notification admin
+        $notif = (new Email())
+            ->from('info@artetpartage.com')
+            ->to('info@artetpartage.com')
+            ->subject('Nouvelle inscription sur Art et Partage')
+            ->text('Un nouvel utilisateur vient de s\'inscrire : ' . $user->getFirstName() . ' ' . $user->getLastName() . ' (' . $user->getEmail() . ')');
+
+        $this->mailer->send($notif);
+
+        return $this->redirectToRoute('security_login');
     }
+
+    return $this->render('security/registration.html.twig', [
+        'form' => $form->createView()
+    ]);
+}
 
 
     #[Route('/activation/{token}', name: 'security_activation')]
