@@ -45,15 +45,34 @@ class GalleryController extends AbstractController
 
 
     // ici je tente d'envoyer la bonne galerie au click sur la categorie voulue
-    #[Route('/category/{id}', name: 'galery_category', methods: ['GET'], requirements: ['id' => '\d+'])]
-    public function category(Request $request, PaginatorInterface $paginator, Category $category, GalleryRepository $galleryRepository)
+   #[Route('/category/{slug}', name: 'galery_category', methods: ['GET'])]
+    public function category(Request $request, PaginatorInterface $paginator, string $slug, CategoryRepository $categoryRepository, GalleryRepository $galleryRepository)
     {
-        return $this->render('gallery/category.html.twig',[
-         'galleries' => $paginator->paginate(
-          $galleryRepository->findBy(['category' => $category]),
-          $request->query->getInt('page' , 1 ),
-          4),
-          'category' =>$category,
+        $slugMap = [
+            'peinture'      => 2,
+            'dessin'        => 1,
+            'sculpture'     => 3,
+            'modelage'      => 4,
+            'art-numerique' => 5,
+            'photographie'  => 6,
+            'ceramique'     => 7,
+            'mosaique'      => 8,
+            'collectionneur'=> 9,
+        ];
+
+        if (!isset($slugMap[$slug])) {
+            throw $this->createNotFoundException('Catégorie introuvable');
+        }
+
+        $category = $categoryRepository->find($slugMap[$slug]);
+
+        return $this->render('gallery/category.html.twig', [
+            'galleries' => $paginator->paginate(
+                $galleryRepository->findBy(['category' => $category]),
+                $request->query->getInt('page', 1),
+                4
+            ),
+            'category' => $category,
         ]);
     }
 
@@ -104,14 +123,10 @@ class GalleryController extends AbstractController
     }
 
 
-    #[Route('/show/{id}', name: 'galery_showUser', methods: ['GET'])]
+   #[Route('/detail/{id}/{slug}', name: 'galery_showUser', requirements: ['id' => '\d+', 'slug' => '.+'])]
     public function show(Gallery $gallery): Response
     {
-
-        return $this->render('gallery/show.html.twig', [
-
-         'gallery'=>$gallery,
-        ]);
+        return $this->render('gallery/show.html.twig', ['gallery' => $gallery]);
     }
 
     #[Route('/delete/{id}', name: 'galery_delete', methods: ['DELETE'])]

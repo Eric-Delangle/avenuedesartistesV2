@@ -63,7 +63,7 @@ public function registration(UserPasswordHasherInterface $passwordHasher,
         $user->setActivationToken(md5(uniqid()));
 
         $slugify = new AsciiSlugger();
-        $slug = $slugify->slug($user->getFirstName() . '' . $user->getLastName());
+        $slug = $slugify->slug($user->getFirstName() . ' ' . $user->getLastName());
         $user->setSlug($slug);
         $user->setRegisteredAt(new \DateTime());
         $user->setNiveau(1);

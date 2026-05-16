@@ -6,13 +6,13 @@
 	<title>{% block title %}Art et partage | Échange d'œuvres d'art{% endblock %}</title>
 	<meta name="description" content="{% block meta_description %}Art et partage, échangez des œuvres d'art originales entre artistes et collectionneurs. Peinture, sculpture, dessin, photographie et plus.{% endblock %}">
 	<meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
-	<link rel="canonical" href="{% block canonical %}{{ app.request.uri }}{% endblock %}">
+	<link rel="canonical" href="{% block canonical %}{{ app.request.schemeAndHttpHost ~ app.request.pathInfo }}{% endblock %}">
 
 	{# Open Graph #}
 	<meta property="og:type"        content="{% block og_type %}website{% endblock %}">
 	<meta property="og:title"       content="{% block og_title %}{% block _og_title %}{{ block('title') }}{% endblock %}{% endblock %}">
 	<meta property="og:description" content="{% block og_description %}{{ block('meta_description') }}{% endblock %}">
-	<meta property="og:url"         content="{{ app.request.uri }}">
+	<meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.pathInfo }}">
 	<meta property="og:image"       content="{% block og_image %}{{ app.request.schemeAndHttpHost }}/images/favicon.svg{% endblock %}">
 	<meta property="og:site_name"   content="Art et partage">
 	<meta property="og:locale"      content="fr_FR">
@@ -44,7 +44,7 @@
 			"@context": "https://schema.org",
 			"@type": "WebSite",
 			"name": "Art et partage",
-			"url": "https://www.artetpartage.com",
+			"url": "https://artetpartage.com",
 			"description": "Plateforme française d'échange d'œuvres d'art originales entre artistes et collectionneurs"
 		}
 		</script>

@@ -31,7 +31,7 @@
                 <img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}" style="max-width:350px;width:100%;border-radius:10px;margin-bottom:10px;">
                 <p><strong>{{ artisticWork.name|title }}</strong></p>
                 <p class="text-muted">{{ artisticWork.description }}</p>
-                {% if artisticWork.exchangeDescription %}
+               {% if artisticWork.exchangeDescription and artisticWork.listingType != 'none' %}
                 <p style="color:#e67e22;font-weight:600;">Souhaite en échange :</p>
                 <p class="text-muted">{{ artisticWork.exchangeDescription }}</p>
                 {% endif %}

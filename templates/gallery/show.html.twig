@@ -2,7 +2,7 @@
 
 {% block title %}Galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} | Art et partage{% endblock %}
 {% block meta_description %}Découvrez la galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} sur Avenue des Artistes.{% endblock %}
-{% block canonical %}{{ url('galery_showUser', {'id': gallery.id}) }}{% endblock %}
+{% block canonical %}{{ url('galery_showUser', {'id': gallery.id, 'slug': gallery.slug}) }}{% endblock %}
 
 {% block body %}
 <section class="container mt-5 mb-5" style="max-width:800px;">
@@ -21,17 +21,19 @@
     <h3 class="text-center mb-4" style="color:#2c3e50;">Œuvres</h3>
 
     {% for artisticWork in gallery.artisticWorks %}
-    <div class="card shadow-sm border-0 mb-4">
-        <div class="card-body p-4 text-center">
-            <img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}" style="max-width:400px;width:100%;border-radius:10px;margin-bottom:15px;">
-            <h5 style="color:#2c3e50;">{{ artisticWork.name|title }}</h5>
-            <p class="text-muted">{{ artisticWork.description }}</p>
-            {% if artisticWork.exchangeDescription %}
-                <p style="color:#e67e22;font-weight:600;">Souhaite en échange :</p>
-                <p class="text-muted">{{ artisticWork.exchangeDescription }}</p>
-            {% endif %}
-        </div>
-    </div>
+        {% if artisticWork.listingType in ['exchange', 'both'] %}
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-4 text-center">
+                    <img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}" style="max-width:400px;width:100%;border-radius:10px;margin-bottom:15px;">
+                    <h5 style="color:#2c3e50;">{{ artisticWork.name|title }}</h5>
+                    <p class="text-muted">{{ artisticWork.description }}</p>
+                    {% if artisticWork.exchangeDescription %}
+                        <p style="color:#e67e22;font-weight:600;">Souhaite en échange :</p>
+                        <p class="text-muted">{{ artisticWork.exchangeDescription }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
 
     <div class="d-flex justify-content-center flex-wrap mt-4">

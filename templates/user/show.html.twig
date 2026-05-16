@@ -41,7 +41,7 @@
             {% if galleryechange %}
                 <div class="d-flex flex-wrap justify-content-center gap-2 mt-2">
                     {% for item in galleryechange %}
-                        <a href="{{ path('galery_showUser', {'id': item.id}) }}" class="btn btn-sm" style="background-color:#e67e22;color:white;border-radius:20px;">
+                        <a href="{{ path('galery_showUser', {'id': item.id, 'slug': item.slug}) }}" class="btn btn-sm" style="background-color:#e67e22;color:white;border-radius:20px;">
                             {{ item }}
                         </a>
                     {% endfor %}

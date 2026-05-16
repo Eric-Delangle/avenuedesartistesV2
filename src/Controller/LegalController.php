@@ -27,4 +27,9 @@ class LegalController extends AbstractController
     public function apropos(): Response{
         return $this->render('legal/apropos.html.twig');
     }
+
+    #[Route('/guide', name: 'documentation')]
+    public function documentation(): Response {
+        return $this->render('legal/documentation.html.twig');
+    }
 }
