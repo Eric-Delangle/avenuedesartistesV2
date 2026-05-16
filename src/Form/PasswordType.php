@@ -2,25 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\Controller\ChangePassword;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType as SymfonyPasswordType;
 
 class PasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('password', PasswordType::class, [
+            ->add('oldPassword', SymfonyPasswordType::class, [
                 'attr' => [
-                    'required' => false,
+                    'placeholder' => 'Votre mot de passe actuel'
                 ]
             ])
-            ->add('password_verify', PasswordType::class, [
+            ->add('password', SymfonyPasswordType::class, [
                 'attr' => [
-                    'required' => false,
-                    'placeholder' => 'Tapez de nouveau votre mot de passe.'
+                    'placeholder' => 'Votre nouveau mot de passe'
                 ]
             ]);
     }
@@ -28,7 +28,7 @@ class PasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => ChangePassword::class,
             'translation_domain' => 'forms',
         ]);
     }

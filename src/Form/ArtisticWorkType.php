@@ -19,7 +19,9 @@ class ArtisticWorkType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
+            ->add('description', null, [
+                'label' => 'Description de votre image',
+            ])
             ->add('pictureFile', VichFileType::class, [
                 'required' => false,
                 'label' => 'Votre image',

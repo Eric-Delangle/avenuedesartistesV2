@@ -1,39 +1,56 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-	Créer votre compte.
-{% endblock %}
-{% block steelsheets %}{% endblock %}
-{% block javascripts %}{% endblock %}
+
+{% block title %}Créer votre compte | Art et partage{% endblock %}
+
+{% block meta_description %}Rejoignez Art et partage et commencez à échanger vos œuvres d'art gratuitement.{% endblock %}
+
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 {% block body %}
-	<div class="container">
-		<h1 class="titre text-center mt-5">Création de <span class="A_titre">v</span>otre compte</h1>
-		<br>
-		<p class="text-center">Lors de la création de votre espace vous aurez la possibilité d'échanger vos œuvres gratuitement.</p>
-		<br>
+<div class="container mt-5 mb-5" style="min-height: calc(100vh - 200px);">
+    <h1 class="titre text-center mb-2">Créer votre <span class="A_titre">c</span>ompte</h1>
+    <p class="text-center text-muted mb-5">Rejoignez la communauté et échangez vos œuvres gratuitement.</p>
 
-		{{ form_start(form, {'attr': {'class': 'placeho'}})}}
-		{{ form_row(form.firstName, {'attr': {'placeholder': "Votre prénom"}})}}
-		{{ form_row(form.lastName, {'attr': {'placeholder': "Votre nom"}})}}
-		{{ form_row(form.location, {'attr': {'placeholder': "Votre ville"}})}}
-		{{ form_row(form.email, {'attr': {'placeholder': "Votre email"}})}}
-		{{ form_row(form.password, {'attr': {'placeholder': "Votre mot de passe"}})}}
-		{{ form_row(form.password_verify)}}
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card p-4 p-md-5">
+                {{ form_start(form, {'attr': {'class': 'placeho'}}) }}
 
-		<!-- form_rest permet d'afficher la liste des catégories -->
-		{{ form_rest(form)}}<!-- captcha -->
-		<!-- Notre boite de vérification --><div class="g-recaptcha" data-sitekey=""> </div>
+                {{ form_row(form.firstName, {'attr': {'placeholder': "Votre prénom"}}) }}
+                {{ form_row(form.lastName,  {'attr': {'placeholder': "Votre nom"}}) }}
+                {{ form_row(form.location,  {'attr': {'placeholder': "Votre ville"}}) }}
+                {{ form_row(form.email,     {'attr': {'placeholder': "Votre email"}}) }}
+                {{ form_row(form.password,  {'attr': {'placeholder': "Votre mot de passe"}}) }}
+                {{ form_row(form.password_verify) }}
+                {{ form_rest(form) }}
+                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-info bouton btn-block">Créer mon compte</button>
+                </div>
 
-		<!-- fin captcha -->
-		<br>
-		<button type="submit" class="btn bouton">Valider</button>
-		{{ form_end(form)}}
-	</div>
-	{# 
-																		<script src='https://www.google.com/recaptcha/api.js'></script>
-																		#}
-	<script>
-		document.getElementById('inscription').style.display = 'none';
+                <p class="text-center text-muted mt-3" style="font-size: 0.9rem;">
+                    Déjà membre ? <a href="{{ path('security_login') }}">Connectez-vous</a>
+                </p>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelector('.placeho').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LcqB-wsAAAAAGmQitaHaXlc-TZELAydfzDIhP-S', {action: 'register'})
+            .then(function(token) {
+                document.getElementById('recaptcha_token').value = token;
+                form.submit();
+            });
+    });
+});
+document.getElementById('inscription').style.display = 'none';
 document.getElementById('connexion').style.display = 'none';
 document.getElementById('admin').style.display = 'none';
 document.getElementById('member').style.display = 'none';
@@ -44,5 +61,5 @@ document.getElementById('echange').style.display = 'none';
 document.getElementById('achat').style.display = 'none';
 document.getElementById('deco').style.display = 'none';
 document.getElementById('bleudeco').style.display = 'none';
-	</script>
+</script>
 {% endblock %}

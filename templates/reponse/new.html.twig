@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Répondre au message{% endblock %}
+
+
+{% block body %}
+
+<div class="container mt-5">
+
+    <h1>Répondre au message</h1>
+
+
+    {% if message is defined %}
+
+        <div class="card mb-4">
+
+            <div class="card-body">
+
+                <p><strong>Message original :</strong></p>
+
+                <p>{{ message.message }}</p>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    {{ form_start(form) }}
+
+        {{ form_row(form.message) }}
+
+        <button type="submit" class="btn bouton mt-3">Envoyer la réponse</button>
+
+    {{ form_end(form) }}
+
+
+    <a href="{{ path('message_index', {'id': app.user.id}) }}" class="btn btn-secondary mt-3">Retour</a>
+
+</div>
+
+{% endblock %}

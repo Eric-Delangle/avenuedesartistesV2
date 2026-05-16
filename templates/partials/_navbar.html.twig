@@ -2,7 +2,7 @@
 	<div class="container">
 
 		<a class="navbar-brand" href="{{ path('home') }}">
-			<span class="brand-av">Avenue</span> <span class="brand-des">des</span> <span class="brand-artistes">Artistes</span>
+			<span class="brand-av">Art</span> <span class="brand-des">et</span> <span class="brand-artistes">partage</span>
 		</a>
 
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Menu">
@@ -12,7 +12,10 @@
 		<div class="collapse navbar-collapse" id="navContent">
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item" id="explain">
-					<a class="nav-link" href="{{ path('explain') }}">Comment ça marche ?</a>
+					<a class="nav-link" href="{{ path('explain') }}">Concept</a>
+				</li>
+				<li class="nav-item">
+    				<a class="nav-link" href="{{ path('documentation') }}">Guide</a>
 				</li>
 				<li class="nav-item" id="echanger">
 					<a class="nav-link" href="{{ path('share_index') }}">Échanger</a>
@@ -25,22 +28,26 @@
 						<i class="fas fa-store-alt"></i> Galeries
 					</a>
 					<div class="dropdown-menu" aria-labelledby="galeriesDropdown">
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 11}) }}">Peinture</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 10}) }}">Dessin</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 12}) }}">Sculpture</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 13}) }}">Modelage</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 14}) }}">Art numérique</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 15}) }}">Photographie</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 17}) }}">Mosaïque</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 18}) }}">Collectionneur</a>
-						<a class="dropdown-item" href="{{ path('galery_category', {'id': 16}) }}">Céramique</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'slug': 'peinture'}) }}">Peinture</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'slug': 'dessin'}) }}">Dessin</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'slug': 'sculpture'}) }}">Sculpture</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'slug': 'modelage'}) }}">Modelage</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'slug': 'art-numerique'}) }}">Art numérique</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'slug': 'photographie'}) }}">Photographie</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'slug': 'mosaique'}) }}">Mosaïque</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'slug': 'collectionneur'}) }}">Collectionneur</a>
+						<a class="dropdown-item" href="{{ path('galery_category', {'slug': 'ceramique'}) }}">Céramique</a>
 					</div>
 				</li>
 			</ul>
 
 			<ul class="navbar-nav align-items-center">
 				<li class="nav-item" id="echange" style="display:none;">
-					<a class="nav-link" href="#"><i class="far fa-handshake"></i> Vos échanges</a>
+					{% if app.user %}
+						<a class="nav-link" href="{{ path('message_index', {'id': app.user.id}) }}"><i class="far fa-handshake"></i> Vos échanges</a>
+					{% else %}
+						<a class="nav-link" href="#"><i class="far fa-handshake"></i> Vos échanges</a>
+					{% endif %}
 				</li>
 				<li class="nav-item" id="registration" style="display:none;">
 					<a class="nav-link" href="{{ path('security_registration') }}"><i class="fas fa-user-circle"></i> Inscription</a>
@@ -53,7 +60,7 @@
 				</li>
 				{% if app.user and not is_subscribed() %}
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('subscription_index') }}" style="color: #f0a500 !important; font-weight: 600;">
+					<a class="nav-link" href="#" style="color: #f0a500 !important; font-weight: 600;">
 						<i class="fas fa-star"></i> S'abonner
 					</a>
 				</li>

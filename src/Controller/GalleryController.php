@@ -33,7 +33,7 @@ class GalleryController extends AbstractController
     }
 
 
-    #[Route('/{id}', name: 'galery_index', methods: ['GET'])]
+    #[Route('/{id}', name: 'galery_index', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function index(GalleryRepository $galleryRepository, User $user): Response
     {
        // dd($user);
@@ -45,17 +45,24 @@ class GalleryController extends AbstractController
 
 
     // ici je tente d'envoyer la bonne galerie au click sur la categorie voulue
-    #[Route('/category/{id}', name: 'galery_category', methods: ['GET'], requirements: ['id' => '\d+'])]
-    public function category(Request $request, PaginatorInterface $paginator, Category $category, GalleryRepository $galleryRepository)
-    {
-        return $this->render('gallery/category.html.twig',[
-         'galleries' => $paginator->paginate(
-          $galleryRepository->findBy(['category' => $category]),
-          $request->query->getInt('page' , 1 ),
-          4),
-          'category' =>$category,
-        ]);
-    }
+  #[Route('/category/{slug}', name: 'galery_category', methods: ['GET'])]
+        public function category(Request $request, PaginatorInterface $paginator, string $slug, CategoryRepository $categoryRepository, GalleryRepository $galleryRepository)
+        {
+            $category = $categoryRepository->findOneBy(['slug' => $slug]);
+
+            if (!$category) {
+                throw $this->createNotFoundException('Catégorie introuvable');
+            }
+
+            return $this->render('gallery/category.html.twig', [
+                'galleries' => $paginator->paginate(
+                    $galleryRepository->findBy(['category' => $category]),
+                    $request->query->getInt('page', 1),
+                    4
+                ),
+                'category' => $category,
+            ]);
+        }
 
     #[Route('/new/{id}', name: 'galery_new', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function new(Request $request, User $user, SubscriptionRepository $subRepo): Response
@@ -84,6 +91,9 @@ class GalleryController extends AbstractController
     #[Route('/edit/{id}', name: 'galery_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function edit(Request $request, Gallery $gallery, SubscriptionRepository $subRepo): Response
     {
+        if ($gallery->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
 
         $canSell = ($sub = $this->getUser() ? $subRepo->findOneBy(['user' => $this->getUser()]) : null) && $sub->isActive();
         $form = $this->createForm(GalleryType::class, $gallery, ['can_sell' => $canSell]);
@@ -104,19 +114,18 @@ class GalleryController extends AbstractController
     }
 
 
-    #[Route('/show/{id}', name: 'galery_showUser', methods: ['GET'])]
+   #[Route('/detail/{id}/{slug}', name: 'galery_showUser', requirements: ['id' => '\d+', 'slug' => '.+'])]
     public function show(Gallery $gallery): Response
     {
-
-        return $this->render('gallery/show.html.twig', [
-
-         'gallery'=>$gallery,
-        ]);
+        return $this->render('gallery/show.html.twig', ['gallery' => $gallery]);
     }
 
     #[Route('/delete/{id}', name: 'galery_delete', methods: ['DELETE'])]
     public function delete(Request $request, Gallery $gallery): Response
     {
+        if ($gallery->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
         if ($this->isCsrfTokenValid('delete'.$gallery->getId(), $request->request->get('_token'))) {
             $entityManager = $this->doctrine->getManager();
             $entityManager->remove($gallery);

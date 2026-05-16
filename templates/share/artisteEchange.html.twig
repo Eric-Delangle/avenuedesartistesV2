@@ -14,15 +14,10 @@
 					<ul class="text-center">
 						<li>
 							<button class="btn bouton">
-								<a href="{{ path('galery_vente_edit', {'id': item.id }) }}">Gérer cette galerie</a>
+								<a href="{{ path('user_show', {'slug': item.user.slug}) }}">Gérer cette galerie</a>
 							</button>
 						</li>
-						<li>
-							<button class="btn bouton">
-								<a href="{{ path('galery_vente_delete', {'id': item.id }) }}">Supprimer cette galerie</a>
-							</button>
-						</li>
-					</ul>
+											</ul>
 				</p>
 				<hr>
 			{% endfor %}

@@ -29,6 +29,9 @@ class ArtisticWorkController extends AbstractController
     #[Route('/new{id}', name: 'artistic_work_new', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function new(Request $request, Gallery $gallery, SubscriptionRepository $subRepo): Response
     {
+        if ($gallery->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
         $artisticWork = new ArtisticWork();
         $artisticWork->setGallery($gallery);
         $sub = $this->getUser() ? $subRepo->findOneBy(['user' => $this->getUser()]) : null;
@@ -66,6 +69,9 @@ class ArtisticWorkController extends AbstractController
     #[Route('/{id}/edit', name: 'artistic_work_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function edit(Request $request, ArtisticWork $artisticWork, SubscriptionRepository $subRepo): Response
     {
+        if ($artisticWork->getGallery()->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
         $sub = $this->getUser() ? $subRepo->findOneBy(['user' => $this->getUser()]) : null;
         $canSell = $sub !== null && $sub->isActive();
         $form = $this->createForm(ArtisticWorkType::class, $artisticWork, ['can_sell' => $canSell]);
@@ -88,6 +94,10 @@ class ArtisticWorkController extends AbstractController
     #[Route('/{id}', name: 'artistic_work_delete', methods: ['DELETE', 'POST'], requirements: ['id' => '\d+'])]
     public function delete(Request $request, ArtisticWork $artisticWork): Response
     {
+        if ($artisticWork->getGallery()->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$artisticWork->getId(), $request->request->get('_token'))) {
             $entityManager = $this->doctrine->getManager();
             $entityManager->remove($artisticWork);

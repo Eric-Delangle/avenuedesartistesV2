@@ -67,7 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     private $registeredAt;
 
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Category', inversedBy: 'users')]
-    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[ORM\JoinTable(name: 'user_category')]
     #[Groups(['group1'])]
     private $categories;
 
@@ -101,6 +101,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $reset_token;
+    
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTime $resetTokenExpiresAt = null;
+    
+    public function getResetTokenExpiresAt(): ?\DateTime
+    {
+        return $this->resetTokenExpiresAt;
+    }
+    
+    public function setResetTokenExpiresAt(?\DateTime $resetTokenExpiresAt): self
+    {
+        $this->resetTokenExpiresAt = $resetTokenExpiresAt;
+        return $this;
+}
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $website;

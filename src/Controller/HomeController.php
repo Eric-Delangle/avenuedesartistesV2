@@ -29,7 +29,7 @@ class HomeController extends AbstractController
     #[Route('/members.json', name: 'members_json')]
     public function membersLocations(): JsonResponse
     {
-        $users = $this->doctrine->getRepository(User::class)->findAll();
+       $users = $this->doctrine->getRepository(User::class)->findBy(['activation_token' => null]);
 
         $data = [];
         foreach ($users as $user) {

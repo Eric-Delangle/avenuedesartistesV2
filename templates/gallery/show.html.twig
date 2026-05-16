@@ -1,35 +1,36 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} | Art et partage{% endblock %}
 {% block meta_description %}Découvrez la galerie de {{ gallery.user.firstName|capitalize }} {{ gallery.user.lastName|capitalize }} sur Avenue des Artistes.{% endblock %}
-{% block canonical %}{{ url('galery_showUser', {'id': gallery.id}) }}{% endblock %}
-
+{% block canonical %}{{ url('galery_showUser', {'id': gallery.id, 'slug': gallery.slug}) }}{% endblock %}
 {% block body %}
 <section class="container mt-5 mb-5" style="max-width:800px;">
-
     <h1 class="text-center mb-4" style="color:#2c3e50;font-weight:700;">
         Galerie de {{ gallery.user.firstName|title }} {{ gallery.user.lastName|title }}
     </h1>
-
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body p-4 text-center">
             <p><span style="color:#e67e22;font-weight:600;">Nom :</span> {{ gallery.name|title }}</p>
             <p><span style="color:#e67e22;font-weight:600;">Catégorie :</span> {{ gallery.category }}</p>
         </div>
     </div>
-
     <h3 class="text-center mb-4" style="color:#2c3e50;">Œuvres</h3>
-
     {% for artisticWork in gallery.artisticWorks %}
-    <div class="card shadow-sm border-0 mb-4">
-        <div class="card-body p-4 text-center">
-            <img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}" style="max-width:400px;width:100%;border-radius:10px;margin-bottom:15px;">
-            <h5 style="color:#2c3e50;">{{ artisticWork.name|title }}</h5>
-            <p class="text-muted">{{ artisticWork.description }}</p>
-        </div>
-    </div>
+        {% if artisticWork.listingType in ['exchange', 'both'] %}
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-4 text-center">
+                    <img src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }}"
+                         style="max-width:400px;width:100%;border-radius:10px;margin-bottom:15px;cursor:zoom-in;"
+                         onclick="openLightbox(this.src)">
+                    <h5 style="color:#2c3e50;">{{ artisticWork.name|title }}</h5>
+                    <p class="text-muted">{{ artisticWork.description }}</p>
+                    {% if artisticWork.exchangeDescription %}
+                        <p style="color:#e67e22;font-weight:600;">Souhaite en échange :</p>
+                        <p class="text-muted">{{ artisticWork.exchangeDescription }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
-
     <div class="d-flex justify-content-center flex-wrap mt-4">
         <a href="{{ path('user_show', {'slug': gallery.user.slug}) }}" class="btn btn-lg" style="background-color:#2fa4e7;color:white;border-radius:30px;padding:10px 25px;margin:5px 10px;">
             Voir son profil
@@ -38,6 +39,27 @@
             Envoyer un message
         </a>
     </div>
-
 </section>
+
+<div id="lightbox" onclick="closeLightbox()" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;cursor:zoom-out;align-items:center;justify-content:center;">
+    <img id="lightbox-img" style="max-width:90%;max-height:90vh;border-radius:8px;box-shadow:0 0 30px rgba(0,0,0,0.5);">
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+});
+</script>
 {% endblock %}

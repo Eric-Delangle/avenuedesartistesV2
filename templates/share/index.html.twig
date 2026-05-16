@@ -6,29 +6,33 @@
 <div class="container mt-5 mb-5" style="min-height: calc(100vh - 200px);">
     <h1 class="text-center titre mb-5">Sélectionnez un artiste avec qui échanger.</h1>
 
-    {% for item in users %}
-    <div class="card mb-4 p-4">
-        <div class="d-flex align-items-center mb-3">
-            <img src="{{ asset(['images/avatars/', item.avatar]|join) }}" alt="avatar" class="avatar" style="margin-right: 20px;">
-            <div class="ms-3">
-    			<strong>{{ item.firstName }} {{ item.lastName }}</strong><br>
-   				<small class="text-muted">{{ item.location }}</small>
-			</div>
+    <div class="row justify-content-center">
+        {% for item in users %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <img src="{{ asset(['images/avatars/', item.avatar]|join) }}" alt="avatar" class="avatar" style="margin-right: 20px;">
+                    <div class="ms-3">
+                        <strong>{{ item.firstName }} {{ item.lastName }}</strong><br>
+                        <small class="text-muted">{{ item.location }}</small>
+                    </div>
+                </div>
+                <p>
+                    {% for cat in item.categories %}
+                        {% if not loop.first %}, {% endif %}{{ cat }}
+                    {% endfor %}
+                </p>
+                <p>
+                    {% for gallery in item.galleryEchange %}
+                        <a href="{{ path('galery_showUser', {'id': gallery.id, 'slug': gallery.slug}) }}" class="btn btn-warning bouton me-1">{{ gallery.name }}</a>
+                    {% else %}
+                        <span class="text-muted">Ce membre n'a pas de galerie d'échange</span>
+                    {% endfor %}
+                </p>
+                <a href="{{ path('user_show', {'slug': item.slug}) }}" class="btn btn-info bouton">Profil</a>
+            </div>
         </div>
-        <p>
-            {% for cat in item.categories %}
-                {% if not loop.first %}, {% endif %}{{ cat }}
-            {% endfor %}
-        </p>
-        <p>
-            {% for gallery in item.galleryEchange %}
-                <a href="{{ path('galery_showUser', {'id': gallery.id}) }}" class="btn btn-sm bouton me-1">{{ gallery.name }}</a>
-            {% else %}
-                <span class="text-muted">Ce membre n'a pas de galerie d'échange</span>
-            {% endfor %}
-        </p>
-        <a href="{{ path('user_show', {'slug': item.slug}) }}" class="btn bouton">Profil</a>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endblock %}

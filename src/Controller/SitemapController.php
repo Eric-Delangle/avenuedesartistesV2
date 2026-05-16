@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Repository\UserRepository;
 
 class SitemapController extends AbstractController
 {
@@ -15,6 +16,7 @@ class SitemapController extends AbstractController
     public function index(
         ArtisticWorkRepository $workRepo,
         GalleryRepository $galleryRepo,
+        UserRepository $userRepo,
         UrlGeneratorInterface $urlGenerator
     ): Response {
         $urls = [];
@@ -56,6 +58,18 @@ class SitemapController extends AbstractController
                 'lastmod'    => $now->format('Y-m-d'),
                 'changefreq' => 'weekly',
                 'priority'   => '0.6',
+            ];
+        }
+
+        // Profils artistes
+        $users = $userRepo->findAll();
+        foreach ($users as $user) {
+            if (!$user->getSlug()) continue; // sécurité si slug vide
+            $urls[] = [
+                'loc'        => $urlGenerator->generate('user_show', ['slug' => $user->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL),
+                'lastmod'    => $now->format('Y-m-d'),
+                'changefreq' => 'weekly',
+                'priority'   => '0.7',
             ];
         }
 

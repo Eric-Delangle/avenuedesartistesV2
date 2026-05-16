@@ -13,12 +13,12 @@ class UserModifType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('firstName')
-            ->add('lastName')
+            ->add('firstName', null, ['label' => 'Prénom'])
+            ->add('lastName', null, ['label' => 'Nom'])
             ->add('location')
             ->add('description2')
             ->add('categories')
-            ->add('website');
+            ->add('website', null, ['label' => 'Site web']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
