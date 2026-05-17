@@ -66,7 +66,7 @@ img { max-width: 100%; height: auto; }
     color: var(--text-dark) !important;
 }
 
-.brand-av       { color: var(--primary); font-style: italic; }
+.brand-av       { color: var(--primary); }
 .brand-des      { color: var(--text-muted); font-weight: 400; font-size: 0.85em; }
 .brand-artistes { color: var(--text-dark); }
 

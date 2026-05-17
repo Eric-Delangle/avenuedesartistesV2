@@ -45,8 +45,8 @@ class ArtisticWork
     #[Assert\File(
         maxSize: '5M',
         maxSizeMessage: 'Le fichier excède 5Mo.',
-        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-        mimeTypesMessage: 'formats autorisés: png, jpeg, jpg, gif'
+        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+        mimeTypesMessage: 'formats autorisés: png, jpeg, jpeg'
     )]
     private $pictureFile;
 
