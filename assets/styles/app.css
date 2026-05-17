@@ -41,21 +41,33 @@ img { max-width: 100%; height: auto; }
 #main-navbar {
     background: rgba(255,255,255,0.97) !important;
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: none;
     padding: 14px 0;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    box-shadow: none;
+    position: relative;
+}
+
+#main-navbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--primary) 35%, #6f42c1 65%, transparent 100%);
+    opacity: 0.45;
 }
 
 .navbar-brand {
     font-family: var(--font-display) !important;
-    font-size: 1.3rem !important;
+    font-size: 1.45rem !important;
     font-weight: 700;
     letter-spacing: -0.3px;
     color: var(--text-dark) !important;
 }
 
-.brand-av       { color: var(--primary); }
-.brand-des      { color: var(--text-muted); font-weight: 400; font-size: 0.9em; }
+.brand-av       { color: var(--primary); font-style: italic; }
+.brand-des      { color: var(--text-muted); font-weight: 400; font-size: 0.85em; }
 .brand-artistes { color: var(--text-dark); }
 
 #main-navbar .nav-link {
@@ -63,14 +75,48 @@ img { max-width: 100%; height: auto; }
     font-weight: 500;
     color: #444 !important;
     padding: 8px 14px !important;
-    border-radius: 6px;
-    transition: all 0.2s;
+    border-radius: 0;
+    transition: color 0.2s;
+    position: relative;
+}
+
+#main-navbar .nav-link:not(.dropdown-toggle):not(.nav-link--disabled)::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    right: 50%;
+    height: 1.5px;
+    background: var(--primary);
+    border-radius: 2px;
+    transition: left 0.25s, right 0.25s;
+}
+
+#main-navbar .nav-link:not(.dropdown-toggle):not(.nav-link--disabled):hover::after {
+    left: 14px;
+    right: 14px;
 }
 
 #main-navbar .nav-link:hover {
     color: var(--primary) !important;
-    background: rgba(47,164,231,0.07);
+    background: transparent;
     text-decoration: none;
+}
+
+.nav-link--disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.nav-badge-soon {
+    font-size: 0.62em;
+    background: linear-gradient(135deg, var(--primary), #6f42c1);
+    color: #fff;
+    border-radius: 4px;
+    padding: 1px 6px;
+    vertical-align: middle;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .nav-btn {
@@ -355,6 +401,109 @@ img { max-width: 100%; height: auto; }
     font-size: 0.9rem;
     line-height: 1.6;
     margin: 0;
+}
+
+.feature-icon img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    margin-bottom: 4px;
+}
+
+/* ----------------------------------------------------------------
+   HERO — éléments artistiques
+   ---------------------------------------------------------------- */
+.hero-label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 22px;
+    border-left: 3px solid var(--primary);
+    padding-left: 12px;
+}
+
+.hero-title em {
+    font-style: italic;
+    color: var(--primary);
+}
+
+.hero-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    border-radius: 2px;
+    margin-bottom: 24px;
+}
+
+.hero-blob {
+    position: absolute;
+    right: 6%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 360px;
+    height: 360px;
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    background: radial-gradient(circle, rgba(47,164,231,0.07) 0%, rgba(111,66,193,0.05) 60%, transparent 80%);
+    border: 1px solid rgba(47,164,231,0.1);
+    animation: hero-morph 14s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.hero-ring {
+    position: absolute;
+    right: 20%;
+    bottom: 12%;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(47,164,231,0.18);
+    pointer-events: none;
+}
+
+@keyframes hero-morph {
+    0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    50%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+@media (max-width: 767px) {
+    .hero-blob, .hero-ring { display: none; }
+}
+
+/* ----------------------------------------------------------------
+   MANIFESTO
+   ---------------------------------------------------------------- */
+.manifesto-section {
+    background: #f7f5f2;
+    padding: 52px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.manifesto-quote {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+    font-style: italic;
+    color: var(--text-dark);
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto;
+    border: none;
+    padding: 0;
+    line-height: 1.7;
+}
+
+.manifesto-quote cite {
+    display: block;
+    font-size: 0.75rem;
+    font-style: normal;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 18px;
+    font-family: var(--font-body);
 }
 
 /* ----------------------------------------------------------------
